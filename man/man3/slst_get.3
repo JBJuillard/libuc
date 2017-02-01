@@ -1,0 +1,96 @@
+.\"
+.\" Manpage of slst_del, slst_deln, slst_delp, slst_delk function
+.\" for Undefined-C library
+.\"
+.\" Created: 15/01/17 by Juillard Jean-Baptiste
+.\" Updated: 31/01/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_GET 3 "15/01/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_get, slst_getn
+.RB "\t- Retire un element d'une liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "slst_t	*slst_get(slst_t " **lst );
+.br
+.BI "slst_t	*slst_getn(slst_t " **lst ", size_t " n );
+
+.SH DESCRIPTION
+.B slst_get
+.RI "retire le maillon se trouvant en tete de la liste " lst " puis le libere"
+.RB "avec " free "(3) et retourne uniquement sa valeur cle."
+.IR lst " doit etre un argument valide tel qu'il est definit dans la section"
+.BR NOTES .
+.BR errno " est toujours modifier par " slst_get " de maniere definit dans"
+.RB "la section " ERREURS .
+
+.B slst_getn
+.RI "retire le " n "-ieme maillon, en partant de 1, de la liste " lst
+.RB "puis le libere avec " free "(3) et retourne uniquement sa valeur cle."
+.IR lst " et " n " doivent etres des argument valide tels qu'ils sont definit"
+.RB "dans la section " NOTES .
+.BR errno " est toujours modifier par " slst_get " de maniere definit dans"
+.RB "la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_get
+.R retourne un pointeur sur la valeur cle du maillon qui vient d'etre retire
+.R ou NULL en cas d'erreur.
+
+.B slst_getn
+.R retourne un pointeur sur la valeur cle du maillon qui vient d'etre retire
+.R ou NULL en cas d'erreur.
+
+.SH ERREURS
+.TP
+.B 0
+.br
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.br
+.RB "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+.TP
+.B ERANGE
+.br
+.RB "Dans la fonction " slst_getn ", si la taille de la liste"
+.IR lst " est inferieur a " n " alors l'element ne peut etre retire de la"
+.IR n "-ieme position,"
+.BR errno " est mis a " ERANGE .
+
+.SH NOTES
+.RI "- Pour toutes les fonctions, " lst " doit etre different de"
+.RI "((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL)) est valide"
+.R et designe une liste vide.
+
+.RB "- Dans la fonction " slst_getn ,
+.IR n " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_put "(3), " slst_del (3)

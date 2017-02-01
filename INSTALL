@@ -1,0 +1,8 @@
+For install libuc use Makefile as follow :
+
+	make all
+
+or if want delete all file including ./lib/libuc.so :
+
+	make make install distclean
+

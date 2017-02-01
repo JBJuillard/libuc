@@ -1,0 +1,58 @@
+.\"
+.\" Manpage of slst_new function for Undefined-C library
+.\"
+.\" Created: 01/15/17 by Juillard Jean-Baptiste
+.\" Updated: 01/31/17 by Juillard Jean-Baptiste
+.\"
+.\" This program is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_NEW 3 "01/31/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+.SH NAME
+.BR slst_new " - Alloue et retourne un element de liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.B slst_t *slst_new(void);
+
+.SH DESCRIPTION
+.BR slst_new " alloue, avec " malloc "(3), un nouvel element de type"
+.BR slst_t " et met tous ces champs a 0."
+.BR errno " est toujours mis a 0 si aucune erreur ne s'est produit."
+
+.SH VALEUR DE RETOUR
+.B slst_new
+.R "retourne un pointeur sur l'element allouer ou NULL en cas d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est produite."
+.TP
+.B ENOMEM
+.RB "Une erreur s'est produite pendant l'allocation par " malloc "(3),"
+.BR errno " est DEVRAIT etre definit par " malloc "(3) a " ENOMEM .
+.RB "Si " malloc "(3) ne modifie pas " errno " lors d'une erreur,"
+.BR slst_new " met " errno " a " ENOMEM .
+
+.SH NOTES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_nsrt "(3), " slst_xtrc (3)

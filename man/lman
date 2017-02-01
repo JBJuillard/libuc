@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+CD=`pwd`
+
+if [ -z "$@" ] ; then
+    1>&2 echo "usage: $0 [section] <manpage>." ;
+    exit ;
+fi
+export "MANPATH=${CD}:${MANPATH}"
+man $@

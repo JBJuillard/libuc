@@ -1,0 +1,67 @@
+.\"
+.\" Manpage of slst_new function for Undefined-C library
+.\"
+.\" Created: 01/15/17 by Juillard Jean-Baptiste
+.\" Updated: 01/31/17 by Juillard Jean-Baptiste
+.\"
+.\" This program is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_PURGE 3 "01/31/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+.SH NAME
+.B slst_purge
+.R "\t- Libere l'ensemble des elements et leurs valeurs cle d'une liste"
+.BR slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "void	slst_purge(slst_t " **lst ", void (*" fdel ")(void *, size_t));"
+
+.SH DESCRIPTION
+.BR slst_purge " libere chaque maillon de la liste"
+.IR lst " en commencant par sa valeur cle via la fonction " fdel
+.RB "passe en parametre puis libere le maillom lui-meme avec " malloc (3).
+.RB "Apres l'execution de " slst_purge ,
+.IR lst " vaut NULL."
+.RB "Si " errno " est mis a une autre valeur que 0 par"
+.IR fdel ,
+.B slst_purge
+.R "se termine et le maillon en cours de traitement n'est pas libere."
+.R "Charge au programmeur d'adopter le comportement qui convient en"
+.RI "fonction de l'erreur s'etant produite dans " fdel .
+.RI "Dans ce cas, le maillon en cours de traitement au moment de l'erreur est"
+.RI "le premier de liste " lst .
+.BR errno " est toujours modifier par " slst_purge ", voir la section ERREURS."
+
+.SH VALEUR DE RETOUR
+.BR slst_purge " ne retourne rien."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est produite."
+.TP
+.B EINVAL
+.RB "Un parametre invalide a ete passe lors de l'appel a " slst_purge .
+
+.SH NOTES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_del (3)

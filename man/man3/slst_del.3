@@ -1,0 +1,176 @@
+.\"
+.\" Manpage of slst_del, slst_deln, slst_delp, slst_delk function
+.\" for Undefined-C library
+.\"
+.\" Created: 15/01/17 by Juillard Jean-Baptiste
+.\" Updated: 31/01/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_DEL 3 "15/01/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_del, slst_deln, slst_delp, slst_delk
+.RB "	- Supprime et libere un element d'une liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "void	slst_del(slst_t " **lst ", void (*" fdel ")(void *, size_t));"
+.br
+.BI "void	slst_deln(slst_t " **lst ", size_t " n ,
+.BI "void (*" fdel ")(void *, size_t));"
+.br
+.BI "void	slst_delp(slst_t " **lst ", slst_t " ptr ,
+.BI "void (*" fdel ")(void *, size_t));"
+.br
+.BI "void	slst_delk(slst_t " **lst ", const void " *key ,
+.BI "const size_t " size ", int (*" fcmp ")(const void *, const size_t,"
+.BI "const void *, const size_t), void (*" fdel ")(void *, size_t));"
+
+.SH DESCRIPTION
+.B slst_del
+.RB "supprime et libere avec " free "(3)"
+.RI "l'element se trouvant en tete de la liste " lst ,
+.RI "la valeur cle est libere avec la fonction " fdel " passe en parametre."
+.RI "Si " fdel " positionne"
+.BR errno " a une valeur differrente de 0,"
+.RB "la fonction " slst_del " se termine, l'element n'est pas libere"
+.RI "et reste present dans la liste " lst ,
+.R "charge au programmeur d'adopter le comportement qui convient en fonction de"
+.RI "l'erreur s'etant produite dans " fdel .
+.IR lst " et " fdel " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_del
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_deln
+.RB "supprime et libere avec " free "(3)"
+.RI "le " n "-ieme element en partant de 1 de la liste " lst ,
+.RI "la valeur cle est libere avec la fonction " fdel " passe en parametre."
+.RI "Si " fdel " positionne"
+.BR errno " a une valeur differrente de 0,"
+.RB "la fonction " slst_deln " se termine, l'element n'est pas libere"
+.RI "et reste present dans la liste " lst ,
+.R "charge au programmeur d'adopter le comportement qui convient en fonction de"
+.RI "l'erreur s'etant produite dans " fdel .
+.IR lst ", " n " et " fdel " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_deln
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_delp
+.RB "supprime et libere avec " free "(3)"
+.RI "l'element " ptr " seulement s'il est dans la liste " lst ,
+.RI "la valeur cle est libere avec la fonction " fdel " passe en parametre."
+.RI "Si " fdel " positionne"
+.BR errno " a une valeur differrente de 0, la fonction " slst_delp
+.RI "se termine, l'element n'est pas libere et reste present dans la liste " lst ,
+.R "charge au programmeur d'adopter le comportement qui convient en fonction de"
+.RI "l'erreur s'etant produite dans " fdel .
+.IR lst ", " ptr " et " fdel " doivent etres des arguments valides tels qu'ils"
+.RB "sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_delp
+.RB "tel que decrit dans la section " ERREURS .
+
+.BR slst_delk
+.RI "supprime de la liste " lst " et libere avec"
+.BR free "(3)"
+.RI "le premier element dont la valeur cle et la taille correspondent a " key
+.RI "et " size " respectivement en fonction de " fcmp .
+.RI "La valeur cle est libere avec la fonction " fdel " passe en parametre."
+.RI "Si " fdel " positionne"
+.BR errno " a une valeur differrente de 0, la fonction " slst_delk
+.RI "se termine, l'element n'est pas libere et reste present dans la liste " lst ,
+.R "charge au programmeur d'adopter le comportement qui convient en fonction de"
+.RI "l'erreur s'etant produite dans " fdel .
+.IR lst ", " key ", " size ", " fcmp " et " fdel " doivent etres des arguments"
+.RB "valides tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_delk
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.BR slst_del " ne retourne rien."
+
+.BR slst_deln " ne retourne rien."
+
+.BR slst_delp " ne retourne rien."
+
+.BR slst_delk " ne retourne rien."
+
+.SH ERREURS
+.TP
+.B 0
+.br
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.br
+.RB "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+.TP
+.B ERANGE
+.br
+.RB "Dans la fonction " slst_deln ,
+.RI "si la taille de la liste " lst " est inferieur a " n " alors l'element"
+.RI "ne peut etre supprime de la " n "-ieme position,"
+.BR errno " est mis a " ERANGE .
+.RB "Dans les fonctions " slst_delp " et " slst_delk ,
+.R "si l'element recherche ne figure pas dans la liste,"
+.BR errno " est mis a " ERANGE .
+
+.SH NOTES
+.RI "- Pour toutes les fonctions, " lst " doit etre different de"
+.RI "((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RB "- Dans la fonction " slst_deln ,
+.IR n " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.RB "- Dans la fonction " slst_delp ,
+.IR ptr " doit pointer vers un element valide (non-NULL)."
+
+.RI "- Pour toutes les fonctions, " fdel " est un pointeur sur fonction."
+.RB "Celle-ci prend en parametre un pointeur " void " qui adresse la valeur"
+.RB "cle et un " size_t " qui donne la taille du tampon contenant la valeur"
+.RI "cle (pour toutes fins utiles). " fdel " ne retourne rien."
+.RI "Une fonction " fdel " bien construite DEVRAIT toujours positionner"
+.BR errno " en fonction du resultat."
+
+.RB "- Pour la fonction " slst_delk ,
+.IR fcmp " est un pointeur sur fonction."
+.RB "Celle-ci prend en parametre deux pointeurs " void " qui adressent les"
+.RB "valeurs cles et deux " size_t " qui donnent les tailles des tampons"
+.R contenant les valeurs cles.
+.RB "Le premier pointeur sur " void " et le premier " size_t " sont ceux de"
+.RB "la valeur de reference (celle passe en parametre d'appel de " slst_delk )
+.RI "et les seconds sont ceux de l'element de la liste " lst
+.R en cours de comparaison avec la valeur de reference.
+.IR fcmp " doit retourne un entier positif si la valeur de reference est"
+.RI "supperieur a la valeur dans la liste " lst ", un entier negatif si la"
+.RI "valeur de reference est inferieur a la valeur dans la liste " lst " et 0"
+.R si les deux valeurs sont egales. Notez que les deux valeurs n'ont pas besoin
+.RI "d'etres strictement egales pour que " fcmp " considere que se soit le cas."
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_get "(3), " slst_put (3)
