@@ -1,0 +1,110 @@
+.\"
+.\" Manpage of slst_put, slst_putn function for Undefined-C library
+.\"
+.\" Created: 15/01/17 by Juillard Jean-Baptiste
+.\" Updated: 31/01/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_PUT 3 "02/01/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_put, slst_putn
+.RB "	- Ajoute une valeur cle a une liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+
+.BI "slst_t      *slst_put(slst_t " **lst ", void " *key ", size_t " size );
+.br
+.BI "slst_t      *slst_putn(slst_t " **lst ", void " *key ", size_t " size ,
+.BI "size_t " n );
+
+.SH DESCRIPTION
+.B slst_put
+.RB "alloue avec " malloc "(3) un nouveau maillon puis met la valeur cle a"
+.IR key " et sa taille a " size .
+.RI "Ce nouveau maillon est ensuite place en tete de la liste " lst .
+.IR lst ", " key " et " size " doivent etres des arguments valides tels qu'ils"
+.RB "sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_put
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_putn
+.RB "alloue avec " malloc "(3) un nouveau maillon puis met la valeur cle a"
+.IR key " et sa taille a " size .
+.RI "Ce nouveau maillon est ensuite place a la " n "-ieme position, en partant"
+.RI "de 1, de la liste " lst .
+.IR lst ", " key ", " size " et " n " doivent etres des arguments valides tels"
+.RB "qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_putn
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.BR slst_put " retourne un pointeur sur le nouveau maillon (la nouvelle tete de"
+.R liste) ou NULL en cas d'erreur.
+
+.BR slst_putn " retourne un pointeur sur le nouveau maillon ou NULL en cas"
+.RI "d'erreur. Si et seulement si " n "=1 alors le nouveau maillon est aussi"
+.R la nouvelle tete de liste.
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.RB "La fonction (" slst_put " ou " slst_putn ") a ete appele avec un (ou des)"
+.R parametre(s) invalide(s).
+
+.TP
+.B ENOMEM
+.RB "Si une erreur d'allocation se produit, " errno " DEVRAIT etre mis a"
+.BR ENOMEM " par " malloc "(3). Si ce n'est pas le cas, alors " errno
+.RB "sera mis a " ENOMEM " par " slst_put " ou " slst_putn .
+.TP
+.B ERANGE
+.RB "Dans la fonction " slst_putn ,
+.RI "si la taille de la liste " lst " est inferieur a (" n " - 1) alors le"
+.RI "maillon ne peut etre ajoute a la " n "-ieme position,"
+.BR errno " est mis a " ERANGE .
+
+.SH NOTES
+.RI "- Pour toutes les fonctions, " lst " doit etre different de"
+.RI "((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RI "- Pour toutes les fonctions, " key " doit pointer un objet valide"
+.R (!= NULL).
+
+.RI "- Pour toutes les fonctions, " size " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.RB "- Dans la fonction " slst_putn ,
+.IR n " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_get "(3), " slst_nsrt (3)

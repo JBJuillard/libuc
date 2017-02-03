@@ -1,0 +1,154 @@
+.\"
+.\" Manpage of slst_nsrt, slst_nsrtn, slst_nsrtp, slst_nsrtk function
+.\" for Undefined-C library
+.\"
+.\" Created: 15/01/17 by Juillard Jean-Baptiste
+.\" Updated: 31/01/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_NSRT 3 "15/01/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_nsrt, slst_nsrtn, slst_nsrtp, slst_nsrtk
+.RB "	- Insere un maillon dans une liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "slst_t      *slst_nsrt(slst_t " **lst ", slst_t " *elm );
+.br
+.BI "slst_t      *slst_nsrtn(slst_t " **lst ", slst_t " *elm ", size_t " n );
+.br
+.BI "slst_t      *slst_nsrtp(slst_t " **lst ", slst_t " *elm ", slst_t " *ptr );
+.br
+.BI "slst_t      *slst_nsrtk(slst_t " **lst ", slst_t " *elm ", const void"
+.IB *key ", const size_t " size ", int (" *fcmp ")(const void *,"
+.B const size_t, const void *, const size_t));
+
+
+.SH DESCRIPTION
+.B slst_nsrt
+.RI "ajoute le maillon " elm " en tete de liste " lst .
+.IR lst " et " elm " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_nsrt
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_nsrtn
+.RI "ajoute le maillon " elm " a la " n "-ieme position, en partant de 1,"
+.RI "de la liste " lst .
+.IR lst ", " elm " et " n " doivent etres des arguments valides tels qu'ils"
+.RB "sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_nsrtn
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_nsrtp
+.RI "ajoute le maillon " elm " dans la liste " lst ", celui-ci est place avant"
+.RI "le maillon " ptr ". L'operation ne s'effectue que si " ptr " fait partie"
+.RI "de la liste " lst .
+.IR lst ", " elm " et " ptr " doivent etres des arguments valides tels qu'ils"
+.RB "sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_nsrtp
+.RB "tel que decrit dans la section " ERREURS .
+
+.BR slst_nsrtk
+.RI "ajoute le maillon " elm " dans la liste " lst ", celui-ci est place avant"
+.RI "le maillon correspondant a " key " et " size " en fonction de " fcmp .
+.RI "L'operation ne s'effectue que si une correspondance est trouve dans la"
+.RI "liste " lst .
+.IR lst ", " elm ", " key ", " size " et " fcmp " doivent etres des arguments"
+.RB "valides tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_nsrtk
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_nsrt
+.RI "retourne " elm " ou NULL en cas d'erreur."
+
+.BR slst_nsrtn
+.RI "retourne " elm " ou NULL en cas d'erreur."
+
+.BR slst_nsrtp
+.RI "retourne " elm " ou NULL en cas d'erreur."
+
+.BR slst_nsrtk
+.RI "retourne " elm " ou NULL en cas d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.RB "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+.TP
+.B ERANGE
+.RB "Dans la fonction " slst_nsrtn ,
+.RI "si la taille de la liste " lst " est inferieur a (" n " - 1) alors le"
+.RI "maillon ne peut etre ajoute de la " n "-ieme position,"
+.BR errno " est mis a " ERANGE .
+.RB "Dans les fonctions " slst_nsrtp " et " slst_nsrtk ,
+.R "si le maillon recherche ne figure pas dans la liste,"
+.BR errno " est mis a " ERANGE .
+
+.SH NOTES
+.RI "- Pour toutes les fonctions, " lst " doit etre different de"
+.RI "((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RI "- Dans toutes les fonctions " elm " doit pointer vers un maillon valide"
+.RB "(non-NULL). Son champ " key " doit etre definit a une valeurs non-NULL,"
+.RB "son champ " size " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX " (definit dans "
+.IR /usr/include/stdint.h ") et son champ " next " doit etre a NULL."
+
+.RB "- Dans la fonction " slst_nsrtn ,
+.IR n " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.RB "- Dans la fonction " slst_nsrtp ,
+.IR ptr " doit pointer vers un maillon valide (non-NULL)."
+
+.RB "- Dans la fonction " slst_nsrtk ,
+.IR key " doit etres non-NULL et " size " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.RB "- Pour la fonction " slst_nsrtk ,
+.IR fcmp " est un pointeur vers une fonction de comparaison."
+.RB "Celle-ci prend en parametre deux pointeurs " void " qui adressent les"
+.RB "valeurs cles et deux " size_t " qui donnent les tailles des tampons"
+.R contenant les valeurs cles.
+.RB "Le premier pointeur sur " void " et le premier " size_t " sont ceux de"
+.RB "la valeur de reference (celle passe en parametre d'appel de " slst_nsrtk )
+.RI "et les seconds sont ceux du maillon de la liste " lst
+.R en cours de comparaison avec la valeur de reference.
+.IR fcmp " doit retourne un entier positif si la valeur de reference est"
+.RI "supperieur a la valeur dans la liste " lst ", un entier negatif si la"
+.RI "valeur de reference est inferieur a la valeur dans la liste " lst " et 0"
+.R si les deux valeurs sont egales. Notez que les deux valeurs n'ont pas besoin
+.RI "d'etres strictement egales pour que " fcmp " considere que se soit le cas."
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_get "(3), " slst_put "(3), " slst_xtrc (3)

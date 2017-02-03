@@ -20,6 +20,7 @@
 # Floor, Boston, MA 02110-1301, USA.
 #
 
+
 # Default value
 SHELL = /bin/sh
 override EMPTY :=
@@ -27,13 +28,16 @@ CD := $(shell pwd)
 .DEFAULT_GOAL := help
 prefix = /usr/local
 
+
 # Flags for recursive call of make
 MFLAGS_DEFAULT := --no-print-directory --warn-undefined-variables
 MFLAGS := $(EMPTY)
 override MFLAGS += $(filter-out $(MAKEFLAGS),$(MFLAGS_DEFAULT))
 
+
 # Project
 NAME = uc
+
 
 # Default directory name
 SRC_PATH = src
@@ -49,20 +53,25 @@ LOG_PATH = log
 UTILS_PATH = utils
 EXAMPLES_PATH = examples
 
+
 # Source files
 SRC =	slst_new.c \
 		slst_delelm.c \
 		slst_put.c slst_putn.c \
 		slst_get.c slst_getn.c \
 		slst_del.c slst_deln.c slst_delp.c slst_delk.c \
-		slst_purge.c
+		slst_purge.c \
+		slst_nsrt.c slst_nsrtn.c slst_nsrtp.c slst_nsrtk.c \
+		slst_xtrc.c slst_xtrcn.c slst_xtrcp.c slst_xtrck.c
 SRC_FULLPATH = $(addprefix $(SRC_PATH)/,$(SRC))
+
 
 # Include files
 INC =	stdlst.h
 INC_FULLPATH = $(addprefix $(INC_PATH)/,$(INC))
 INC_INSTALLPATH = $(prefix)/include
 INC_INSTALLFULLPATH = $(addprefix $(INC_INSTALLPATH)/,$(INC))
+
 
 # Assembly files
 #
@@ -73,18 +82,17 @@ ASM_DIALECT = att
 ASM = $(patsubst %.c,%.$(ASM_EXTENSION),$(SRC))
 ASM_FULLPATH = $(addprefix $(ASM_PATH)/,$(ASM))
 
+
 # Object files
 OBJ = $(patsubst %.c,%.o,$(SRC))
 OBJ_FULLPATH = $(addprefix $(OBJ_PATH)/,$(OBJ))
+
 
 # Static Library
 A_NAME = lib$(NAME).a
 A_PATH = $(LIB_PATH)
 A_FULLPATH = $(addprefix $(A_PATH)/,$(A_NAME))
-A_ARCH = ar
-A_ARCH_FLAGS = -rc
-A_LD = ranlib
-A_LD_FLAGS = -t
+
 
 # Dynamic Library
 SO_MAJOR_VERSION = $(shell cat VERSION | tr -d "$$IFS" | awk 'BEGIN {FS="."} END {print $$1}')
@@ -98,6 +106,7 @@ SO_FULLPATH = $(SO_PATH)/$(SO_FULLNAME)
 SO_INSTALLPATH = $(prefix)/lib
 SO_INSTALLFULLPATH =	$(SO_INSTALLPATH)/$(SO_FULLNAME)
 
+
 # Manpages and documentation
 MAN_SECTION = 3
 MAN =	$(patsubst %.c,%.$(MAN_SECTION),$(SRC))
@@ -109,6 +118,7 @@ MAN_INSTALLPATH_PDF = $(MAN_INSTALLPATH)/pdf$(MAN_SECTION)
 MAN_INSTALLPATH_PS = $(MAN_INSTALLPATH)/ps$(MAN_SECTION)
 MAN_INSTALLFULLPATH_MAN = $(addprefix $(MAN_INSTALLPATH_MAN)/,$(MAN))
 
+
 # Variables overriding filter
 OVERRIDES_FILTER =	OPTIMIZATION_LEVEL=% \
 					CFLAGS=% \
@@ -118,6 +128,7 @@ OVERRIDES_FILTER =	OPTIMIZATION_LEVEL=% \
 					A_PATH=% \
 					SO_PATH=%
 
+
 # Debugging
 DBG_OVERRIDES =	"OPTIMIZATION_LEVEL=g" \
 				"CFLAGS=$(CFLAGS)  $(filter-out $(CFLAGS),$(CFLAGS_DEBUG))" \
@@ -126,6 +137,7 @@ DBG_OVERRIDES =	"OPTIMIZATION_LEVEL=g" \
 				"ASM_PATH=$(DBG_PATH)/$(ASM_PATH)" \
 				"LIB_PATH=$(DBG_PATH)/$(LIB_PATH)"
 DBG_OVERRIDES += $(filter-out $(OVERRIDES_FILTER),$(MAKEOVERRIDES))
+
 
 # Test
 TEST = $(patsubst %.c,%,$(SRC))
@@ -201,7 +213,7 @@ MAKEINFO_OUTPUT_PS =  --ps
 # BISON = bison
 # FLEX = flex
 # LEX = lex
-# TEXT2DVI =texi2dvi
+# TEXT2DVI = texi2dvi
 # YACC = yacc
 
 
@@ -220,8 +232,8 @@ INSTALLFLAGS_FILETARGET = -T
 # Memory error detector
 MEMCHK = /usr/bin/valgrind
 MEMCHKFLAGS = -v --leak-check=full --leak-check-heuristics=all --track-origins=yes --show-leak-kinds=all
-MEMCHK_EXITCODE = 1
-MEMCHKFLAGS += --error-exitcode=$(MEMCHK_EXITCODE)
+override MEMCHK_EXITCODE = 1
+override MEMCHKFLAGS += --error-exitcode=$(MEMCHK_EXITCODE)
 MEMCHKFLAGS_LOG = --log-file=
 
 
@@ -234,6 +246,7 @@ TIMEFLAGS = $(EMPTY)
 TIMEOUT = /usr/bin/timeout
 TIMEOUT_DELAY = 1
 
+
 # Bin Utils
 CPY = /bin/cp
 CPY_FLAGS = -uv
@@ -245,6 +258,11 @@ MD_FLAGS = -pv
 LN = /bin/ln
 LN_SLNKFLAGS = -sf
 CHMOD = /bin/chmod
+
+
+# Git
+GIT_URL = https://github.com/JBJuillard/libuc.git
+
 
 # Protect phony rules
 .PHONY:	help \
@@ -269,6 +287,7 @@ CHMOD = /bin/chmod
 			.so.$(SO_MAJOR_VERSION).$(SO_MINOR_VERSION).$(SO_RELEASE_VERSION) \
 			.$(MAN_SECTION) .html .dvi .pdf .ps \
 			.conf
+
 
 # ====================
 # Standart target
@@ -469,7 +488,6 @@ $(TEST_PATH)/$(BIN_PATH)/%: TEST_MAINFILE += $(TEST_PATH)/$(SRC_PATH)/ut_$(*F).c
 $(TEST_PATH)/$(BIN_PATH)/%: TEST_MAINFILE += $(TEST_PATH)/$(SRC_PATH)/extra.c
 $(TEST_PATH)/$(BIN_PATH)/%: $(TEST_PATH)/$(SRC_PATH)/ut_%.c
 	$(CC) $(CFLAGS) $(addprefix $(CFLAGS_MACRO),$(CMACRO)) $(CFLAGS_OUTPUT) $@ $(TEST_MAINFILE)
-
 $(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)
 $(TEST_SUCCESSFILE_FULLPATH): | check-prompt
 $(TEST_PATH)/$(LOG_PATH):
@@ -515,9 +533,10 @@ $(TEST_PATH)/$(LOG_PATH)/%.log: $(TEST_PATH)/$(BIN_PATH)/% $(SRC_PATH)/%.c $(TES
 	/usr/bin/tail -n +$$MEMCHK_LINE $(@D)/$(*F).memchk | /bin/sed -E s/==\[0-9\]+==\ */\	/ >> $@ ; \
 	/bin/rm $(@D)/$(*F).memchk ; \
 	echo "\n\nExecution time and timeout test:\n" >> $@ ; \
-	/bin/cat $(@D)/$(*F).time | /usr/bin/awk 'BEGIN {FS="\n";ORS=""} {print "\t";print $1;print "\n"}' >> $@ ; \
+	/bin/cat $(@D)/$(*F).time | /usr/bin/awk 'BEGIN {FS="\n";ORS=""} {print "\t";print $$1;print "\n"}' >> $@ ; \
 	echo "\tTimeout don't occur." >> $@ ; \
 	/bin/rm $(@D)/$(*F).time
+
 
 # Installation rules
 $(MAN_INSTALLPATH_MAN)/%: INSTALLFLAGS += $(INSTALLFLAGS_MODE)$(INSTALLFLAGS_FILEACLS)
@@ -526,6 +545,12 @@ $(MAN_INSTALLPATH_MAN)/%: man/man$(MAN_SECTION)/%
 	$(INSTALL) $(INSTALLFLAGS) $(INSTALLFLAGS_FILETARGET) $< $@
 $(MAN_INSTALLPATH_MAN):
 	@$(MD) $(MD_FLAGS) $@
+$(MAN_INSTALLPATH_MAN)/slst_putn.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_put.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_getn.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_get.$(MAN_SECTION) $(@F)
 $(MAN_INSTALLPATH_MAN)/slst_deln.$(MAN_SECTION):
 	@cd $(MAN_INSTALLPATH_MAN) ; \
 	$(LN) $(LN_SLNKFLAGS) slst_del.$(MAN_SECTION) $(@F)
@@ -535,14 +560,21 @@ $(MAN_INSTALLPATH_MAN)/slst_delk.$(MAN_SECTION):
 $(MAN_INSTALLPATH_MAN)/slst_delp.$(MAN_SECTION):
 	@cd $(MAN_INSTALLPATH_MAN) ; \
 	$(LN) $(LN_SLNKFLAGS) slst_del.$(MAN_SECTION) $(@F)
-
+$(MAN_INSTALLPATH_MAN)/slst_nsrtn.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_nsrt.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_nsrtp.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_nsrt.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_nsrtk.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_nsrt.$(MAN_SECTION) $(@F)
 $(INC_INSTALLPATH)/%: INSTALLFLAGS += $(INSTALLFLAGS_MODE)$(INSTALLFLAGS_FILEACLS)
 $(INC_INSTALLPATH)/%: | $(INC_INSTALLPATH)
 $(INC_INSTALLPATH)/%: $(INC_PATH)/%
 	$(INSTALL) $(INSTALLFLAGS) $(INSTALLFLAGS_FILETARGET) $< $@
 $(INC_INSTALLPATH):
 	@$(MD) $(MD_FLAGS) $@
-
 $(SO_INSTALLPATH)/%: INSTALLFLAGS += $(INSTALLFLAGS_MODE)$(INSTALLFLAGS_EXECFILEACLS)
 $(SO_INSTALLPATH)/%: | $(SO_INSTALLPATH)
 $(SO_INSTALLPATH)/%: $(SO_PATH)/%

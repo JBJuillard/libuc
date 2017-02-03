@@ -88,12 +88,12 @@ slst_t		*slst_rrch(slst_t **lst, const void *key, const size_t size, int (*f)(co
 size_t		slst_xrch(slst_t **lst, const void *key, const size_t size, mslst_t **match, int (*f)(const void *, const size_t, const void *, const size_t));
 size_t		slst_xrrch(slst_t **lst, const void *key, const size_t size, mslst_t **match, int (*f)(const void *, const size_t, const void *, const size_t));
 
-int		slst_cmp(slst_t **lst1, slst_t **ptr1, slst_t **lst2, slst_t **ptr2, int (*f)(const void *, const size_t, const void *, const size_t));
-int		slst_rcmp(slst_t **lst1, slst_t **ptr1, slst_t **lst2, slst_t **ptr2, int (*f)(const void *, const size_t, const void *, const size_t));
+int			slst_cmp(slst_t **lst1, slst_t **ptr1, slst_t **lst2, slst_t **ptr2, int (*f)(const void *, const size_t, const void *, const size_t));
+int			slst_rcmp(slst_t **lst1, slst_t **ptr1, slst_t **lst2, slst_t **ptr2, int (*f)(const void *, const size_t, const void *, const size_t));
 size_t		slst_diff(slst_t **lst1, mslst_t **diff1, slst_t **lst2, mslst_t **diff2, int (*f)(const void *, const size_t, const void *, const size_t));
 size_t		slst_rdiff(slst_t **lst1, mslst_t **diff1, slst_t **lst2, mslst_t **diff2, int (*f)(const void *, const size_t, const void *, const size_t));
 
-int		slst_isempty(slst_t **lst);
+int			slst_isempty(slst_t **lst);
 size_t		slst_length(slst_t **lst);
 slst_t		*slst_previous(slst_t **lst, slst_t *elm);
 slst_t		*slst_next(slst_t **lst, slst_t *elm);
@@ -103,7 +103,7 @@ slst_t		*slst_copy(slst_t **lst, void *(*f)(const void *, size_t));
 slst_t		*slst_rcopy(slst_t **lst, void *(*f)(const void *, size_t));
 slst_t		*slst_reverse(slst_t **lst);
 slst_t		*slst_concat(slst_t **lst1, slst_t **lst2);
-int		slst_apply(slst_t **lst, int (*f)(void **, size_t *));
+int			slst_apply(slst_t **lst, int (*f)(void **, size_t *));
 slst_t		*slst_ksplit(slst_t **lst, const void *key,  const size_t size, int (*f)(const void *, const size_t, const void *, const size_t));
 slst_t		*slst_nsplit(slst_t **lst, size_t n);
 slst_t		*slst_psplit(slst_t **lst, slst_t *elm);

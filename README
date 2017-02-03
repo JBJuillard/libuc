@@ -1,1 +1,12 @@
 Work in progress ...
+
+libuc provide some functions for deployment of efficent algorythms.
+
+For more information, you can see manpages using the following command:
+
+	cd man
+	./lman [3] <manpages>
+
+Because the project is in devellopement, manpages is only in french.
+The translation has been maked when the work has finish.
+Sorry for this inconvenient.
