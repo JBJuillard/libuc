@@ -1,8 +1,23 @@
 /*
-** Test for slst_xtrck function of Undefined-C library
+** ut_slst_xtrck function for Undefined-C library
 **
-** Created: 17/01/2017 10:00:00 by Juillard Jean-Baptiste
-** Updated: 17/01/2017 10:00:00 by Juillard Jean-Baptiste
+** Created: 17/01/2017 by Juillard Jean-Baptiste
+** Updated: 02/03/2017 by Juillard Jean-Baptiste
+**
+** This file is a part free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License as
+** published by the Free Software Foundation; either version 3, or
+** (at your option) any later version.
+** 
+** There is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** General Public License for more details.
+** 
+** You should have received a copy of the GNU General Public License
+** along with this program; see the file LICENSE.  If not, write to
+** the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+** Floor, Boston, MA 02110-1301, USA.
 */
 
 #include <stdlib.h>
@@ -10,65 +25,73 @@
 #include "stdlst.h"
 #include "test.h"
 
-typedef struct	test_s
+typedef struct			test_s
 {
-	int	lst;
-	int	key;
-	size_t	size;
-	void	*f;
-	int	err;
-}		test_t;
+	int					lst;
+	int					key;
+	unsigned long long	size;
+	void				*f;
+	int					err;
+	int					returnNULLptr;
+}						test_t;
 
 
 int	ut_slst_xtrck_interface(int N)
 {
-	slst_t		*lst;
-	slst_t		**lptr;
-	void		*key;
-	int		err;
-	int		i;
-	static test_t	ut_list[7] = {	{ 0, 1, sizeof(long long), ((void *)(&_ocmp)), EINVAL },
-					{ 1, 0, sizeof(long long), ((void *)(&_ocmp)), EINVAL },
-					{ 1, 1, 0, ((void *)(&_ocmp)), EINVAL },
-					{ 1, 1, (SIZE_MAX + 1), ((void *)(&_ocmp)), EINVAL },
-					{ 1, 1, sizeof(long long), NULL, EINVAL },
-					{ 1, 1, sizeof(long long), ((void *)(&_ocmp)), 0 },
-					{ 1, 1, sizeof(long long), ((void *)(&_ocmp)), 0 }};
+	slst_t			*lst;
+	slst_t			**lptr;
+	void			*key;
+	slst_t			*ret;
+	int				err;
+	int				i;
+	int				j;
+	/*
+	**									lst	key	size				f					err		returnNULLptr
+	*/
+	static test_t	ut_list[6] = {	{	0,	1,	sizeof(long long),	((void *)(&_ocmp)),	EINVAL,	1 },
+									{	1,	0,	sizeof(long long),	((void *)(&_ocmp)), EINVAL,	1 },
+									{	1,	1,	0,					((void *)(&_ocmp)), EINVAL,	1 },
+									{	1,	1,	(SIZE_MAX + 1),		((void *)(&_ocmp)), EINVAL,	1 },
+									{	1,	1,	sizeof(long long),	NULL,				EINVAL,	1 },
+									{	1,	1,	sizeof(long long),	((void *)(&_ocmp)), 0,		0 }};
 
 	i = 0;
 	err = 0xFF;
-	while (i < 7)
+	while (i < 6)
 	{
-		lst = (slst_t *)(NULL);
+		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+			return (errno);
 		if ((ut_list[i]).lst)
 			lptr = &lst;
 		else
 			lptr = (slst_t **)(NULL);
-	        if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+		j = 0;
+		while (j < N)
 		{
-			if (lst)
-				slst_purge(&lst, &_ofree);
-			return (errno);
-		}
-		if ((ut_list[i]).key)
-		{
-			if ((key = malloc(sizeof(long long))) == NULL)
+			if ((ut_list[i]).key)
+				key = lst->key;
+			else
+				key = NULL;
+			errno = 0;
+			ret = slst_xtrck(lptr, key, (ut_list[i]).size, (int (*)(const void *, const size_t, const void *, const size_t))((ut_list[i]).f));
+			if (errno != (ut_list[i]).err
+				|| (!ret && !(ut_list[i]).returnNULLptr)
+				|| (ret && (ut_list[i]).returnNULLptr))
 			{
+				if (ret)
+				{
+					free(ret->key);
+					free((void *)(ret));
+				}
 				slst_purge(&lst, &_ofree);
-				return (errno);
+				return (err);
 			}
-			*((long long *)(key)) = (N / 2);
-		}
-		else
-			key = NULL;
-		errno = 0;
-		slst_xtrck(lptr, key, (ut_list[i]).size, (int (*)(const void *, const size_t, const void *, const size_t))((ut_list[i]).f));
-		if (key)
-			free(key);
-		if (errno != (ut_list[i]).err)
-		{
-			slst_purge(&lst, &_ofree);
-			return (err);
+			if (ret)
+			{
+				free(ret->key);
+				free((void *)(ret));
+			}
+			j++;
 		}
 		slst_purge(&lst, &_ofree);
 		i++;

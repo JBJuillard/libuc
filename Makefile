@@ -2,7 +2,7 @@
 # Makefile for Undefined-C library
 #
 # Created: 01/29/2017 by Juillard Jean-Baptiste
-# Updated: 01/29/2017 by Juillard Jean-Baptiste
+# Updated: 02/03/2017 by Juillard Jean-Baptiste
 #
 # This file is a part of free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as

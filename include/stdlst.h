@@ -2,7 +2,7 @@
 ** Header file for stdlst sudset of Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 01/31/2017 by Juillard Jean-Baptiste
+** Updated: 02/03/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part of free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -72,16 +72,14 @@ void		slst_deln(slst_t **lst, size_t n, void (*fdel)(void *, size_t));
 void		slst_delp(slst_t **lst, slst_t *ptr, void (*fdel)(void *, size_t));
 void		slst_delk(slst_t **lst, const void *key, const size_t size, int (*fcmp)(const void *, const size_t, const void *, const size_t), void (*fdel)(void *, size_t));
 void		slst_purge(slst_t **lst, void (*fdel)(void *, size_t));
-
 slst_t		*slst_nsrt(slst_t **lst, slst_t *elm);
 slst_t		*slst_nsrtn(slst_t **lst, slst_t *elm, size_t n);
 slst_t		*slst_nsrtp(slst_t **lst, slst_t *elm, slst_t *ptr);
 slst_t		*slst_nsrtk(slst_t **lst, slst_t *elm, const void *key, const size_t size, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-
 slst_t		*slst_xtrc(slst_t **lst);
 slst_t		*slst_xtrcn(slst_t **lst, size_t n);
 slst_t		*slst_xtrcp(slst_t **lst, slst_t *ptr);
-slst_t		*slst_xtrck(slst_t **lst, const void *key, const size_t size, int (*f)(const void *, const size_t, const void *, const size_t));
+slst_t		*slst_xtrck(slst_t **lst, const void *key, const size_t size, int (*fcmp)(const void *, const size_t, const void *, const size_t));
 
 slst_t		*slst_rch(slst_t **lst, const void *key, const size_t size, int (*f)(const void *, const size_t, const void *, const size_t));
 slst_t		*slst_rrch(slst_t **lst, const void *key, const size_t size, int (*f)(const void *, const size_t, const void *, const size_t));

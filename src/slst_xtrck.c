@@ -2,7 +2,7 @@
 ** slst_xtrck function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/02/2017 by Juillard Jean-Baptiste
+** Updated: 02/03/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -31,13 +31,17 @@
 
 #include	"stdlst.h"
 
-slst_t		*slst_xtrck(slst_t **lst, const void *key, const size_t size, int (*fcmp)(const void *, const size_t, const void *, const size_t))
+slst_t		*slst_xtrck(	slst_t **lst,
+							const void *key,
+							const size_t size,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t))
 {
 	register slst_t	*tmp;
 	register slst_t	**addr;
 
 	errno = 0;
-	if (!lst || !key || !size || size > SIZE_MAX || !f)
+	if (!lst || !key || !size || size > SIZE_MAX || !fcmp)
 	{
 #if defined(DEBUG) && (DEBUG == 1)
 		assert(EINVAL);
@@ -51,7 +55,8 @@ slst_t		*slst_xtrck(slst_t **lst, const void *key, const size_t size, int (*fcmp
 	addr = lst;
 	while (tmp)
 	{
-		if (!(*fcmp)(key, size, (const void *)(tmp->key) , (const size_t)(tmp->size)))
+		if (!(*fcmp)(	key, size,
+						(const void *)(tmp->key), (const size_t)(tmp->size)))
 		{
 			*addr = tmp->next;
 			tmp->next = (slst_t *)(NULL);
