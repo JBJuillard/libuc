@@ -62,7 +62,12 @@ SRC =	slst_new.c \
 		slst_del.c slst_deln.c slst_delp.c slst_delk.c \
 		slst_purge.c \
 		slst_nsrt.c slst_nsrtn.c slst_nsrtp.c slst_nsrtk.c \
-		slst_xtrc.c slst_xtrcn.c slst_xtrcp.c slst_xtrck.c
+		slst_xtrc.c slst_xtrcn.c slst_xtrcp.c slst_xtrck.c \
+		slst_rch.c slst_rrch.c slst_xrch.c slst_rxrch.c \
+		slst_cmp.c slst_rcmp.c slst_diff.c slst_rdiff.c \
+		slst_map.c \
+		\
+		mslst_purge.c
 SRC_FULLPATH = $(addprefix $(SRC_PATH)/,$(SRC))
 
 
@@ -329,7 +334,7 @@ help:
 make: make-obj $(SO_FULLPATH)
 make-asm: $(ASM_FULLPATH)
 make-obj: $(OBJ_FULLPATH)
-make-a: make-obj
+make-a: make-obj | $(A_PATH)
 	$(AR) $(ARFLAGS) $(A_FULLPATH) $(OBJ_FULLPATH)
 	$(RANLIB) $(RANLIBFLAGS) $(A_FULLPATH)
 
@@ -569,6 +574,21 @@ $(MAN_INSTALLPATH_MAN)/slst_nsrtp.$(MAN_SECTION):
 $(MAN_INSTALLPATH_MAN)/slst_nsrtk.$(MAN_SECTION):
 	@cd $(MAN_INSTALLPATH_MAN) ; \
 	$(LN) $(LN_SLNKFLAGS) slst_nsrt.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_xtrcn.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_xtrc.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_xtrcp.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_xtrc.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_xtrck.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_xtrc.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_rrch.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_rch.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_rxrch.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_xrch.$(MAN_SECTION) $(@F)
 $(INC_INSTALLPATH)/%: INSTALLFLAGS += $(INSTALLFLAGS_MODE)$(INSTALLFLAGS_FILEACLS)
 $(INC_INSTALLPATH)/%: | $(INC_INSTALLPATH)
 $(INC_INSTALLPATH)/%: $(INC_PATH)/%

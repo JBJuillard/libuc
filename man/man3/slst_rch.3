@@ -1,0 +1,107 @@
+.\"
+.\" Manpage of slst_rch and slst_rrch function for Undefined-C library
+.\"
+.\" Created: 02/03/17 by Juillard Jean-Baptiste
+.\" Updated: 02/03/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_RCH 3 "02/05/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_rch, slst_rrch
+.RB "	- Recherche une valeur cle dans une liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "slst_t      *slst_rch(slst_t " **lst ", const void"
+.IB *key ", const size_t " size ", int (" *fcmp ")(const void *,"
+.B const size_t, const void *, const size_t));
+.br
+.BI "slst_t      *slst_rrch(slst_t " **lst ", const void"
+.IB *key ", const size_t " size ", int (" *fcmp ")(const void *,"
+.B const size_t, const void *, const size_t));
+
+
+.SH DESCRIPTION
+.B slst_rch
+.RI "recherche la premiere occurence de la valeur cle correspondant a " key
+.RI "et " size " en fonction de " fcmp " dans la liste " lst .
+.IR lst ", " key ", " size " et " fcmp " doivent etres des arguments valides"
+.RB "tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_rch
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_rrch
+.RI "recherche la derniere occurence de la valeur cle correspondant a " key
+.RI "et " size " en fonction de " fcmp " dans la liste " lst .
+.IR lst ", " key ", " size " et " fcmp " doivent etres des arguments valides"
+.RB "tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_rch
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_rch
+.RI "retourne un pointeur sur le maillon trouve. Si une erreur se produit ou si"
+.RB "aucune correspondance n'est trouve, " slst_rch " retourne NULL."
+
+.BR slst_rrch
+.RI "retourne un pointeur sur le maillon trouve. Si une erreur se produit ou si"
+.RB "aucune correspondance n'est trouve, " slst_rrch " retourne NULL."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.RB "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+
+.SH NOTES
+.RI "- Pour toutes les fonctions, " lst " doit etre different de"
+.RI "((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.R "- Pour toutes les fonctions,"
+.IR key " doit etres non-NULL et " size " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.R "- Pour toutes les fonctions,"
+.IR fcmp " est un pointeur vers une fonction de comparaison."
+.RB "Celle-ci prend en parametre deux pointeurs " void " qui adressent les"
+.RB "valeurs cles et deux " size_t " qui donnent les tailles des tampons"
+.R contenant les valeurs cles.
+.RB "Le premier pointeur sur " void " et le premier " size_t " sont ceux de"
+.RB "la valeur de reference (celle passe en parametre d'appel de " slst_rch
+.RB "ou de " slst_rrch )
+.RI "et les seconds sont ceux du maillon de la liste " lst
+.R en cours de comparaison avec la valeur de reference.
+.IR fcmp " doit retourne un entier positif si la valeur de reference est"
+.RI "supperieur a la valeur dans la liste " lst ", un entier negatif si la"
+.RI "valeur de reference est inferieur a la valeur dans la liste " lst " et 0"
+.R si les deux valeurs sont egales. Notez que les deux valeurs n'ont pas besoin
+.RI "d'etres strictement egales pour que " fcmp " considere que se soit le cas."
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_xrch "(3), " slst_cmp "(3), " slst_diff (3)

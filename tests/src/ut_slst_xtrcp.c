@@ -1,5 +1,5 @@
 /*
-** ut_slst_xtrcp function for Undefined-C library
+** Units tests of slst_xtrcp function for Undefined-C library
 **
 ** Created: 17/01/2017 by Juillard Jean-Baptiste
 ** Updated: 02/03/2017 by Juillard Jean-Baptiste

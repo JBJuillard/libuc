@@ -1,5 +1,5 @@
 /*
-** Units tests of slst_xtrck function for Undefined-C library
+** Units tests of slst_rrch function for Undefined-C library
 **
 ** Created: 17/01/2017 by Juillard Jean-Baptiste
 ** Updated: 02/03/2017 by Juillard Jean-Baptiste
@@ -35,8 +35,7 @@ typedef struct			test_s
 	int					returnNULLptr;
 }						test_t;
 
-
-int	ut_slst_xtrck_interface(int N)
+int	ut_slst_rrch_interface(int N)
 {
 	slst_t			*lst;
 	slst_t			**lptr;
@@ -44,7 +43,6 @@ int	ut_slst_xtrck_interface(int N)
 	slst_t			*ret;
 	int				err;
 	int				i;
-	int				j;
 	static test_t	ut_list[6] = {	{0,1,sizeof(long long),((void *)(&_ocmp)),EINVAL,1},
 									{1,0,sizeof(long long),((void *)(&_ocmp)),EINVAL,1},
 									{1,1,0,((void *)(&_ocmp)),EINVAL,1},
@@ -62,34 +60,31 @@ int	ut_slst_xtrck_interface(int N)
 			lptr = &lst;
 		else
 			lptr = (slst_t **)(NULL);
-		j = 0;
-		while (j < N)
+	    if ((ut_list[i]).key)
 		{
-			if ((ut_list[i]).key)
-				key = lst->key;
-			else
-				key = NULL;
-			errno = 0;
-			ret = slst_xtrck(lptr, key, (ut_list[i]).size, (int (*)(const void *, const size_t, const void *, const size_t))((ut_list[i]).f));
-			if (errno != (ut_list[i]).err
-				|| (!ret && !(ut_list[i]).returnNULLptr)
-				|| (ret && (ut_list[i]).returnNULLptr))
+			if ((key = malloc(sizeof(long long))) == NULL)
 			{
-				if (ret)
-				{
-					free(ret->key);
-					free((void *)(ret));
-				}
 				slst_purge(&lst, &_ofree);
-				return (err);
+				return (errno);
 			}
-			if (ret)
-			{
-				free(ret->key);
-				free((void *)(ret));
-			}
-			j++;
+			*((long long *)(key)) = N / 2;
 		}
+		else
+			key = NULL;
+		errno = 0;
+		ret = slst_rrch(lptr, (const void *)(key), (const size_t)((ut_list[i]).size), (int (*)(const void *, const size_t, const void *, const size_t))((ut_list[i]).f));
+		if (errno != (ut_list[i]).err
+			|| (!ret && !(ut_list[i]).returnNULLptr)
+			|| (ret && (ut_list[i]).returnNULLptr)
+			|| (ret && *((long long *)(ret->key)) != *((long long *)(key))))
+		{
+			if (key)
+				free(key);
+			slst_purge(&lst, &_ofree);
+			return (err);
+		}
+		if (key)
+			free(key);
 		slst_purge(&lst, &_ofree);
 		i++;
 		err--;
@@ -97,7 +92,7 @@ int	ut_slst_xtrck_interface(int N)
 	return (0);
 }
 
-int	ut_slst_xtrck_memchk(int N)
+int	ut_slst_rrch_memchk(int N)
 {
 	slst_t	*lst;
 	slst_t	*tmp;
@@ -111,30 +106,21 @@ int	ut_slst_xtrck_memchk(int N)
 			slst_purge(&lst, &_ofree);
 		return (errno);
 	}
-	while (lst && N >= 0)
+	*((long long *)(i)) = N / 2;
+	if (!(tmp = slst_rrch(&lst, i, sizeof(long long), _ocmp)) || errno || *((long long *)(tmp->key)) != (long long)(N / 2))
 	{
-		*((long long *)(i)) = N--;
-		if (!(tmp = slst_xtrck(&lst, i, sizeof(long long), _ocmp)) || errno)
-		{
-			slst_purge(&lst, &_ofree);
-			free(i);
-			if (tmp)
-			{
-				free(tmp->key);
-				free(tmp);
-			}
-			if (errno)
-				return (errno);
-			return (0xFF);
-		}
-		free(tmp->key);
-		free(tmp);
+		slst_purge(&lst, &_ofree);
+		free(i);
+		if (errno)
+			return (errno);
+		return (0xFF);
 	}
+	slst_purge(&lst, &_ofree);
 	free(i);
 	return (0);
 }
 
-int	ut_slst_xtrck_timeout(int N)
+int	ut_slst_rrch_timeout(int N)
 {
-	return (ut_slst_xtrck_memchk(N));
+	return (ut_slst_rrch_memchk(N));
 }

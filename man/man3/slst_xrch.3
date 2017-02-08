@@ -1,0 +1,112 @@
+.\"
+.\" Manpage of slst_xrch and slst_rxrch function for Undefined-C library
+.\"
+.\" Created: 02/03/17 by Juillard Jean-Baptiste
+.\" Updated: 02/03/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_XRCH 3 "02/05/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_xrch, slst_rxrch
+.R "	- Recherche exhaustive de valeur cle dans une liste de type "
+.BR slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "size_t		slst_xrch(slst_t " **lst ", const void"
+.IB *key ", const size_t " size ", mslst_t " **match ,
+.BI "int (" *fcmp ")(const void *, const size_t, const void *, const size_t));"
+.br
+.BI "size_t		slst_rxrch(slst_t " **lst ", const void"
+.IB *key ", const size_t " size ", mslst_t " **match ,
+.BI "int (" *fcmp ")(const void *, const size_t, const void *, const size_t));"
+
+.SH DESCRIPTION
+.BR slst_xrch " recherche dans le sens cursif (du debut vers la fin)"
+.RI "l'ensemble des valeurs cles correspondant a " key
+.RI "et " size " en fonction de " fcmp " dans la liste " lst ,
+.RI "les resultats sont place dans le mappage de liste " match .
+.IR lst ", " key ", " size ", " match " et " fcmp " doivent etres des arguments"
+.RB "valides tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_xrch
+.RB "tel que decrit dans la section " ERREURS .
+
+.BR slst_rxrch " recherche dans le sens recursif (de la fin vers le debut)"
+.RI "l'ensemble des valeurs cles correspondant a " key
+.RI "et " size " en fonction de " fcmp " dans la liste " lst ,
+.RI "les resultats sont place dans le mappage de liste " match .
+.IR lst ", " key ", " size ", " match " et " fcmp " doivent etres des arguments"
+.RB "valides tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_rxrch
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_xrch
+.RI "retourne le nombre d'occurence trouve. Si une erreur se produit ou si"
+.RB "aucune correspondance n'est trouve, " slst_xrch " retourne 0."
+
+.BR slst_rxrch
+.RI "retourne le nombre d'occurence trouve. Si une erreur se produit ou si"
+.RB "aucune correspondance n'est trouve, " slst_rxrch " retourne 0."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.RB "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+
+.SH NOTES
+.RI "- Pour toutes les fonctions, " lst " doit etre different de"
+.RI "((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.R "- Pour toutes les fonctions,"
+.IR key " doit etres non-NULL et " size " doit etre different de 0"
+.RB "et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.RI "- Pour toutes les fonctions, " match " doit etre different de"
+.RI "((mslst_t **)(NULL)) et " *match " egale a ((mslst_t *)(NULL))."
+
+.R "- Pour toutes les fonctions,"
+.IR fcmp " est un pointeur vers une fonction de comparaison."
+.RB "Celle-ci prend en parametre deux pointeurs " void " qui adressent les"
+.RB "valeurs cles et deux " size_t " qui donnent les tailles des tampons"
+.R contenant les valeurs cles.
+.RB "Le premier pointeur sur " void " et le premier " size_t " sont ceux de"
+.RB "la valeur de reference (celle passe en parametre d'appel de " slst_xrch
+.RB "ou de " slst_rxrch )
+.RI "et les seconds sont ceux du maillon de la liste " lst
+.R en cours de comparaison avec la valeur de reference.
+.IR fcmp " doit retourne un entier positif si la valeur de reference est"
+.RI "supperieur a la valeur dans la liste " lst ", un entier negatif si la"
+.RI "valeur de reference est inferieur a la valeur dans la liste " lst " et 0"
+.R si les deux valeurs sont egales. Notez que les deux valeurs n'ont pas besoin
+.RI "d'etres strictement egales pour que " fcmp " considere que se soit le cas."
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " mslst_t "(3), " slst_rch "(3), " slst_cmp "(3), " slst_diff (3)

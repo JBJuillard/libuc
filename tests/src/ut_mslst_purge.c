@@ -1,5 +1,5 @@
 /*
-** Units tests of slst_purge function for Undefined-C library
+** Units tests of mslst_purge function for Undefined-C library
 **
 ** Created: 01/29/2017 by Juillard Jean-Baptiste
 ** Updated: 01/29/2017 by Juillard Jean-Baptiste
@@ -28,68 +28,82 @@
 
 typedef struct	test_s
 {
-	int			lst;
-	void		*f;
+	int			mlst;
 	int			err;
 }				test_t;
 
 
-int	ut_slst_purge_interface(int N)
+int	ut_mslst_purge_interface(int N)
 {
 	slst_t			*lst;
-	slst_t			**lptr;
-	slst_t			*elm;
+	mslst_t			*mlst;
+	mslst_t			**mptr;
 	int				err;
 	int				i;
-	static test_t	ut_list[3] = {	{ 0, ((void *)(&_ofree)), EINVAL },
-									{ 1, NULL, EINVAL },
-									{ 1, ((void *)(&_ofree)), 0 }};
+	static test_t	ut_list[2] = {	{ 0, EINVAL },
+									{ 1, 0 }};
 
 	i = 0;
 	err = 0xFF;
-	while (i < 3)
+	lst = (slst_t *)(NULL);
+	while (i < 2)
 	{
-		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
-			return (errno);
-		if ((ut_list[i]).lst)
-			lptr = &lst;
-		else
-			lptr = (slst_t **)(NULL);
-		errno = 0;
-		slst_purge(lptr, (void (*)(void *, size_t))((ut_list[i]).f));
-		if (errno != (ut_list[i]).err || (ut_list[i]).err == EINVAL)
+		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL)
+			|| (mlst = slst_map(&lst)) == (mslst_t *)(NULL))
 		{
-			while (lst)
+			if (lst)
+				slst_purge(&lst, &_ofree);
+			return (errno);
+		}
+		if ((ut_list[i]).mlst)
+			mptr = &mlst;
+		else
+			mptr = (mslst_t **)(NULL);
+		errno = 0;
+		mslst_purge(mptr);
+		if (errno != (ut_list[i]).err)
+		{
+			while (mlst)
 			{
-				elm = lst;
-				lst = lst->next;
-				if (elm->key)
-					free(elm->key);
-				free((void *)(elm));
+				mptr = (mslst_t **)(mlst->next);
+				free((void *)(mlst));
+				mlst = (mslst_t *)(mptr);
 			}
+			slst_purge(&lst, &_ofree);
 			if (errno != (ut_list[i]).err)
 				return (err);
 		}
+		if ((ut_list[i]).err == EINVAL)
+			mslst_purge(&mlst);
+		slst_purge(&lst, &_ofree);
 		i++;
 		err--;
 	}
 	return (0);
 }
 
-int	ut_slst_purge_memchk(int N)
+int	ut_mslst_purge_memchk(int N)
 {
 	slst_t	*lst;
+	mslst_t	*mlst;
 
-	if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+	lst = (slst_t *)(NULL);
+	if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL)
+		|| (mlst = slst_map(&lst)) == (mslst_t *)(NULL))
+	{
+		if (lst)
+			slst_purge(&lst, &_ofree);
 		return (errno);
+	}
 	errno = 0;
+	mslst_purge(&mlst);
 	slst_purge(&lst, &_ofree);
 	if (errno)
 		return (errno);
 	return (0);
 }
 
-int	ut_slst_purge_timeout(int N)
+int	ut_mslst_purge_timeout(int N)
 {
-	return (ut_slst_purge_memchk(N));
+	return (ut_mslst_purge_memchk(N));
 }

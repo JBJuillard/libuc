@@ -2,7 +2,7 @@
 ** Header file for units test of Undefined-C library
 **
 ** Created: 28/01/2017 by Juillard Jean-Baptiste
-** Updated: 28/01/2017 by Juillard Jean-Baptiste
+** Updated: 02/06/2017 by Juillard Jean-Baptiste
 **
 **
 ** This program is free software; you can redistribute it and/or
@@ -120,5 +120,38 @@ int		ut_slst_rch_timeout(int N);
 int		ut_slst_rrch_interface(int N);
 int		ut_slst_rrch_memchk(int N);
 int		ut_slst_rrch_timeout(int N);
+/***** slst_xrch *****/
+int		ut_slst_xrch_interface(int N);
+int		ut_slst_xrch_memchk(int N);
+int		ut_slst_xrch_timeout(int N);
+/***** slst_rxrch *****/
+int		ut_slst_rxrch_interface(int N);
+int		ut_slst_rxrch_memchk(int N);
+int		ut_slst_rxrch_timeout(int N);
+/***** slst_cmp *****/
+int		ut_slst_cmp_interface(int N);
+int		ut_slst_cmp_memchk(int N);
+int		ut_slst_cmp_timeout(int N);
+/***** slst_rcmp *****/
+int		ut_slst_rcmp_interface(int N);
+int		ut_slst_rcmp_memchk(int N);
+int		ut_slst_rcmp_timeout(int N);
+/***** slst_diff *****/
+int		ut_slst_diff_interface(int N);
+int		ut_slst_diff_memchk(int N);
+int		ut_slst_diff_timeout(int N);
+/***** slst_rdiff *****/
+int		ut_slst_rdiff_interface(int N);
+int		ut_slst_rdiff_memchk(int N);
+int		ut_slst_rdiff_timeout(int N);
+/***** slst_map *****/
+int		ut_slst_map_interface(int N);
+int		ut_slst_map_memchk(int N);
+int		ut_slst_map_timeout(int N);
+
+/***** mslst_purge *****/
+int		ut_mslst_purge_interface(int N);
+int		ut_mslst_purge_memchk(int N);
+int		ut_mslst_purge_timeout(int N);
 
 #endif
