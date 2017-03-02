@@ -172,10 +172,11 @@ int		_ofunc(void *key, size_t size)
 	if (!key || size != sizeof(long long))
 	{
 		errno = EINVAL;
-		return ;
+		return (0);
 	}
 	offset = 0;
 	while (offset < size)
 		*((unsigned char *)(key + offset++)) = 0x0;
 	free(key);
+	return (0);
 }

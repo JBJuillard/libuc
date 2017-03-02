@@ -221,6 +221,7 @@ mslst_t		*slst_map(slst_t **lst);
 /*
 ** Non-ordered simply linked list mapping (mslst_t)
 */
+void		mslst_purge(mslst_t **mlst);
 
 
 /*
