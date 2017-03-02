@@ -1,0 +1,88 @@
+.\"
+.\" Manpage of slst_head and slst_tail function for Undefined-C library
+.\"
+.\" Created: 02/23/17 by Juillard Jean-Baptiste
+.\" Updated: 02/23/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_HEAD 3 "02/23/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.BR slst_head "		- Retourne un mappage sur les N premier maillon d'une liste"
+.RB "de type " slst_t (3).
+.br
+.BR slst_tail "		- Retourne un mappage sur les N dernier maillon d'une liste"
+.RB "de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "mslst_t	*slst_head(slst_t " **lst ", size_t " n );
+.br
+.BI "mslst_t	*slst_tail(slst_t " **lst ", size_t " n );
+
+.SH DESCRIPTION
+.B slst_head
+.RI "retourne un mappage sur les " n " premier maillone de la liste " lst ". "
+.IR lst " doit etre un argument valide tel qu'il est decrit dans la section"
+.BR NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_head
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_tail
+.RI "retourne un mappage sur les " n " dernier maillone de la liste " lst ". "
+.IR lst " doit etre un argument valide tel qu'il est decrit dans la section"
+.BR NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_tail
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_head
+.RI "retourne un pointeur sur le mappage des " n " premiers elements de la"
+.RI "liste " lst " ou NULL en cas d'erreur d'erreur."
+
+.B slst_tail
+.RI "retourne un pointeur sur le mappage des " n " derniers elements de la liste"
+.RI "liste " lst " ou NULL en cas d'erreur d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.R "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+.TP
+.B ENOMEM
+.R Erreur d'allocation memoire.
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RI "de ((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RI "- " n " doit etre different de 0 et inferieur ou egal a SIZE_MAX (denifit"
+.RI "dans " /usr/include/stdint.h ).
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_cmp (3)

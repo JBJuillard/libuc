@@ -164,3 +164,18 @@ slst_t	*_gen_slst(long long start, long long end, long long step)
 	}
 	return (lst);
 }
+
+int		_ofunc(void *key, size_t size)
+{
+	size_t	offset;
+
+	if (!key || size != sizeof(long long))
+	{
+		errno = EINVAL;
+		return ;
+	}
+	offset = 0;
+	while (offset < size)
+		*((unsigned char *)(key + offset++)) = 0x0;
+	free(key);
+}

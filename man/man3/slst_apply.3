@@ -1,0 +1,73 @@
+.\"
+.\" Manpage of slst_apply function for Undefined-C library
+.\"
+.\" Created: 02/26/17 by Juillard Jean-Baptiste
+.\" Updated: 02/26/17 by Juillard Jean-Baptiste
+.\"
+.\" This program is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_APPLY 3 "02/26/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+.SH NAME
+.B slst_apply
+.R "\t- Applique une fonction sur l'ensemble des valeurs cles d'une liste"
+.BR slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "int\tslst_apply(slst_t " **lst ", int (*" func ")(void **, size_t *));"
+
+.SH DESCRIPTION
+.BR slst_apply
+.RI "applique la fonction " func " sur chaque maillon de la liste " lst .
+.RB "Si " errno " est mis a une autre valeur que " 0 " par"
+.IR func " ou si " func " retourne une valeur differente de"
+.BR 0 ", " slst_apply " se termine."
+.IR lst " et " func " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrits dans la section " NOTES .
+.BR errno " est toujours modifier par " slst_apply " tel que definit dans"
+.RB "la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.BR slst_apply " retourne " 0 " ou toutes autres valeurs en cas d'erreurs."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est produite."
+.TP
+.B EINVAL
+.RB "Un parametre invalide a ete passe lors de l'appel a " slst_apply .
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RI "de ((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RI "- " func " doit etre un pointeur valide vers une fonction applicative."
+.RB "Celle-ci prend en parametre un pointeur sur pointeur " void " qui adresse"
+.RB "le pointeur sur la valeur cle et un pointeur sur " size_t " qui addresse"
+.R la taille du tampon contenant la valeur cle. Cette disposition permet a la
+.RI "fonction " func " de reallouer la cle si necessaire."
+.IR func " doit retourne un entier"
+.RB "non-" NULL " en cas d'erreur et " 0 " sinon."
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t (3)

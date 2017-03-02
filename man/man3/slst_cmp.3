@@ -1,0 +1,119 @@
+.\"
+.\" Manpage of slst_cmp and slst_rcmp function for Undefined-C library
+.\"
+.\" Created: 02/08/17 by Juillard Jean-Baptiste
+.\" Updated: 02/08/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_CMP 3 "02/08/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_cmp, slst_rcmp
+.RB "	- Compare deux listes de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "int	slst_cmp(slst_t " **lst1 ", slst_t " **ptr1 ", slst_t " **lst2 ,
+.BI "slst_t " **ptr2 ", int (" *fcmp ")(const void *, const size_t,"
+.B const void *, const size_t));
+.br
+.BI "int	slst_rcmp(slst_t " **lst1 ", slst_t " **ptr1 ", slst_t " **lst2 ,
+.BI "slst_t " **ptr2 ", int (" *fcmp ")(const void *, const size_t,"
+.B const void *, const size_t));
+
+.SH DESCRIPTION
+.B slst_cmp
+.RI "compare " lst1 " et " lst2 " en fonction de " fcmp " jusqu'a la premiere"
+.RI "difference trouve. Si " ptr1 " et/ou " ptr2 " sont non-NULL, ceux-ci"
+.RI "sont definit avec les pointeurs sur les deux premiers maillons differents."
+.IR lst1 ", " ptr1 ", " lst2 ", " ptr2 " et " fcmp " doivent etres des"
+.RB "arguments valides tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_cmp
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_rcmp
+.RI "compare " lst1 " et " lst2 " en fonction de " fcmp " jusqu'a la derniere"
+.RI "difference trouve. Si " ptr1 " et/ou " ptr2 " sont non-NULL, ceux-ci"
+.RI "sont definit avec les pointeurs sur les deux diniers maillons differents."
+.IR lst1 ", " ptr1 ", " lst2 ", " ptr2 " et " fcmp " doivent etres des"
+.RB "arguments valides tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_rcmp
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_cmp
+.RI "retourne la difference entre les deux permiers maillons non-egaux."
+.RB "Si une erreur se produit ou si aucune difference n'est trouve, " slst_cmp
+.RI "retourne 0. Si " lst1 " est plus courte que " lst2 " mais qu'aucune"
+.RI "difference n'existe entre " lst1 " et les maillons equivalants dans"
+.IR lst2 ,
+.BR slst_cmp " retourne " INT_MIN " et dans le cas contraire"
+.RI ( lst2 " plus courte que " lst1 )
+.BR slst_cmp " retourne " INT_MAX .
+
+.BR slst_rcmp
+.RI "retourne la difference entre les deux derniers maillons non-egaux."
+.RB "Si une erreur se produit ou si aucune difference n'est trouve, " slst_rcmp
+.RI "retourne 0. Si " lst1 " est plus courte que " lst2 " mais qu'aucune"
+.RI "difference n'existe entre " lst1 " et les maillons equivalants dans"
+.IR lst2 ,
+.BR slst_rcmp " retourne " INT_MIN " et dans le cas contraire"
+.RI ( lst2 " plus courte que " lst1 )
+.BR slst_cmp " retourne " INT_MAX .
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.RB "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+
+.SH NOTES
+.RI "- Pour toutes les fonctions, " lst1 " et " lst2 " doivent etres different"
+.RI "de ((slst_t **)(NULL)), notez que " *lstX "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.R "- Pour toutes les fonctions,"
+.IR ptr1 " et " ptr2 " peuvent etres egaux a (slst_t **)(NULL), dans ce cas"
+.R les pointeurs vers les maillons differents ne sont pas sauvegarde. Si
+.IR ptr1 " et/ou " ptr2 " est/sont definit alors le ou les pointeurs vers le"
+.R ou les maillons differents seront sauvegarde.
+
+.R "- Pour toutes les fonctions,"
+.IR fcmp " est un pointeur vers une fonction de comparaison."
+.RB "Celle-ci prend en parametre deux pointeurs " void " qui adressent les"
+.RB "valeurs cles et deux " size_t " qui donnent les tailles des tampons"
+.R contenant les valeurs cles.
+.RB "Le premier pointeur sur " void " et le premier " size_t " sont ceux de"
+.RI "la liste " lst1 " et les seconds ceux de la liste " lst2 .
+.IR fcmp " doit retourne un entier positif si la valeur de la liste " lst1
+.RI "est supperieur a la valeur de la liste " lst2 ", un entier negatif si la"
+.RI "valeur de la liste " lst1 " est inferieur a la valeur de la liste " lst2
+.R et 0 si les deux valeurs sont egales. Notez que les deux valeurs n'ont pas
+.RI "besoin d'etres strictement egales pour que " fcmp " considere que se soit"
+.R le cas.
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_diff (3)

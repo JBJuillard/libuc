@@ -1,0 +1,89 @@
+.\"
+.\" Manpage of slst_previous and slslt_next function for Undefined-C library
+.\"
+.\" Created: 02/23/17 by Juillard Jean-Baptiste
+.\" Updated: 02/23/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_PREVIOUS 3 "02/23/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.BR slst_previous "       - Retourne l'element precedent dans une liste de type"
+.BR slst_t (3).
+.br
+.BR slst_next "           - Retourne l'element suivant dans une liste de type"
+.BR slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "slst_t	*slst_previous(slst_t " **lst ", slst_t " *elm );
+.br
+.BI "slst_t	*slst_next(slst_t " **lst ", slst_t " *elm );
+
+.SH DESCRIPTION
+.B slst_previous
+.RI "retourne l'element precedent " elm " dans la liste " lst " uniquement si "
+.IR elm " fait parite de la liste " lst ". " lst " et " elm " doivent etres des"
+.RB "arguments valides tel qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_previous
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_next
+.RI "retourne l'element suivant " elm " dans la liste " lst " uniquement si "
+.IR elm " fait parite de la liste " lst ". " lst " et " elm " doivent etres des"
+.RB "arguments valides tel qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_next
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_previous
+.RI "retourne un pointeur l'element precdent " elm ". En cas d'erreur d'erreur"
+.RI "ou si " elm " ne fait pas partie de " lst " ou si "elm " est le premier"
+.RI "maillon de " lst ,
+.BR slst_previous " retourne NULL."
+
+.B slst_next
+.RI "retourne un pointeur l'element suivant " elm ". En cas d'erreur d'erreur"
+.RI "ou si " elm " ne fait pas partie de " lst " ou si "elm " est le dernier"
+.RI "maillon de " lst ,
+.BR slst_next " retourne NULL."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.R "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RI "de ((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RI "- " elm " doit etre different"
+.RI "de ((slst_t *)(NULL))."
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_cmp (3)

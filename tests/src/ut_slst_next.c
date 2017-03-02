@@ -1,8 +1,8 @@
 /*
-** ut_slst_deln function for Undefined-C library
+** Units tests of slst_next function for Undefined-C library
 **
-** Created: 01/17/2017 by Juillard Jean-Baptiste
-** Updated: 01/10/2017 by Juillard Jean-Baptiste
+** Created: 17/01/2017 by Juillard Jean-Baptiste
+** Updated: 02/10/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -25,84 +25,76 @@
 #include "stdlst.h"
 #include "test.h"
 
-
 typedef struct			test_s
 {
 	int					lst;
-	unsigned long long	n;
-	void				*f;
+	int					elm;
 	int					err;
+	int					returnNULLptr;
 }						test_t;
 
-
-int	ut_slst_deln_interface(int N)
+int	ut_slst_next_interface(int N)
 {
 	slst_t			*lst;
 	slst_t			**lptr;
+	slst_t			*elm;
+	slst_t			*ret;
 	int				err;
 	int				i;
-	int				j;
-	static test_t	ut_list[6] = {	{ 0, 1, ((void *)(&_ofree)), EINVAL },
-					{ 1, 0, ((void *)(&_ofree)), EINVAL },
-					{ 1, (SIZE_MAX + 1), ((void *)(&_ofree)), EINVAL },
-					{ 1, 1, NULL, EINVAL },
-					{ 1, 1, ((void *)(&_ofree)), 0 },
-					{ 1, 1, ((void *)(&_ofree)), 0 }};
+	static test_t	ut_list[3] = {	{0,1,EINVAL,1},
+									{1,0,EINVAL,1},
+									{1,1,0,0}};
 
 	i = 0;
 	err = 0xFF;
-	while (i < 6)
+	while (i < 3)
 	{
-		lst = (slst_t *)(NULL);
+		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
+			return (errno);
 		if ((ut_list[i]).lst)
 			lptr = &lst;
 		else
 			lptr = (slst_t **)(NULL);
-		j = 0;
-		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
-			return (errno);
-		while (j++ < N)
+		if ((ut_list[i]).elm)
+			elm = lst;
+		else
+			elm = (slst_t *)(NULL);
+		errno = 0;
+		ret = slst_next(lptr, elm);
+		if (errno != (ut_list[i]).err
+			|| (!ret && !(ut_list[i]).returnNULLptr)
+			|| (ret && ret != lst->next))
 		{
-			errno = 0;
-			slst_deln(lptr, (size_t)((ut_list[i]).n), (void (*)(void *, size_t))((ut_list[i]).f));
-			if (errno != (ut_list[i]).err)
-			{
-				slst_purge(&lst, &_ofree);
-				return (err);
-			}
-			else if ((ut_list[i]).err == EINVAL)
-			{
-				slst_purge(&lst, &_ofree);
-				break ;
-			}
+			slst_purge(&lst, &_ofree);
+			return (err);
 		}
+		slst_purge(&lst, &_ofree);
 		i++;
 		err--;
 	}
 	return (0);
 }
 
-int	ut_slst_deln_memchk(int N)
+int	ut_slst_next_memchk(int N)
 {
 	slst_t	*lst;
+	slst_t	*tmp;
 
-	lst =(slst_t *)(NULL);
+	errno = 0;
 	if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 		return (errno);
-	errno = 0;
-	while (lst && N-- >= 0)
+	if (!(tmp = slst_next(&lst, lst)) || errno)
 	{
-		slst_deln(&lst, 1, &_ofree);
+		slst_purge(&lst, &_ofree);
 		if (errno)
-		{
-			slst_purge(&lst, &_ofree);
 			return (errno);
-		}
+		return (0xFF);
 	}
+	slst_purge(&lst, &_ofree);
 	return (0);
 }
 
-int	ut_slst_deln_timeout(int N)
+int	ut_slst_next_timeout(int N)
 {
-	return (ut_slst_deln_memchk(N));
+	return (ut_slst_next_memchk(N));
 }

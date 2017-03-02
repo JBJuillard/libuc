@@ -2,7 +2,7 @@
 # Makefile for Undefined-C library
 #
 # Created: 01/29/2017 by Juillard Jean-Baptiste
-# Updated: 02/03/2017 by Juillard Jean-Baptiste
+# Updated: 02/23/2017 by Juillard Jean-Baptiste
 #
 # This file is a part of free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -27,6 +27,7 @@ override EMPTY :=
 CD := $(shell pwd)
 .DEFAULT_GOAL := help
 prefix = /usr/local
+TARGET_ARCH = $(shell echo $$CPUTYPE)
 
 
 # Flags for recursive call of make
@@ -55,8 +56,10 @@ EXAMPLES_PATH = examples
 
 
 # Source files
-SRC =	slst_new.c \
-		slst_delelm.c \
+SRC =	slst_new.c slst_delelm.c \
+		slst_len.c slst_isempty.c \
+		slst_previous.c slst_next.c \
+		slst_head.c slst_tail.c \
 		slst_put.c slst_putn.c \
 		slst_get.c slst_getn.c \
 		slst_del.c slst_deln.c slst_delp.c slst_delk.c \
@@ -65,6 +68,10 @@ SRC =	slst_new.c \
 		slst_xtrc.c slst_xtrcn.c slst_xtrcp.c slst_xtrck.c \
 		slst_rch.c slst_rrch.c slst_xrch.c slst_rxrch.c \
 		slst_cmp.c slst_rcmp.c slst_diff.c slst_rdiff.c \
+		slst_cpy.c slst_rcpy.c \
+		slst_rev.c \
+		slst_cat.c \
+		slst_cut.c slst_cutn.c slst_cutp.c slst_cutk.c \
 		slst_map.c \
 		\
 		mslst_purge.c
@@ -100,9 +107,9 @@ A_FULLPATH = $(addprefix $(A_PATH)/,$(A_NAME))
 
 
 # Dynamic Library
-SO_MAJOR_VERSION = $(shell cat VERSION | tr -d "$$IFS" | awk 'BEGIN {FS="."} END {print $$1}')
-SO_MINOR_VERSION = $(shell cat VERSION | tr -d "$$IFS" | awk 'BEGIN {FS="."} END {print $$2}')
-SO_RELEASE_VERSION = $(shell cat VERSION | tr -d "$$IFS" | awk 'BEGIN {FS="."} END {print $$3}')
+SO_MAJOR_VERSION = $(shell cat VERSION | tr -d "$$IFS" | awk 'BEGIN {FS="."} {print $$1}')
+SO_MINOR_VERSION = $(shell cat VERSION | tr -d "$$IFS" | awk 'BEGIN {FS="."} {print $$2}')
+SO_RELEASE_VERSION = $(shell cat VERSION | tr -d "$$IFS" | awk 'BEGIN {FS="."} {print $$3}')
 SO_NAME = lib$(NAME).so
 SO_SONAME = $(SO_NAME).$(SO_MAJOR_VERSION)
 SO_FULLNAME = $(SO_SONAME).$(SO_MINOR_VERSION).$(SO_RELEASE_VERSION)
@@ -187,6 +194,8 @@ CMACRO_DEBUG = \"DEBUG=1\"
 
 # Linker
 LD = /usr/bin/ld
+LDFLAGS =
+LDLIBS =
 
 
 # Dynamic link editor
@@ -589,6 +598,30 @@ $(MAN_INSTALLPATH_MAN)/slst_rrch.$(MAN_SECTION):
 $(MAN_INSTALLPATH_MAN)/slst_rxrch.$(MAN_SECTION):
 	@cd $(MAN_INSTALLPATH_MAN) ; \
 	$(LN) $(LN_SLNKFLAGS) slst_xrch.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_rcmp.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_cmp.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_rdiff.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_diff.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_next.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_previous.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_tail.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_head.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_rcpy.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_cpy.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_cutn.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_cut.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_cutp.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_cut.$(MAN_SECTION) $(@F)
+$(MAN_INSTALLPATH_MAN)/slst_cutk.$(MAN_SECTION):
+	@cd $(MAN_INSTALLPATH_MAN) ; \
+	$(LN) $(LN_SLNKFLAGS) slst_cut.$(MAN_SECTION) $(@F)
 $(INC_INSTALLPATH)/%: INSTALLFLAGS += $(INSTALLFLAGS_MODE)$(INSTALLFLAGS_FILEACLS)
 $(INC_INSTALLPATH)/%: | $(INC_INSTALLPATH)
 $(INC_INSTALLPATH)/%: $(INC_PATH)/%

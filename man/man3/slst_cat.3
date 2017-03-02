@@ -1,0 +1,68 @@
+.\"
+.\" Manpage of slst_cat function for Undefined-C library
+.\"
+.\" Created: 02/26/17 by Juillard Jean-Baptiste
+.\" Updated: 02/26/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_CAT 3 "02/26/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_cat
+.RB "	- Concatene deux listes de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "slst_t	*slst_cat(slst_t " **lst1 ", slst_t " **lst2 );
+
+.SH DESCRIPTION
+.B slst_cat
+.RI "concatene la liste " lst2 " a la fin de la liste " lst1 .
+.RI "Apres l'operation, " lst2 " vaut"
+.BR NULL .
+.IR lst1 " et " lst2 " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_cat
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_cat
+.RI "retourne un pointeur sur le premier maillon de la liste " lst1
+.RB "ou " NULL " en cas d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.R "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+
+.SH NOTES
+.RI "- " lstX " doivent etres different"
+.RI "de ((slst_t **)(NULL)), notez que " *lstX "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_cut (3)

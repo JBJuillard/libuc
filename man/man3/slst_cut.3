@@ -1,0 +1,144 @@
+.\"
+.\" Manpage of slst_cut, slst_cutn, slst_cutp and
+.\" slst_cutk function for Undefined-C library
+.\"
+.\" Created: 02/26/17 by Juillard Jean-Baptiste
+.\" Updated: 02/26/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_CUT 3 "02/26/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_cut
+.RB "	- Coupe une liste de type " slst_t "(3) en deux."
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "slst_t	*slst_cut(slst_t " **lst );
+.br
+.BI "slst_t	*slst_cutn(slst_t " **lst ", size_t " n );
+.br
+.BI "slst_t	*slst_cutp(slst_t " **lst ", slst_t " *ptr );
+.br
+.BI "slst_t	*slst_cutk(slst_t " **lst ", const void " *key ,
+.BI "const size_t " size ", int (" *fcmp ")(const void *, const size_t,"
+.B const void *, const size_t));
+
+.SH DESCRIPTION
+.B slst_cut
+.RI "coupe en deux la liste " lst ", la coupure s'effectue au milieu de la liste."
+.IR lst " doit etre un argument valide tel qu'il est"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_cut
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_cutn
+.RI "coupe en deux la liste " lst ", la coupure s'effectue avant le " n "-ieme"
+.R maillon de la liste.
+.IR lst " et " n " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_cutn
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_cutp
+.RI "coupe en deux la liste " lst ", la coupure s'effectue avant le maillon"
+.IR ptr " si il fait partie de la liste " lst .
+.IR lst " et " ptr " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_cutp
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_cutk
+.RI "coupe en deux la liste " lst ", la coupure s'effectue avant le maillon"
+.RI "correspondant a " key " et " size " en fonction de " fcmp
+.RI "seulement si une correspondance est trouve dans la liste " lst .
+.IR lst ", " key ", " size " et " fcmp " doivent etres des arguments valides"
+.RB "tels qu'ils sont decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_cutk
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_cut
+.RI "retourne un pointeur sur le premier maillon de la nouvelle liste"
+.RB "ou " NULL " en cas d'erreur."
+
+.B slst_cutn
+.RI "retourne un pointeur sur le premier maillon de la nouvelle liste"
+.RB "ou " NULL " en cas d'erreur."
+
+.B slst_cutp
+.RI "retourne un pointeur sur le premier maillon de la nouvelle liste"
+.RB "ou " NULL " en cas d'erreur."
+
+.B slst_cutk
+.RI "retourne un pointeur sur le premier maillon de la nouvelle liste"
+.RB "ou " NULL " en cas d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.R "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+.TP
+.B EOVERFLOW
+.R "Erreur arithmetique."
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RI "de ((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RB "- Dans la fonction " slst_cutn ,
+.IR n " doit etre different de"
+.BR 0 " et inferrieur ou egal a " SIZE_MAX " (definit dans"
+.IR /usr/include/stdint.h ).
+
+.RB "- Dans la fonction " slst_cutp ,
+.IR ptr " doit etre different de"
+.BR "((slst_t *)(NULL))" .
+
+.RB "- Dans la fonction " slst_cutk ,
+.IR key " doit etre different de"
+.BR "((slst_t *)(NULL))" ,
+.IR size " doit etre different de"
+.BR 0 " et inferrieur ou egal a " SIZE_MAX " (definit dans"
+.IR /usr/include/stdint.h ") et"
+.IR fcmp " doit etre un pointeur valide vers une fonction de comparaison."
+.RB "Celle-ci prend en parametre deux pointeurs " void " qui adressent les"
+.RB "valeurs cles et deux " size_t " qui donnent les tailles des tampons"
+.R contenant les valeurs cles.
+.RB "Le premier pointeur sur " void " et le premier " size_t " sont ceux de"
+.RI "la valeur de reference (" key " et " size " passer en parametre d'appel de"
+.BR slst_cutk ") et les seconds ceux de la liste " lst .
+.IR fcmp " doit retourne un entier positif si la valeur de reference"
+.RI "est supperieur a la valeur de la liste " lst ", un entier negatif si la"
+.RI "valeur de reference est inferieur a la valeur de la liste " lst
+.R et 0 si les deux valeurs sont egales. Notez que les deux valeurs n'ont pas
+.RI "besoin d'etres strictement egales pour que " fcmp " considere que se soit"
+.R le cas.
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_cat (3)

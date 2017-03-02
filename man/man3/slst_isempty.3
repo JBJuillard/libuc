@@ -1,0 +1,65 @@
+.\"
+.\" Manpage of slst_isempty function for Undefined-C library
+.\"
+.\" Created: 02/08/17 by Juillard Jean-Baptiste
+.\" Updated: 02/08/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_ISEMPTY 3 "02/08/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_isempty
+.RB "	- Retourne l'etat d'une liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "int	slst_isempty(slst_t " **lst );
+
+.SH DESCRIPTION
+.B slst_isempty
+.RI "retourne l'etat de la liste " lst .
+.IR lst " doit etre un argument valide tel qu'il est decrit dans la"
+.RB "section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_isempty
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_isempty
+.RI "retourne 1 si la liste est vide et 0 sinon."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.R "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RI "de ((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_len (3)

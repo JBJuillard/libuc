@@ -1,0 +1,93 @@
+.\"
+.\" Manpage of slst_cpy and slst_rcpy function for Undefined-C library
+.\"
+.\" Created: 02/26/17 by Juillard Jean-Baptiste
+.\" Updated: 02/26/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_CPY 3 "02/26/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_cpy, slst_rcpy
+.RB "	- Copie une liste de type " slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "int	slst_cpy(slst_t " **lst ", void *(" *fcpy ")(const void *, size_t));"
+.br
+.BI "int	slst_rcpy(slst_t " **lst ", void *(" *fcpy ")(const void *, size_t));"
+
+.SH DESCRIPTION
+.B slst_cpy
+.RI "copie " lst ", les valeurs cles sont copies par la fonction " fcpy " passe"
+.R en parametre.
+.IR lst " et " fcpy " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_cpy
+.RB "tel que decrit dans la section " ERREURS .
+
+.B slst_rcpy
+.RI "copie recursivement " lst ", les valeurs cles sont copies par la fonction "
+.IR fcpy " passe en parametre."
+.IR lst " et " fcpy " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_rcpy
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_cpy
+.RB "retourne un pointeur sur la copie de la liste ou " NULL " en cas d'erreur."
+
+.B slst_rcpy
+.RB "retourne un pointeur sur la copie de la liste ou " NULL " en cas d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite."
+.TP
+.B EINVAL
+.RB "La fonction a ete appele avec un (ou des) parametre(s) invalide(s)."
+.TP
+.B ENOMEM
+.RB "Erreur d'allocation memoire ou lors de la copie de la valeur cle."
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RI "de ((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RI "- " fcpy " est un pointeur vers une fonction de copie."
+.RB "Celle-ci prend en parametre un pointeur " "const void" " qui adresse la"
+.RB "valeur cle a copier et un " size_t " qui donne la taille du tampon"
+.R contenant la valeur cle.
+.IR fcpy " doit retourne un pointeur sur la copie de  la valeur cle ou"
+.BR NULL " en cas d'erreur. Lors d'une erreur durant la copie de la valeur cle,"
+.RI "si "fcpy " ne modifie pas"
+.BR errno " alors " errno " seras mis a " ENOMEM " par la fonction " slst_Xcpy .
+.R Notez que la copie de la valeur cle doit faire exactement la meme taille que
+.RB "l'originale pour que le champ " size " du type " slst_t " reste valide."
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_map (3)

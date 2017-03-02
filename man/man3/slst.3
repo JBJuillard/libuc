@@ -1,0 +1,128 @@
+.\"
+.\" Manpage of slst type for Undefined-C library
+.\"
+.\" Created: 12/01/17 by Juillard Jean-Baptiste
+.\" Updated: 02/08/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST 3 "02/08/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+slst \- Sous-ensemble des listes non-ordonnees lineaires simplement chainees.
+
+.SH SYNOPSYS
+.TP
+.I Include
+.B #include <stdlst.h>
+.TP
+.I Structure
+
+.B typedef struct		slst_s
+.br
+.B {
+.br
+.BI "	void			" *key ;
+.br
+.BI "	size_t		" size ;
+.br
+.BI "	struct slst_s	" *next ;
+.br
+.B }				slst_t;
+
+.TP
+.I Fonctions
+slst_new									\- Creer un maillon vide de type slst.
+.br
+slst_delelm								\- Supprime un maillon de type slst_t.
+.br
+slst_isempty								\- Test si une liste de type slst_t est vide.
+.br
+slst_len									\- Retourne la taille d'une liste de type slst_t.
+.br
+slst_previous, slst_next						\- Retourne l'element precedent/suivant dans une liste de type slst_t.
+.br
+slst_head, slst_tail						\- Retourne un mappage de N element en debut/fin de liste de type slst_t.
+.br
+slst_put, slst_putn							\- Ajoute un maillon dans une liste de type slst_t.
+.br
+slst_get, slst_getn							\- Enleve un maillon dans une liste de type slst_t.
+.br
+slst_del, slst_deln, slst_delp, slst_delk		\- Supprime un maillon dans une liste de type slst_t.
+.br
+slst_purge								\- Supprime l'ensemble des maillons d'une liste de type slst_t.
+.br
+slst_xtrc, slst_xtrcn, slst_xtrck, slst_xtrcp	\- Extrait un maillon d'une liste de type slst_t.
+.br
+slst_rch, slst_rrch							\- Recherche, recursive ou non, de la premiere occurence d'un maillon dans une liste de type slst_t.
+.br
+slst_xrch, slst_xrrch						\- Recherche exhaustive, recursive ou non, d'un maillon dans une liste de type slst_t.
+.br
+slst_cmp, slst_rcmp							\- Comparaison, recursive ou non, entre deux listes de type slst_t.
+.br
+slst_diff, slst_rdiff						\- Difference (comparaison exhaustive), recursive ou non, entre deux listes de type slst_t.
+.br
+slst_cpy, slst_rcpy							\- Copie, recursive ou non, d'une liste de type slst_t.
+.br
+slst_rev									\- Inverse une liste de type slst_t.
+.br
+slst_cat									\- Concatene deux listes de type slst_t.
+.br
+slst_cut, slst_cutn, slst_cutp, slst_cutk		\- Coupe une liste de type slst_t en deux.
+.br
+slst_apply								\- Applique une fonction sur chaque maillon d'une liste de type slst_t.
+.br
+slst_XYZsrt, slst_XYZrsrt					\- Trie, recursif ou non, d'une liste de type slst_t avec l'algorithme XYZ.
+.br
+slst2XYZ									\- Cast une liste de type slst_t en une liste de type XYZ.
+.br
+slst_map									\- Mappage de liste de type slst_t.
+
+.SH DESCRIPTION
+.TP
+.RB "Les listes non-ordonnees lineaires simplement chainees utilisent le type " slst_t " et suivent les regles suivantes:"
+
+.RB "- Toute liste initialise a " NULL " est vide."
+.RI "Les elements sont lies les uns aux autres par le champ " next
+.RB "du type " slst_t " qui point vers l'element suivant dans la liste,"
+.RI "le dernier element de la liste a son champ " next
+.RB "a " NULL ". Le premier element de la liste est donc le dernier a avoir ete ajoute (LIFO)."
+.RB "Ce mecanisme structurel du type " slst_t " est le meme que pour les types " sslst_t "(3) et " lifo_t (3)
+.R "ce qui permet de caster vers ces dernier sans autre modification que celle du type de pointeur."
+
+.RB "- Toute liste de type " slst_t " doit comporter au maximum " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ") elements,"
+.RB "sous peine de generrer une erreur " EOVERFLOW
+.RI "(definit dans " /usr/include/errno.h ") dans les fonctions utilisant l'index des elements dans la liste ou la taille de la liste."
+
+.RB "- Tout element de liste du type " slst_t " est valide seulement si"
+.RI "son champ " key
+.RB "pointe un " objet " quelquonque valide"
+.RI "et que son champ " size
+.RB "vaut " sizeof(objet) .
+
+
+.SH NOTES
+
+.SH EXEMPLES
+.RI "Plusieurs exemples peuvent etre trouve dans le repertoire " ~/libuc/examples/stdlst/slst/ .
+
+.SH AUTEUR
+.R "Juillard Jean-Baptiste"
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " mslst_t "(3), "  lifo_t "(3), " sclst_t "(3), "sslst_t "(3), " scslst_t "(3)"
