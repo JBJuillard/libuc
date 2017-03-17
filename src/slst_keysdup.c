@@ -23,9 +23,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
 #include "stdlst.h"
 
 void	*slst_keysdup(slst_t **lst, size_t *size)
@@ -38,9 +35,6 @@ void	*slst_keysdup(slst_t **lst, size_t *size)
 	if (!lst)
 	{
 		errno = EINVAL;
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		return (NULL);
 	}
 	errno = 0;

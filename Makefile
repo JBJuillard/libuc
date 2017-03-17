@@ -56,7 +56,7 @@ EXAMPLES_PATH = examples
 
 
 # Source files
-SRC =	slst_new.c slst_delelm.c \
+SRC =	slst_newelm.c slst_delelm.c \
 		slst_len.c slst_isempty.c \
 		slst_previous.c slst_next.c \
 		slst_head.c slst_tail.c \
@@ -72,9 +72,28 @@ SRC =	slst_new.c slst_delelm.c \
 		slst_rev.c \
 		slst_cat.c \
 		slst_cut.c slst_cutn.c slst_cutp.c slst_cutk.c \
+		slst_apply.c \
+		slst_keyslen.c slst_keysdup.c \
+		slst_random.c \
+		slst2lifo.c slst2sclst.c slst2fifo.c \
 		slst_map.c \
+		mslst_purge.c \
 		\
-		mslst_purge.c
+		lifo_push.c lifo_pop.c lifo_purge.c  lifo_map.c \
+		mlifo_push.c mlifo_pop.c mlifo_purge.c \
+		\
+		sclst_newelm.c sclst_delelm.c \
+		sclst_isempty.c sclst_len.c \
+		sclst_previous.c sclst_next.c \
+		sclst_head.c sclst_tail.c \
+		sclst_put.c sclst_put_front.c sclst_put_back.c sclst_putn.c \
+		sclst_get.c sclst_get_front.c sclst_get_back.c sclst_getn.c \
+		sclst_purge.c \
+		sclst_map.c \
+		msclst_purge.c \
+		\
+		fifo_push.c fifo_pop.c fifo_purge.c fifo_map.c \
+		mfifo_push.c mfifo_pop.c mfifo_purge.c
 SRC_FULLPATH = $(addprefix $(SRC_PATH)/,$(SRC))
 
 
@@ -539,11 +558,14 @@ $(TEST_PATH)/$(LOG_PATH)/%.log: $(TEST_PATH)/$(BIN_PATH)/% $(SRC_PATH)/%.c $(TES
 		exit ; \
 	fi ; \
 	echo "\033[s\033[K[ \033[0;32;40mOk\033[0m ]\033[u" ; \
+	if [ -e $@ ] ; then \
+		$(RM) $(RM_FILE_FLAGS) $@ >> /dev/null ; \
+	fi ; \
 	touch $@; \
 	echo "\nUnits tests log file of $(*F)" >> $@ ; \
 	echo "\n\nInterface test:\n\n\tFunction interface work properly." >> $@ ; \
 	echo "\n\nMemory test:\n" >> $@ ; \
-	export MEMCHK_LINE=`/bin/grep -n 'HEAP SUMMARY' $(@D)/$(*F).memchk | /usr/bin/awk 'BEGIN {FS=":"} END {print $$1}'` ; \
+	export MEMCHK_LINE=`/bin/grep -n 'HEAP SUMMARY' $(@D)/$(*F).memchk | /usr/bin/awk 'BEGIN {FS=":"} {print $$1}'` ; \
 	/usr/bin/tail -n +$$MEMCHK_LINE $(@D)/$(*F).memchk | /bin/sed -E s/==\[0-9\]+==\ */\	/ >> $@ ; \
 	/bin/rm $(@D)/$(*F).memchk ; \
 	echo "\n\nExecution time and timeout test:\n" >> $@ ; \

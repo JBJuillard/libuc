@@ -43,14 +43,16 @@ int	ut_slst_put_interface(int N)
 	slst_t			*ret;
 	int				i;
 	int				j;
-	static test_t	ut_list[6] = {	{ 0, 1, sizeof(int), EINVAL, 1 },
-									{ 1, 0, sizeof(int), EINVAL, 1 },
+	int				err;
+	static test_t	ut_list[6] = {	{ 0, 1, sizeof(long long), EINVAL, 1 },
+									{ 1, 0, sizeof(long long), EINVAL, 1 },
 									{ 1, 1, 0, EINVAL, 1 },
 									{ 1, 1, (SIZE_MAX + 1), EINVAL, 1 },
-									{ 1, 1, sizeof(int), 0, 0 },
-									{ 1, 1, sizeof(int), 0, 0 }	};
+									{ 1, 1, sizeof(long long), 0, 0 },
+									{ 1, 1, sizeof(long long), 0, 0 }	};
 
 	i = 0;
+	err = 0xFF;
 	while (i < 6)
 	{
 		lst = (slst_t *)(NULL);
@@ -64,9 +66,9 @@ int	ut_slst_put_interface(int N)
 			k = NULL;
 			if ((ut_list[i]).key)
 			{
-				if ((k = malloc(sizeof(int))) == NULL)
+				if ((k = malloc(sizeof(long long))) == NULL)
 					break ;
-				*((int *)(k)) = j;
+				*((long long *)(k)) = j;
 			}
 			errno = 0;
 			ret = slst_put(lptr, k, (ut_list[i]).size);
@@ -74,8 +76,10 @@ int	ut_slst_put_interface(int N)
 				|| (!ret && !((ut_list[i]).returnNULLptr))
 				|| (ret && (ut_list[i]).returnNULLptr))
 			{
-				free(k);
-				break ;
+				if (k && !ret)
+					free(k);
+				slst_purge(&lst, &_ofree);
+				return (err);
 			}
 			if (k && (ut_list[i]).err ==  EINVAL)
 				free(k);
@@ -83,6 +87,7 @@ int	ut_slst_put_interface(int N)
 		}
 		slst_purge(&lst, &_ofree);
 		i++;
+		err--;
 	}
 	return (0);
 }
@@ -97,16 +102,16 @@ int	ut_slst_put_memchk(int N)
 	lst = (slst_t *)(NULL);
 	while (i < N)
 	{
-		if ((k = malloc(sizeof(int))) == NULL)
+		if ((k = malloc(sizeof(long long))) == NULL)
 		{
 			slst_purge(&lst, &_ofree);
 			if (!errno)
 				errno = -16;
 			break ;
 		}
-		*((int *)(k)) = i;
+		*((long long *)(k)) = i;
 		errno = 0;
-		if (slst_put(&lst, k, sizeof(int)) == (slst_t *)(NULL) || errno)
+		if (slst_put(&lst, k, sizeof(long long)) == (slst_t *)(NULL) || errno)
 		{
 			free(k);
 			slst_purge(&lst, &_ofree);

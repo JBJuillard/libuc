@@ -1,8 +1,8 @@
 /*
-** Units tests of slst_new function for Undefined-C library
+** Units tests of slst_newelm function for Undefined-C library
 **
-** Created: 29/01/2017 by Juillard Jean-Baptiste
-** Updated: 29/01/2017 by Juillard Jean-Baptiste
+** Created: 01/29/2017 by Juillard Jean-Baptiste
+** Updated: 01/29/2017 by Juillard Jean-Baptiste
 **
 **
 ** This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include "stdlst.h"
 
-int	ut_slst_new_interface(int N)
+int	ut_slst_newelm_interface(int N)
 {
 	slst_t	*tmp;
 	int		r;
@@ -32,7 +32,7 @@ int	ut_slst_new_interface(int N)
 	N = N;
 	tmp = (slst_t *)(NULL);
 	r = 0;
-	if ((tmp = slst_new()) == (slst_t *)(NULL))
+	if ((tmp = slst_newelm()) == (slst_t *)(NULL))
 		return (errno);
 	if (tmp->key)
 		r += -1;
@@ -44,19 +44,19 @@ int	ut_slst_new_interface(int N)
 	return ((r) ? (0xFF + r) : (0));
 }
 
-int	ut_slst_new_memchk(int N)
+int	ut_slst_newelm_memchk(int N)
 {
 	int	i;
 	int	r;
 
 	i = 0;
 	while (i < N)
-		if ((r = ut_slst_new_interface(i++)))
+		if ((r = ut_slst_newelm_interface(i++)))
 			return (r);
 	return (0);
 }
 
-int	ut_slst_new_timeout(int N)
+int	ut_slst_newelm_timeout(int N)
 {
-	return (ut_slst_new_memchk(N));
+	return (ut_slst_newelm_memchk(N));
 }

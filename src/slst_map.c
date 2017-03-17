@@ -2,7 +2,7 @@
 ** slst_map function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/05/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -23,25 +23,18 @@
 #include <stddef.h>
 #include <errno.h>
 #include <stdlib.h>
-
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
-
 #include "stdlst.h"
 
-mslst_t		*slst_map(slst_t **lst)
+mslst_t	*slst_map(slst_t **lst)
 {
 	register slst_t		*ptr;
-	register mslst_t	*tmp;
+	auto mslst_t		*tmp;
 	register mslst_t	*mlst;
+	register int		err;
 
 	errno = 0;
 	if (!lst)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ((mslst_t *)(NULL));
 	}
@@ -55,12 +48,12 @@ mslst_t		*slst_map(slst_t **lst)
 		{
 			if (!errno)
 				errno = ENOMEM;
-#if defined(DEBUG) && (DEBUG == 1)
-			assert(errno);
-#endif
 			tmp = mlst->next;
 			mlst->next = (mslst_t *)(NULL);
-			return (tmp);
+			err = errno;
+			mslst_purge(&tmp);
+			errno = err;
+			return ((mslst_t *)(NULL));
 		}
 		tmp->kptr = &(ptr->key);
 		tmp->sptr = &(ptr->size);

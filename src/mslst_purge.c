@@ -2,7 +2,7 @@
 ** mslst_purge function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/04/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -22,22 +22,14 @@
 
 #include <errno.h>
 #include <stdlib.h>
-
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
-
 #include "stdlst.h"
 
-void		mslst_purge(mslst_t **mlst)
+void	mslst_purge(mslst_t **mlst)
 {
 	register mslst_t	*tmp;
 
 	if (!mlst)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ;
 	}
@@ -50,14 +42,5 @@ void		mslst_purge(mslst_t **mlst)
 		tmp->sptr = (size_t *)(NULL);
 		tmp->next = (mslst_t *)(NULL);
 		free((void *)(tmp));
-		if (errno)
-#if defined(DEBUG) && (DEBUG == 1)
-		{
-			assert(errno);
-#endif
-			return ;
-#if defined(DEBUG) && (DEBUG == 1)
-		}
-#endif
 	}
 }

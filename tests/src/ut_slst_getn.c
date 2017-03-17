@@ -1,8 +1,8 @@
 /*
-** ut_slst_getn function for Undefined-C library
+** Units tests of slst_getn function for Undefined-C library
 **
 ** Created: 01/17/2017 by Juillard Jean-Baptiste
-** Updated: 02/01/2017 by Juillard Jean-Baptiste
+** Updated: 03/12/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -50,14 +50,14 @@ int	ut_slst_getn_interface(int N)
 	err = 0xFF;
 	while (i < 4)
 	{
-		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 			return (errno);
 		if ((ut_list[i]).lst)
 			lptr = &lst;
 		else
 			lptr = (slst_t **)(NULL);
 		j = 0;
-		while (j <= N)
+		while (j < N)
 		{
 			errno = 0;
 			ret = slst_getn(lptr, (ut_list[i]).n);
@@ -85,12 +85,14 @@ int	ut_slst_getn_memchk(int N)
 	slst_t	*lst;
 	void	*k;
 
-	if ((lst = _gen_slst(0, N, 1)) == (slst_t*)(NULL))
+	if ((lst = _gen_slst(1, N, 1)) == (slst_t*)(NULL))
 		return (errno);
-	while (lst && N-- >= 0)
+	while (lst && N-- > 0)
 	{
 		if (!(k = slst_getn(&lst, 1)) || errno)
 		{
+			if (k)
+				free(k);
 			slst_purge(&lst, &_ofree);
 			if (errno)
 				return (errno);

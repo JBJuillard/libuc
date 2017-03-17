@@ -2,7 +2,7 @@
 ** slst_deln function for Undefined-C library
 **
 ** Created: 28/12/2016 by Juillard Jean-Baptiste
-** Updated: 01/31/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,17 +20,12 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stdlib.h>
-#include	<errno.h>
-#include	<stdint.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <stdint.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG ==1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-void		slst_deln(slst_t **lst, size_t n, void (*fdel)(void *, size_t))
+void	slst_deln(slst_t **lst, size_t n, void (*fdel)(void *, size_t))
 {
 	register slst_t	*tmp;
 	register slst_t	**addr;
@@ -39,9 +34,6 @@ void		slst_deln(slst_t **lst, size_t n, void (*fdel)(void *, size_t))
 	errno = 0;
 	if (!lst || !n || n > SIZE_MAX || !fdel)
 	{
-#if defined(DEBUG) && (DEBUG ==1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ;
 	}
@@ -56,24 +48,14 @@ void		slst_deln(slst_t **lst, size_t n, void (*fdel)(void *, size_t))
 		tmp = tmp->next;
 		i++;
 	}
-	if (i != n)
+	if (!tmp || i != n)
 	{
-#if defined(DEBUG) && (DEBUG ==1)
-		assert(ERANGE);
-#endif
 		errno = ERANGE;
 		return ;
 	}
 	(*fdel)(tmp->key, tmp->size);
 	if (errno)
-#if defined(DEBUG) && (DEBUG ==1)
-	{
-		assert(errno);
-#endif
 		return ;
-#if defined(DEBUG) && (DEBUG ==1)
-	}
-#endif
 	*addr = tmp->next;
 	tmp->key = NULL;
 	tmp->size = 0;

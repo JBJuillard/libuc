@@ -49,7 +49,7 @@ int	ut_slst_map_interface(int N)
 	lst = (slst_t *)(NULL);
 	while (i < 2)
 	{
-		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 			return (errno);
 		if ((ut_list[i]).lst)
 			lptr = &lst;
@@ -81,7 +81,7 @@ int	ut_slst_map_memchk(int N)
 
 	lst = (slst_t *)(NULL);
 	errno = 0;
-	if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL)
+	if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL)
 		|| (mlst = slst_map(&lst)) == (mslst_t *)(NULL))
 	{
 		if (lst)

@@ -55,7 +55,7 @@ int	ut_slst_delelm_interface(int N)
 			errno = 0;
 			if ((ut_list[i]).elm)
 			{
-				if ((elm = slst_new()) == (slst_t *)(NULL)
+				if ((elm = slst_newelm()) == (slst_t *)(NULL)
 					|| (elm->key = malloc(sizeof(int))) == NULL)
 				{
 					if (elm)

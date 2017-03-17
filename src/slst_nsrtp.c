@@ -2,7 +2,7 @@
 ** slst_nsrtp function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/01/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -22,24 +22,16 @@
 
 #include <errno.h>
 #include <stdint.h>
-
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
-
 #include "stdlst.h"
 
-slst_t		*slst_nsrtp(slst_t **lst, slst_t *elm, slst_t *ptr)
+slst_t	*slst_nsrtp(slst_t **lst, slst_t *elm, slst_t *ptr)
 {
-	slst_t	*tmp;
-	slst_t	**addr;
+	register slst_t	*tmp;
+	register slst_t	**addr;
 
 	if (!lst ||!elm || !elm->key || !elm->size || elm->size > SIZE_MAX
 		|| elm->next || !ptr)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ((slst_t *)(NULL));
 	}
@@ -52,9 +44,6 @@ slst_t		*slst_nsrtp(slst_t **lst, slst_t *elm, slst_t *ptr)
 	}
 	if (tmp != ptr)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(ERANGE);
-#endif
 		errno = ERANGE;
 		return ((slst_t *)(NULL));
 	}

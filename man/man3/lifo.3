@@ -1,0 +1,93 @@
+.\"
+.\" Manpage of lifo type for Undefined-C library
+.\"
+.\" Created: 03/09/17 by Juillard Jean-Baptiste
+.\" Updated: 03/09/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH LIFO 3 "03/09/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+lifo \- Sous-ensemble des structures LIFO
+
+.SH SYNOPSYS
+.TP
+.I Include
+.B #include <stdlst.h>
+.TP
+.I Structure
+
+.B typedef struct		lifo_s
+.br
+.B {
+.br
+.BI "	void			" *key ;
+.br
+.BI "	size_t		" size ;
+.br
+.BI "	struct lifo_s	" *next ;
+.br
+.B }				lifo_t;
+
+.TP
+.I Fonctions
+
+lifo_push					\- Ajoute un maillon sur le dessus de la pile.
+.br
+lifo_pop					\- Retire le maillon se trouvant sur le dessus de la pile.
+.br
+lifo_purge				\- Supprime tous les maillon de la pile.
+.br
+lifo_map					\- Mappe une pile.
+
+.SH DESCRIPTION
+.TP
+.RB "Les structures LIFO utilisent le type " lifo_t " et suivent les regles suivantes:"
+
+.RB "- Toute structure LIFO initialise a " NULL " est vide."
+.RI "Les elements sont lies les uns aux autres par le champ " next
+.RB "du type " lifo_t " qui point vers l'element suivant dans la pile,"
+.RI "le dernier element de la pile a son champ " next
+.RB "a " NULL ". Le premier element de la liste est donc le dernier a avoir ete"
+.RB "ajoute (LIFO). Ce mecanisme structurel du type " lifo_t " est le meme que"
+.RB "pour les types " sslst_t "(3) et " slst_t "(3) ce qui permet de caster"
+.R "vers ces derniers sans autre modification que celle du type de pointeur."
+
+.RB "- Toute structure LIFO doit comporter au maximum " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ") elements,"
+.RB "afin de rester compatible avec les autres types de liste."
+
+.RB "- Tout element d'une structure LIFO est valide seulement si"
+.RI "son champ " key
+.RB "pointe un " objet " quelquonque valide"
+.RI "et que son champ " size
+.RB "vaut " sizeof(objet) .
+
+.SH NOTES
+
+.SH EXEMPLES
+.TP
+.I ~/libuc/examples/shunting-yard/
+.R Transformation d'expression numerique infixe en expression postfixe (RPN).
+
+.SH AUTEUR
+.R "Juillard Jean-Baptiste"
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), "  mlifo_t "(3), " sclst_t "(3), " fifo_t "(3),"
+.BR sslst_t "(3), " scslst_t (3)

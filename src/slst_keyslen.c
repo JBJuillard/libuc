@@ -23,9 +23,6 @@
 #include <stddef.h>
 #include <errno.h>
 #include <stdint.h>
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
 #include "stdlst.h"
 
 size_t	slst_keyslen(slst_t **lst)
@@ -36,9 +33,6 @@ size_t	slst_keyslen(slst_t **lst)
 	if (!lst)
 	{
 		errno = EINVAL;
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		return (0);
 	}
 	sz = 0;
@@ -49,9 +43,6 @@ size_t	slst_keyslen(slst_t **lst)
 		if (sz > (SIZE_MAX - ptr->size))
 		{
 			errno = EOVERFLOW;
-#if defined(DEBUG) && (DEBUG == 1)
-			assert(EOVERFLOW);
-#endif
 			return (0);
 		}
 		sz += ptr->size;

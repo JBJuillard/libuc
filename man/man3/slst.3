@@ -46,68 +46,160 @@ slst \- Sous-ensemble des listes non-ordonnees lineaires simplement chainees.
 
 .TP
 .I Fonctions
-slst_new									\- Creer un maillon vide de type slst.
+.R "slst_new									"
+.RB "- Creer un maillon vide de type " slst_t .
 .br
-slst_delelm								\- Supprime un maillon de type slst_t.
+.R "slst_delelm								"
+.RB "- Supprime un maillon de type " slst_t .
 .br
-slst_isempty								\- Test si une liste de type slst_t est vide.
+.R "slst_isempty								"
+.RB "- Test si une liste de type " slst_t " est vide."
 .br
-slst_len									\- Retourne la taille d'une liste de type slst_t.
+.R "slst_len									"
+.RB "- Retourne la taille d'une liste de type " slst_t .
 .br
-slst_previous, slst_next						\- Retourne l'element precedent/suivant dans une liste de type slst_t.
+.R "slst_previous, slst_next						"
+.RB "- Retourne l'element precedent/suivant dans une liste de type " slst_t .
 .br
-slst_head, slst_tail						\- Retourne un mappage de N element en debut/fin de liste de type slst_t.
+.R "slst_head, slst_tail						"
+.RB "- Retourne un mappage de N element en debut/fin de liste de type " slst_t .
 .br
-slst_put, slst_putn							\- Ajoute un maillon dans une liste de type slst_t.
+.R "slst_put, slst_putn							"
+.RB "- Ajoute un maillon dans une liste de type " slst_t .
 .br
-slst_get, slst_getn							\- Enleve un maillon dans une liste de type slst_t.
+.R "slst_get, slst_getn							"
+.RB "- Enleve un maillon dans une liste de type " slst_t .
 .br
-slst_del, slst_deln, slst_delp, slst_delk		\- Supprime un maillon dans une liste de type slst_t.
+.R "slst_del, slst_deln, slst_delp, slst_delk		"
+.RB "- Supprime un maillon dans une liste de type " slst_t .
 .br
-slst_purge								\- Supprime l'ensemble des maillons d'une liste de type slst_t.
+.R "slst_purge								"
+.RB "- Supprime l'ensemble des maillons d'une liste de type " slst_t .
 .br
-slst_xtrc, slst_xtrcn, slst_xtrck, slst_xtrcp	\- Extrait un maillon d'une liste de type slst_t.
+.R "slst_xtrc, slst_xtrcn, slst_xtrck, slst_xtrcp	"
+.RB "- Extrait un maillon d'une liste de type " slst_t .
 .br
-slst_rch, slst_rrch							\- Recherche, recursive ou non, de la premiere occurence d'un maillon dans une liste de type slst_t.
+.R "slst_rch, slst_rrch							"
+.R "- Recherche, recursive ou non, de la premiere occurence d'un maillon dans"
+.RB "une liste de type " slst_t .
 .br
-slst_xrch, slst_xrrch						\- Recherche exhaustive, recursive ou non, d'un maillon dans une liste de type slst_t.
+.R "slst_xrch, slst_xrrch						"
+.R "- Recherche exhaustive, recursive ou non, d'un maillon dans une liste de"
+.RB "type " slst_t .
 .br
-slst_cmp, slst_rcmp							\- Comparaison, recursive ou non, entre deux listes de type slst_t.
+.R "slst_cmp, slst_rcmp							"
+.RB "- Comparaison, recursive ou non, entre deux listes de type " slst_t .
 .br
-slst_diff, slst_rdiff						\- Difference (comparaison exhaustive), recursive ou non, entre deux listes de type slst_t.
+.R "slst_diff, slst_rdiff						"
+.RB "- Difference (comparaison exhaustive), recursive ou non, entre deux listes"
+.RB "de type " slst_t .
 .br
-slst_cpy, slst_rcpy							\- Copie, recursive ou non, d'une liste de type slst_t.
+.R "slst_cpy, slst_rcpy							"
+.RB "- Copie, recursive ou non, d'une liste de type " slst_t .
 .br
-slst_rev									\- Inverse une liste de type slst_t.
+.R "slst_rev									"
+.RB "- Inverse une liste de type " slst_t .
 .br
-slst_cat									\- Concatene deux listes de type slst_t.
+.R "slst_cat									"
+.RB "- Concatene deux listes de type " slst_t .
 .br
-slst_cut, slst_cutn, slst_cutp, slst_cutk		\- Coupe une liste de type slst_t en deux.
+.R "slst_cut, slst_cutn, slst_cutp, slst_cutk		"
+.RB "- Coupe une liste de type " slst_t " en deux."
 .br
-slst_apply								\- Applique une fonction sur chaque maillon d'une liste de type slst_t.
+.R "slst_apply								"
+.RB "- Applique une fonction sur chaque maillon d'une liste de type " slst_t .
 .br
-slst_XYZsrt, slst_XYZrsrt					\- Trie, recursif ou non, d'une liste de type slst_t avec l'algorithme XYZ.
+.R "slst_keyslen								"
+.RB "- Retourne la taille totale des valeurs cles d'une liste de type " slst_t .
 .br
-slst2XYZ									\- Cast une liste de type slst_t en une liste de type XYZ.
+.R "slst_keysdup								"
+.RB "- Retourne un dump contenant l'ensemble des valeurs cles d'une liste de"
+.RB "type " slst_t .
 .br
-slst_map									\- Mappage de liste de type slst_t.
+.R "slst_slctsrt, slst_slctrsrt					"
+.RB "- Trie par selection(selection sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_nsrtsrt, slst_nsrtrsrt					"
+.RB "- Trie par insertion (insertion sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_bbsrt, slst_bbrsrt						"
+.RB "- Trie a bulle (bubble sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_cmbsrt, slst_cmbrsrt					"
+.RB "- Trie a peigne (comb sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_mrgsrt, slst_mrgrsrt					"
+.RB "- Trie fusion (merge sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_qcksrt, slst_qckrsrt					"
+.RB "- Trie rapide (quick sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_intsrt, slst_intrsrt					"
+.RB "- Trie (introsort), recursif ou non, sur une liste de type " slst_t .
+.br
+.R "slst_shsrt, slst_shrsrt						"
+.RB "- Trie de Shell (Shell sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_heapsrt, slst_heaprsrt					"
+.RB "- Trie par tas (heap sort), recursif ou non, sur une liste de"
+.RB "type " slst_t .
+.br
+.R "slst_random								"
+.RB "- Melange aleatoire sur une liste de type " slst_t .
+.br
+.\" .R "slst_XYZsrt, slst_XYZrsrt					"
+.\" .RB "- Trie, recursif ou non, sur une liste de type " slst_t .
+.br
+.R "slst2lifo									"
+.RB "- Transforme une liste de type " slst_t " en une liste de type " lifo_t .
+.br
+.R "slst2sslst								"
+.RB "- Transforme une liste de type " slst_t " en une liste de type " sslst_t .
+.br
+.R "slst2sclst								"
+.RB "- Transforme une liste de type " slst_t " en une liste de type " sclst_t .
+.br
+.R "slst2fifo									"
+.RB "- Transforme une liste de type " slst_t " en une liste de type " fifo_t .
+.br
+.R "slst2scslst								"
+.RB "- Transforme une liste de type " slst_t " en une liste de type " scslst_t .
+.br
+.R "slst_map									"
+.RB "- Mappage de liste de type " slst_t .
 
 .SH DESCRIPTION
 .TP
-.RB "Les listes non-ordonnees lineaires simplement chainees utilisent le type " slst_t " et suivent les regles suivantes:"
+.RB "Les listes non-ordonnees lineaires simplement chainees (type " slst_t ") suivent les regles suivantes:"
 
-.RB "- Toute liste initialise a " NULL " est vide."
-.RI "Les elements sont lies les uns aux autres par le champ " next
+.RB "- Toute liste de type " slst_t " initialise a " NULL " est vide."
+
+.RB "- Une liste de type " slst_t " est adresse par par son premier element."
+
+.RI "- Les elements d'une liste sont lies les uns aux autres par le champ " next
 .RB "du type " slst_t " qui point vers l'element suivant dans la liste,"
 .RI "le dernier element de la liste a son champ " next
-.RB "a " NULL ". Le premier element de la liste est donc le dernier a avoir ete ajoute (LIFO)."
-.RB "Ce mecanisme structurel du type " slst_t " est le meme que pour les types " sslst_t "(3) et " lifo_t (3)
-.R "ce qui permet de caster vers ces dernier sans autre modification que celle du type de pointeur."
+.RB "a " NULL.
+
+.RB "- Les elements sont ajoute en tete d'une liste de type " slst_t ,
+.R "le premier element de la liste est donc le dernier a avoir ete ajoute"
+.RB "(structre " LIFO ": " L "ast " I "n " F "irst " O ut).
+.RB "Ce mecanisme structurel du type " slst_t " est le meme que pour les types"
+.BR sslst_t "(3) et " lifo_t "(3) ce qui permet de caster depuis et vers ces"
+.R "dernier."
 
 .RB "- Toute liste de type " slst_t " doit comporter au maximum " SIZE_MAX
 .RI "(definit dans " /usr/include/stdint.h ") elements,"
 .RB "sous peine de generrer une erreur " EOVERFLOW
-.RI "(definit dans " /usr/include/errno.h ") dans les fonctions utilisant l'index des elements dans la liste ou la taille de la liste."
+.RB ( errno "(3)) dans les fonctions utilisant l'index des elements dans la"
+.R "liste ou la taille de la liste."
 
 .RB "- Tout element de liste du type " slst_t " est valide seulement si"
 .RI "son champ " key
@@ -119,10 +211,12 @@ slst_map									\- Mappage de liste de type slst_t.
 .SH NOTES
 
 .SH EXEMPLES
-.RI "Plusieurs exemples peuvent etre trouve dans le repertoire " ~/libuc/examples/stdlst/slst/ .
+.R "Plusieurs exemples peuvent etre trouve dans le repertoire "
+.IR ~/libuc/examples/ .
 
 .SH AUTEUR
 .R "Juillard Jean-Baptiste"
 
 .SH VOIR AUSSI
-.BR stdlst "(3), " mslst_t "(3), "  lifo_t "(3), " sclst_t "(3), "sslst_t "(3), " scslst_t "(3)"
+.BR stdlst "(3), " mslst_t "(3), "  lifo_t "(3), " sslst_t "(3), "
+.BR sclst_t "(3), " fifo_t "(3), " scslst_t "(3)"

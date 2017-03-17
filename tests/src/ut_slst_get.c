@@ -48,14 +48,14 @@ int	ut_slst_get_interface(int N)
 	err = 0xFF;
 	while (i < 2)
 	{
-		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 			return (errno);
 		if ((ut_list[i]).lst)
 			lptr = &lst;
 		else
 			lptr = (slst_t **)(NULL);
 		j = 0;
-		while (j <= N)
+		while (j < N)
 		{
 			errno = 0;
 			ret = slst_get(lptr);
@@ -86,12 +86,14 @@ int	ut_slst_get_memchk(int N)
 	slst_t	*lst;
 	void	*k;
 
-	if ((lst = _gen_slst(0, N, 1)) == (slst_t*)(NULL))
+	if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 		return (errno);
-	while (lst && N-- >= 0)
+	while (lst && N-- > 0)
 	{
 		if (!(k = slst_get(&lst)) || errno)
 		{
+			if (k)
+				free(k);
 			slst_purge(&lst, &_ofree);
 			if (errno)
 				return (errno);

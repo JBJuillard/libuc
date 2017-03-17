@@ -1,0 +1,75 @@
+.\"
+.\" Manpage of lifo_map function for Undefined-C library
+.\"
+.\" Created: 03/09/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH LIFO_MAP 3 "03/16/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+lifo_map \- Mappage de structure LIFO
+
+.SH SYNOPSYS
+.B #include <stdlst.h>
+
+.BI "mlifo_t	*lifo_map(lifo_t " **stk );
+
+.SH DESCRIPTION
+.B lifo_map
+.RI "retourne un mappage de la pile " stk ". " stk " doit etre un argument"
+.RB "valide tel que decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno "(3) est modifier par " lifo_map " de la"
+.RB "maniere decrite dans la section " NOTES .
+
+.SH VALEUR DE RETOUR
+.B lifo_map
+.RI "retourne un pointeur sur le mappage de la pile " stk .
+
+.SH ERREURS
+.TP
+.B 0
+.RB "L'operation s'est termine sans erreur, " errno "(3) est mis a " 0 .
+.TP
+.B EINVAL
+.RB "Si la fonction a ete appele avec au moins un argument invalide, " errno (3)
+.RB "est mis a " EINVAL .
+.TP
+.B ENOMEM
+.RB "Si une erreur d'allocation survient lors d'un appel a " malloc "(3),"
+.BR errno "(3) devrait etre mis a " ENOMEM " par " malloc (3).
+
+.SH NOTES
+.RI "- " stk " doit etre different de"
+.RB (( lifo_t " **)(" NULL )),
+.RI "notez que " *stk
+.RB "= ((" lifo_t " *)(" NULL ))
+.R est valide et designe une pile vide.
+
+.SH BUGS
+.R Aucun bug signale.
+
+.SH EXEMPLES
+
+
+.SH AUTEUR
+.R Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR lifo_push "(3), " lifo_pop "(3), " lifo_purge "(3),"
+.BR stdlst "(3), " mlifo "(3), " slst (3)

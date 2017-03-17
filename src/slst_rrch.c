@@ -2,7 +2,7 @@
 ** slst_rrch function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/03/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,42 +20,52 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stddef.h>
-#include	<errno.h>
-#include	<stdint.h>
+#include <stddef.h>
+#include <errno.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-slst_t		*slst_rrch(	slst_t **lst,
-						const void *key,
-						const size_t size,
-						int (*fcmp)(const void *, const size_t,
-									const void *, const size_t))
+slst_t	*slst_rrch(slst_t **lst,
+					const void *key,
+					const size_t size,
+					int (*fcmp)(const void *, const size_t,
+								const void *, const size_t))
 {
 	register slst_t	*ptr;
-	register slst_t	*last;
+	register slst_t	**tab;
+	register size_t	i;
+
 
 	if (!lst || !key || !size || size > SIZE_MAX || !fcmp)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ((slst_t *)(NULL));
 	}
 	errno = 0;
+	if (((i = slst_len(lst)) == 0 && errno)
+		|| (tab = (slst_t **)calloc(i, sizeof(slst_t *))) == (slst_t **)(NULL))
+		return ((slst_t *)(NULL));
+	i = 0;
 	ptr = *lst;
-	last = (slst_t *)(NULL);
 	while (ptr)
 	{
-		if (!(*fcmp)(	key, size,
-						(const void *)(ptr->key), (const size_t)(ptr->size)))
-			last = ptr;
+		tab[i++] = ptr;
 		ptr = ptr->next;
 	}
-	return (last);
+	--i;
+	while (1)
+	{
+		if (!(*fcmp)(key, size,
+					 (const void *)((tab[i])->key), (const size_t)((tab[i])->size)))
+		{
+			ptr = tab[i];
+			break ;
+		}
+		if (i == 0)
+			break ;
+	    i--;
+	}
+	free((void *)(tab));
+	return (ptr);
 }

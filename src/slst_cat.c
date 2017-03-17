@@ -22,9 +22,6 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#if defined(DEBUG) && (DEBUGG ==1)
-# include <assert.h>
-#endif
 #include "stdlst.h"
 
 slst_t	*slst_cat(slst_t **lst1, slst_t **lst2)
@@ -34,9 +31,6 @@ slst_t	*slst_cat(slst_t **lst1, slst_t **lst2)
 	if (!lst1 || !lst2)
 	{
 		errno = EINVAL;
-#if defined(DEBUG) && (DEBUGG ==1)
-		assert(EINVAL);
-#endif
 		return ((slst_t *)(NULL));
 	}
 	errno = 0;

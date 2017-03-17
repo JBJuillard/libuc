@@ -1,0 +1,75 @@
+.\"
+.\" Manpage of lifo_pop function for Undefined-C library
+.\"
+.\" Created: 03/09/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH LIFO_POP 3 "03/16/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+lifo_pop \- Retourne la valeur se trouvant au sommet d'une structure LIFO
+
+.SH SYNOPSYS
+.B #include <stdlst.h>
+
+.BI "void	*lifo_pop(lifo_t " **stk );
+
+.SH DESCRIPTION
+.B lifo_pop
+.RB "libere, avec " free "(3), le premier element au sommet de la"
+.RI "pile " stk " (e.i.: le dernier ajoute) et  retourne sa valleur cle."
+.IR stk " doit etre un argument valide tel que decrit dans la section "
+.BR NOTES .
+.BR errno "(3) est toujours modifier par " lifo_pop " tel que decrit dans"
+.RB "la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B lifo_pop
+.RI "retourne un pointeur sur la valeur cle qui etait contenut dans le premier"
+.RI "element au sommet de la pile " stk " avant sa liberation."
+.RB "En cas d'erreur, " NULL " est retourner et " errno "(3) est definit."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "L'operation s'est termine sans erreur, " errno "(3) est mis a " 0 .
+.TP
+.B EINVAL
+.RB "Si la fonction a ete appele avec au moins un argument invalide, " errno (3)
+.RB "est mis a " EINVAL .
+
+.SH NOTES
+.RI "- " stk " doit etre different de"
+.RB (( lifo_t " **)( " NULL )),
+.RI " notez que " *stk
+.RB "= ((" lifo_t " *)( " NULL )),
+.R est valide et designe une pile vide.
+
+.SH BUGS
+.R Aucun bug signale.
+
+.SH EXEMPLES
+.RB "Voir " lifo_push (3).
+
+.SH AUTEUR
+.R Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR lifo_push "(3), " lifo_purge "(3), " lifo_map "(3),"
+.BR stdlst "(3), " mlifo "(3), " slst "(3)"

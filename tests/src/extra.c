@@ -1,8 +1,8 @@
 /*
 ** extra function for units tests of Undefined-C library
 **
-** Created: 28/01/2017 by Juillard Jean-Baptiste
-** Updated: 28/01/2017 by Juillard Jean-Baptiste
+** Created: 01/28/2017 by Juillard Jean-Baptiste
+** Updated: 01/12/2017 by Juillard Jean-Baptiste
 **
 **
 ** This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 #include <errno.h>
 #include <stdint.h>
 #include <limits.h>
-
+#include <stdio.h>
 #include "stdlst.h"
 
 int	get_int(char *str)
@@ -134,6 +134,35 @@ void	*_ocpy(void *key, size_t size)
 	return (ptr);
 }
 
+int		_ofunc(void **key, size_t *size)
+{
+	size_t	offset;
+
+	if (!key || !*key || *size != sizeof(long long))
+	{
+		errno = EINVAL;
+		return (1);
+	}
+	offset = 0;
+	while (offset < *size)
+		*((unsigned char *)((*key) + offset++)) = 0x0;
+	return (0);
+}
+
+int		_oprint(void **k, size_t *s)
+{
+	static size_t	i = 0;
+
+	if (!k || !*k || !s || !*s)
+	{
+		errno = EINVAL;
+		return (1);
+	}
+	printf("%zi:\t%lli\n", i, *((long long *)(*k)));
+	i++;
+	return (0);
+}
+
 slst_t	*_gen_slst(long long start, long long end, long long step)
 {
 	slst_t	*lst;
@@ -150,33 +179,54 @@ slst_t	*_gen_slst(long long start, long long end, long long step)
 	lst = (slst_t *)(NULL);
 	while (start <= end)
 	{
-		if ((tmp = (slst_t *)malloc(sizeof(slst_t))) == (slst_t *)(NULL)
+		if ((tmp = (slst_t *)malloc(sizeof(sclst_t))) == (slst_t *)(NULL)
 			|| (tmp->key = malloc(sizeof(long long))) == NULL)
 		{
-			slst_purge(&lst, &_ofree);
+			sclst_purge(&lst, &_ofree);
 			return ((slst_t *)(NULL));
 		}
 		*((long long *)(tmp->key)) = start;
 		tmp->size = sizeof(long long);
 		tmp->next = lst;
-		lst= tmp;
+		lst = tmp;
 		start += step;
 	}
 	return (lst);
 }
 
-int		_ofunc(void *key, size_t size)
+sclst_t	*_gen_sclst(long long start, long long end, long long step)
 {
-	size_t	offset;
+	sclst_t	*lst;
+	sclst_t	*tmp;
 
-	if (!key || size != sizeof(long long))
+	if ((start < end && step <= 0)
+		|| (start > end && step >= 0)
+		|| !step)
 	{
 		errno = EINVAL;
-		return (0);
+		return ((sclst_t *)(NULL));
 	}
-	offset = 0;
-	while (offset < size)
-		*((unsigned char *)(key + offset++)) = 0x0;
-	free(key);
-	return (0);
+	errno = 0;
+	lst = (sclst_t *)(NULL);
+	while (start <= end)
+	{
+		if ((tmp = (sclst_t *)malloc(sizeof(sclst_t))) == (sclst_t *)(NULL)
+			|| (tmp->key = malloc(sizeof(long long))) == NULL)
+		{
+			sclst_purge(&lst, &_ofree);
+			return ((sclst_t *)(NULL));
+		}
+		*((long long *)(tmp->key)) = start;
+		tmp->size = sizeof(long long);
+		if (lst)
+		{
+			tmp->next = lst->next;
+			lst->next = tmp;
+		}
+		else
+			tmp->next = tmp;
+		lst = tmp;
+		start += step;
+	}
+	return (lst);
 }

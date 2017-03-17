@@ -1,0 +1,212 @@
+.\"
+.\" Manpage of fifo_push function for Undefined-C library
+.\"
+.\" Created: 03/15/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH FIFO_PUSH 3 "03/16/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+fifo_push \- Ajoute un element en fin de file
+.SH SYNOPSYS
+.B #include <stdlst.h>
+
+.BI "fifo_t	*fifo_push(lifo_t " **que ", void " *key ", size_t " size );
+
+.SH DESCRIPTION
+.B fifo_push
+.RI "ajoute un element contenant une valeur cle " key " d'une taille de " size
+.RI "octets en fin de file " que .
+.RB "Ce nouvel element est alloue avec " malloc "(3), les files doivent donc"
+.RB "etre libere soit avec " fifo_pop " soit avec " fifo_purge " ou soit avec"
+.BR free (3).
+.IR que ", " key " et " size " doivent etre des arguments valides tels qu'ils"
+.RB "sont decrit dans la section " NOTES .
+.BR errno "(3) est toujours modifier par " fifo_push ", voir la section"
+.BR ERREURS .
+
+.SH VALEUR DE RETOUR
+.B fifo_push
+.R retourne un pointeur sur la nouvelle fin de file (e.i.: l'element ajoute).
+.RB "En cas d'erreur, " NULL " est retourner et " errno "(3) est definit."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "L'operation s'est terminer sans erreur, " errno "(3) est mis a " 0 .
+.TP
+.B EINVAL
+.RB "Si la fonction a ete appele avec au moins un argument invalide, " errno (3)
+.RB "est mis a " EINVAL .
+.TP
+.B ENOMEM
+.RB "Si une erreur d'allocation survient lors d'un appel a " malloc "(3),"
+.BR errno "(3) devrait etre mis a " ENOMEM " par " malloc (3).
+
+.SH NOTES
+.RI "- " que " doit etre different de"
+.RB (( fifo_t " **)(" NULL )),
+.RI "notez que " *que
+.RB "= ((" fifo_t " *)(" NULL ))
+.R est valide et designe une file vide.
+
+.RI "- " key " doit pointer un objet valide"
+.RB "(!= " NULL ).
+
+.RI "- " size " doit etre different"
+.RB "de " 0 " et inferieur ou egal a " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ).
+
+.SH BUGS
+.R "Aucun bug signale."
+
+.SH EXEMPLES
+
+.TP
+.RB "Exemple avec une file d'entier:"
+
+
+#include <stdlib.h>
+.br
+#include <errno.h>
+.br
+#include <stdlst.h>
+.br
+#include <stdio.h>
+
+
+static void	_ofree(void *k, size_t z)
+.br
+{
+.br
+	if (!k || z != sizeof(int))
+.br
+	{
+.br
+		errno = EINVAL;
+.br
+		return ;
+.br
+	}
+.br
+	free(k);
+.br
+}
+
+
+int			main(void)
+.br
+{
+.br
+	fifo_t	*que;
+.br
+	void		*tmp;
+.br
+	int		i;
+
+
+	/*
+.br
+	** Creation d'une file d'entier
+.br
+	*/
+.br
+	que = (fifo_t *)(NULL);
+.br
+	i = 0;
+.br
+	while (i < 10)
+.br
+	{
+.br
+		if ((tmp = malloc(sizeof(int)) )== NULL)
+.br
+		{
+.br
+			/*
+.br
+			** En cas d'erreur on vide la file
+.br
+			*/
+.br
+			fifo_purge(&que, &_ofree);
+.br
+			return (1);
+.br
+		}
+.br
+		*((int *)(tmp)) = i;
+.br
+		if (fifo_push(&que, tmp, sizeof(int)) == (fifo_t *)(NULL))
+.br
+		{
+.br
+			free(tmp);
+.br
+			fifo_purge(&que, &_ofree);
+.br
+			return (1);
+.br
+		}
+.br
+		i++;
+.br
+	}
+
+.br
+	/*
+.br
+	** Utilisation de la file
+.br
+	*/
+.br
+	while (que)
+.br
+	{
+.br
+		if ((tmp = fifo_pop(&que)) == NULL)
+.br
+		{
+.br
+			fifo_purge(&que, &_ofree);
+.br
+			return (1);
+.br
+		}
+.br
+		printf("%i\\n", *((int *)(tmp)));
+.br
+		free(tmp);
+.br
+	}
+
+
+	return (0);
+.br
+}
+
+.TP
+.RI "Un exemple d'implentation de l'algorithme shunting-yard utilisant les files se trouve dans " examples/shunting-yard/ .
+
+.SH AUTEUR
+.R Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR fifo_pop "(3), " fifo_purge "(3), " fifo_map "(3),"
+.BR stdlst "(3), " sclst "(3), " mfifo (3)

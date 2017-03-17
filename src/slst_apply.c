@@ -2,7 +2,7 @@
 ** slst_apply function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/26/2017 by Juillard Jean-Baptiste
+** Updated: 03/09/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -21,9 +21,6 @@
 */
 
 #include <errno.h>
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
 #include "stdlst.h"
 
 int	slst_apply(slst_t **lst, int (*func)(void **, size_t *))
@@ -34,16 +31,16 @@ int	slst_apply(slst_t **lst, int (*func)(void **, size_t *))
 	if (!lst || !func)
 	{
 		errno = EINVAL;
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
-		return (0);
+		return (-1);
 	}
 	errno = 0;
 	ptr = *lst;
 	while (ptr)
 	{
-		if ((ret = (*func)(&(ptr->key), &(ptr->size))) || errno)
+		if ((ret = (*func)(&(ptr->key), &(ptr->size)))
+			|| errno
+			|| !(ptr->key)
+			|| !(ptr->size))
 			return (ret);
 		ptr = ptr->next;
 	}

@@ -2,7 +2,7 @@
 ** slst_delk function for Undefined-C library
 **
 ** Created: 28/12/2016 by Juillard Jean-Baptiste
-** Updated: 01/31/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,18 +20,18 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stddef.h>
-#include	<errno.h>
-#include	<stdlib.h>
-#include	<stdint.h>
+#include <stddef.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-void	slst_delk(slst_t **lst, const void *key, const size_t size, int (*fcmp)(const void *, const size_t, const void *, const size_t), void (*fdel)(void *, size_t))
+void	slst_delk(slst_t **lst,
+					const void *key,
+					const size_t size,
+					int (*fcmp)(const void *, const size_t,
+								const void *, const size_t),
+					void (*fdel)(void *, size_t))
 {
 	register slst_t	*tmp;
 	register slst_t	**addr;
@@ -39,9 +39,6 @@ void	slst_delk(slst_t **lst, const void *key, const size_t size, int (*fcmp)(con
 	errno = 0;
 	if (!lst || !key || !size || size > SIZE_MAX || !fcmp || !fdel)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ;
 	}
@@ -55,14 +52,7 @@ void	slst_delk(slst_t **lst, const void *key, const size_t size, int (*fcmp)(con
 		{
 			(*fdel)(tmp->key, tmp->size);
 			if (errno)
-#if defined(DEBUG) && (DEBUG == 1)
-			{
-				assert(errno);
-#endif
 				return ;
-#if defined(DEBUG) && (DEBUG == 1)
-			}
-#endif
 			*addr = tmp->next;
 			tmp->key = NULL;
 			tmp->size = 0;
@@ -73,8 +63,4 @@ void	slst_delk(slst_t **lst, const void *key, const size_t size, int (*fcmp)(con
 		addr = &(tmp->next);
 		tmp = tmp->next;
 	}
-#if defined(DEBUG) && (DEBUG == 1)
-	assert(ERANGE);
-#endif
-	errno = ERANGE;
 }

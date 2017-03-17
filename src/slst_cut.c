@@ -2,7 +2,7 @@
 ** slst_cut function for Undefined-C library
 **
 ** Created: 02/23/2017 by Juillard Jean-Baptiste
-** Updated: 02/23/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -22,9 +22,6 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
 #include "stdlst.h"
 
 slst_t	*slst_cut(slst_t **lst)
@@ -36,9 +33,6 @@ slst_t	*slst_cut(slst_t **lst)
 	if (!lst)
 	{
 		errno = EINVAL;
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		return ((slst_t *)(NULL));
 	}
 	else if (!*lst)

@@ -1,8 +1,8 @@
 /*
 ** slst_purge function for Undefined-C library
 **
-** Created: 29/01/2017 by Juillard Jean-Baptiste
-** Updated: 29/01/2017 by Juillard Jean-Baptiste
+** Created: 01/29/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 **
 ** This program is free software; you can redistribute it and/or
@@ -21,24 +21,16 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stdlib.h>
-#include	<errno.h>
+#include <stdlib.h>
+#include <errno.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-void		slst_purge(slst_t **lst, void (*fdel)(void *, size_t))
+void	slst_purge(slst_t **lst, void (*fdel)(void *, size_t))
 {
 	register slst_t	*tmp;
 
 	if (!lst || !fdel)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ;
 	}
@@ -48,27 +40,11 @@ void		slst_purge(slst_t **lst, void (*fdel)(void *, size_t))
 		tmp = *lst;
 		(*fdel)(tmp->key, tmp->size);
 		if (errno)
-#if defined(DEBUG) && (DEBUG == 1)
-		{
-			assert(errno);
-#endif
 			return ;
-#if defined(DEBUG) && (DEBUG == 1)
-		}
-#endif
+		*lst = tmp->next;
 		tmp->key = NULL;
 		tmp->size = 0;
-		*lst = tmp->next;
 		tmp->next = (slst_t *)(NULL);
 		free((void *)(tmp));
-		if (errno)
-#if defined(DEBUG) && (DEBUG == 1)
-		{
-			assert(errno);
-#endif
-			return ;
-#if defined(DEBUG) && (DEBUG == 1)
-		}
-#endif
 	}
 }

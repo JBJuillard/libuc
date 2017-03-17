@@ -2,7 +2,7 @@
 ** slst_rdiff function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/06/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,31 +24,24 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <stdint.h>
-
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
-
 #include "stdlst.h"
 
-size_t		slst_rdiff(	slst_t **lst1,
-						mslst_t **diff1,
-						slst_t **lst2,
-						mslst_t **diff2,
-						int (*fcmp)(const void *, const size_t,
-									const void *, const size_t))
+size_t	slst_rdiff(slst_t **lst1,
+					mslst_t **diff1,
+					slst_t **lst2,
+					mslst_t **diff2,
+					int (*fcmp)(const void *, const size_t,
+								const void *, const size_t))
 {
 	register slst_t		*tmp1;
 	register slst_t		*tmp2;
 	register mslst_t	*d1;
 	register mslst_t	*d2;
 	register size_t		ret;
+	register int		err;
 
 	if (!lst1 || !diff1 || *diff1 || !lst2 || !diff2 || *diff2 || !fcmp)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return (0);
 	}
@@ -69,47 +62,36 @@ size_t		slst_rdiff(	slst_t **lst1,
 			|| (!tmp1 && tmp2)
 			|| (tmp1 && !tmp2))
 		{
-			if (tmp1)
-			{
-				if ((d1 = (mslst_t *)malloc(sizeof(mslst_t)))
+			if ((d1 = (mslst_t *)malloc(sizeof(mslst_t)))
+					== (mslst_t *)(NULL)
+				|| (d2 = (mslst_t *)malloc(sizeof(mslst_t)))
 					== (mslst_t *)(NULL))
-#if defined(DEBUG) && (DEBUG == 1)
-				{
-					assert(ENOMEM);
-#endif
-					break ;
-#if defined(DEBUG) && (DEBUG == 1)
-				}
-#endif
-				d1->kptr = &(tmp1->key);
-				d1->sptr = &(tmp1->size);
-				d1->next = *diff1;
-				*diff1 = d1;
-			}
-			if (tmp2)
 			{
-				if ((d2 = (mslst_t *)malloc(sizeof(mslst_t)))
-					== (mslst_t *)(NULL))
-#if defined(DEBUG) && (DEBUG == 1)
-				{
-					assert(ENOMEM);
-#endif
-					break ;
-#if defined(DEBUG) && (DEBUG == 1)
-				}
-#endif
-				d2->kptr = &(tmp2->key);
-				d2->sptr = &(tmp2->size);
-				d2->next = *diff2;
-				*diff2 = d2;
+				if (!errno)
+					errno = ENOMEM;
+				err = errno;
+				if (d1)
+					free((void *)(d1));
+				mslst_purge(diff1);
+				mslst_purge(diff2);
+				errno = err;
+				return (0);
 			}
+			d1->kptr = ((tmp1) ? &(tmp1->key) : (void **)(NULL));
+			d1->sptr = ((tmp1) ? &(tmp1->size) : (size_t *)(NULL));
+			d1->next = *diff1;
+			*diff1 = d1;
+			d2->kptr = ((tmp2) ? &(tmp2->key) : (void **)(NULL));
+			d2->sptr = ((tmp2) ? &(tmp2->size) : (size_t *)(NULL));
+			d2->next = *diff2;
+			*diff2 = d2;
 			if (ret == SIZE_MAX)
 			{
-#if defined(DEBUG) && (DEBUG == 1)
-				assert(EOVERFLOW);
-#endif
-				errno = EOVERFLOW;
-				return (ret);
+				err = EOVERFLOW;
+				mslst_purge(diff1);
+				mslst_purge(diff2);
+				errno = err;
+				return (0);
 			}
 			ret++;
 		}

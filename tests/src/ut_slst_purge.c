@@ -49,7 +49,7 @@ int	ut_slst_purge_interface(int N)
 	err = 0xFF;
 	while (i < 3)
 	{
-		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 			return (errno);
 		if ((ut_list[i]).lst)
 			lptr = &lst;
@@ -80,7 +80,7 @@ int	ut_slst_purge_memchk(int N)
 {
 	slst_t	*lst;
 
-	if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+	if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 		return (errno);
 	errno = 0;
 	slst_purge(&lst, &_ofree);

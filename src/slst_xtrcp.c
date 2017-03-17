@@ -2,7 +2,7 @@
 ** slst_xtrcp function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/02/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,17 +20,12 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stddef.h>
-#include	<errno.h>
-#include	<stdlib.h>
+#include <stddef.h>
+#include <errno.h>
+#include <stdlib.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-slst_t		*slst_xtrcp(slst_t **lst, slst_t *ptr)
+slst_t	*slst_xtrcp(slst_t **lst, slst_t *ptr)
 {
 	register slst_t	*tmp;
 	register slst_t	**addr;
@@ -38,9 +33,6 @@ slst_t		*slst_xtrcp(slst_t **lst, slst_t *ptr)
 	errno = 0;
 	if (!lst || !ptr)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ((slst_t *)(NULL));
 	}
@@ -59,9 +51,6 @@ slst_t		*slst_xtrcp(slst_t **lst, slst_t *ptr)
 		addr = &(tmp->next);
 		tmp = tmp->next;
 	}
-#if defined(DEBUG) && (DEBUG == 1)
-	assert(ERANGE);
-#endif
 	errno = ERANGE;
 	return ((slst_t *)(NULL));
 }

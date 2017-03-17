@@ -48,7 +48,7 @@ int	ut_mslst_purge_interface(int N)
 	lst = (slst_t *)(NULL);
 	while (i < 2)
 	{
-		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL)
+		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL)
 			|| (mlst = slst_map(&lst)) == (mslst_t *)(NULL))
 		{
 			if (lst)
@@ -88,7 +88,7 @@ int	ut_mslst_purge_memchk(int N)
 	mslst_t	*mlst;
 
 	lst = (slst_t *)(NULL);
-	if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL)
+	if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL)
 		|| (mlst = slst_map(&lst)) == (mslst_t *)(NULL))
 	{
 		if (lst)

@@ -1,8 +1,8 @@
 /*
-** slst_new function for Undefined-C library
+** slst_newelm function for Undefined-C library
 **
 ** Created: 29/01/2017 by Juillard Jean-Baptiste
-** Updated: 29/01/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 **
 ** This program is free software; you can redistribute it and/or
@@ -21,25 +21,17 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<errno.h>
-#include	<stdlib.h>
+#include <errno.h>
+#include <stdlib.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG ==1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-slst_t		*slst_new(void)
+slst_t	*slst_newelm(void)
 {
 	register slst_t	*ptr;
 
 	errno = 0;
 	if ((ptr = (slst_t *)malloc(sizeof(slst_t))) == (slst_t *)(NULL))
 	{
-#if defined(DEBUG) && (DEBUG ==1)
-		assert(ENOMEM);
-#endif
 		if (!errno)
 			errno = ENOMEM;
 		return ((slst_t *)(NULL));

@@ -2,7 +2,7 @@
 ** slst_cpy function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/23/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -22,9 +22,6 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
 #include "stdlst.h"
 
 slst_t	*slst_cpy(slst_t **lst, void *(*fcpy)(const void *, size_t))
@@ -35,9 +32,6 @@ slst_t	*slst_cpy(slst_t **lst, void *(*fcpy)(const void *, size_t))
 
 	if (!lst || !fcpy)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ((slst_t *)(NULL));
 	}
@@ -53,9 +47,6 @@ slst_t	*slst_cpy(slst_t **lst, void *(*fcpy)(const void *, size_t))
 				errno = ENOMEM;
 			if (tmp)
 				free((void *)(tmp));
-#if defined(DEBUG) && (DEBUG == 1)
-			assert(ENOMEM);
-#endif
 			return (cpy);
 		}
 		tmp->size = ptr->size;

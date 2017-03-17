@@ -2,7 +2,7 @@
 ** slst_head function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/08/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -32,6 +32,7 @@ mslst_t	*slst_head(slst_t **lst, size_t n)
 	register size_t		i;
 	register mslst_t	*head;
 	auto mslst_t		*tmp;
+	register int		err;
 
 	errno = 0;
 	if (!lst || !n || n > SIZE_MAX)
@@ -44,7 +45,7 @@ mslst_t	*slst_head(slst_t **lst, size_t n)
 	ptr = *lst;
 	i = 0;
 	head = (mslst_t *)(NULL);
-	while (ptr && i < n)
+	while (i < n)
 	{
 		if ((tmp = (mslst_t *)malloc(sizeof(mslst_t))) == (mslst_t *)(NULL))
 		{
@@ -54,12 +55,14 @@ mslst_t	*slst_head(slst_t **lst, size_t n)
 			{
 				tmp = head->next;
 				head->next = (mslst_t *)(NULL);
+				err = errno;
 				mslst_purge(&tmp);
+				errno = err;
 			}
 			return (mslst_t *)(NULL);
 		}
-		tmp->kptr = &(ptr->key);
-		tmp->sptr = &(ptr->size);
+		tmp->kptr = ((ptr) ? &(ptr->key) : (void **)(NULL));
+		tmp->sptr = ((ptr) ? &(ptr->size) : (size_t *)(NULL));
 		if (head)
 		{
 			tmp->next = head->next;
@@ -67,8 +70,9 @@ mslst_t	*slst_head(slst_t **lst, size_t n)
 		}
 		else
 			tmp->next = tmp;
+		if (ptr)
+			ptr = ptr->next;
 		head = tmp;
-		ptr = ptr->next;
 		i++;
 	}
 	tmp = head->next;

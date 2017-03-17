@@ -1,0 +1,100 @@
+.\"
+.\" Manpage of fifo type for Undefined-C library
+.\"
+.\" Created: 03/09/17 by Juillard Jean-Baptiste
+.\" Updated: 03/09/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH FIFO 3 "03/09/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+fifo \- Sous-ensemble des structures FIFO
+
+.SH SYNOPSYS
+.TP
+.I Include
+.B #include <stdlst.h>
+.TP
+.I Structure
+
+.B typedef struct		fifo_s
+.br
+.B {
+.br
+.BI "	void			" *key ;
+.br
+.BI "	size_t		" size ;
+.br
+.BI "	struct fifo_s	" *next ;
+.br
+.B }				fifo_t;
+
+.TP
+.I Fonctions
+
+fifo_push					\- Ajoute un element en fin de file.
+.br
+fifo_pop					\- Retire un element en debut de file.
+.br
+fifo_purge				\- Supprime tous les elements de la file.
+.br
+fifo_map					\- Mappe une file.
+
+.SH DESCRIPTION
+.TP
+.RB "Les structures FIFO utilisent le type " fifo_t " et suivent les regles suivantes:"
+
+.RB "- Toute structure FIFO initialise a " NULL " est vide."
+
+.R - Une structure FIFO est adresse par son dernier elements.
+.RI "Les elements sont lies les uns aux autres par le champ " next
+.RB "du type " fifo_t " qui pointe vers l'element suivant dans la file,"
+.RI "le dernier element de la file a son champ " next " qui pointe vers le"
+.RB "premier de la file (liste circulaire)."
+.R Ce qui permet d'acceder au dernier element de la file en O(1) et au premier
+.R de la file en O(2) via une seule adresse.
+
+.R - Les elements sont ajoutes a la fin et retires au debut. Le premier element
+.R de la liste est donc le premier a avoir ete ajoute (FIFO). Ce mecanisme
+.RB "structurel du type " fifo_t " est le meme que pour les types " sclst_t (3)
+.RB "et " scslst_t "(3) ce qui permet de caster vers ces derniers sans autre"
+.R modification que celle du type de pointeur.
+
+.RB "- Toute structure FIFO doit comporter au maximum " SIZE_MAX
+.RI "(definit dans " /usr/include/stdint.h ") elements,"
+.RB "afin de rester compatible avec les autres types de liste."
+
+.RB "- Tout element d'une structure FIFO est valide seulement si"
+.RI "son champ " key
+.RB "pointe un " objet " quelquonque valide"
+.RI "et que son champ " size
+.RB "vaut " sizeof(objet) .
+
+.SH NOTES
+
+.SH EXEMPLES
+.TP
+.I ~/libuc/examples/shunting-yard/
+.R Transformation d'expression numerique infixe en expression postfixe (RPN).
+
+.SH AUTEUR
+.R "Juillard Jean-Baptiste"
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), "  lifo_t "(3), " sclst_t "(3), " mfifo_t "(3),"
+.BR sslst_t "(3), " scslst_t (3)

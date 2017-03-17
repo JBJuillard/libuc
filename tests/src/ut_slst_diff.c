@@ -2,7 +2,7 @@
 ** Units tests of slst_diff function for Undefined-C library
 **
 ** Created: 17/01/2017 by Juillard Jean-Baptiste
-** Updated: 02/03/2017 by Juillard Jean-Baptiste
+** Updated: 03/11/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -63,11 +63,11 @@ int	ut_slst_diff_interface(int N)
 
 	i = 0;
 	err = 0xFF;
-	(ut_list[9]).ret = (unsigned long long)(N) + 1ULL;
+	(ut_list[9]).ret = (unsigned long long)(N);
 	while (i < 10)
 	{
-		if ((lst1 = _gen_slst(0, N, 1)) == (slst_t *)(NULL)
-			|| (lst2 = _gen_slst(0, (N - 1), 1)) == (slst_t *)(NULL))
+		if ((lst1 = _gen_slst(1, N, 1)) == (slst_t *)(NULL)
+			|| (lst2 = _gen_slst(1, (N - 1), 1)) == (slst_t *)(NULL))
 		{
 			if (lst1)
 				slst_purge(&lst1, &_ofree);
@@ -121,8 +121,8 @@ int	ut_slst_diff_memchk(int N)
 	size_t	ret;
 
 	errno = 0;
-	if ((lst1 = _gen_slst(0, N, 1)) == (slst_t *)(NULL)
-		|| (lst2 = _gen_slst(0, (N - 1), 1)) == (slst_t *)(NULL))
+	if ((lst1 = _gen_slst(1, N, 1)) == (slst_t *)(NULL)
+		|| (lst2 = _gen_slst(1, (N - 1), 1)) == (slst_t *)(NULL))
 	{
 		if (lst1)
 			slst_purge(&lst1, &_ofree);
@@ -130,7 +130,7 @@ int	ut_slst_diff_memchk(int N)
 	}
 	mlst1 = (mslst_t *)(NULL);
 	mlst2 = (mslst_t *)(NULL);
-	if ((ret = slst_diff(&lst1, &mlst1, &lst2, &mlst2, &_ocmp)) != (unsigned long long)(N + 1) || errno)
+	if ((ret = slst_diff(&lst1, &mlst1, &lst2, &mlst2, &_ocmp)) != (unsigned long long)(N) || errno)
 	{
 		mslst_purge(&mlst1);
 		mslst_purge(&mlst2);

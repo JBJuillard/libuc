@@ -1,0 +1,72 @@
+.\"
+.\" Manpage of slst2fifo function for Undefined-C library
+.\"
+.\" Created: 03/16/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST2FIFO 3 "03/16/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst2fifo
+.RB "	- Transforme une liste de type " slst_t "(3) en structure FIFO de"
+.RB "type " fifo_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "fifo_t	*slst2fifo(slst_t " **lst );
+
+.SH DESCRIPTION
+.B slst2fifo
+.RI "transforme la liste " lst " en structure FIFO. Apres l'appel"
+.RB "a " slst2fifo " et si aucune erreur ne se produit,"
+.I *lst
+.RB "vaut "NULL .
+.IR lst " doit etre un argument valide tel qu'il est decrit dans la"
+.RB "section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst2fifo
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst2fifo
+.RB "retourne un pointeur sur la structure FIFO ou " NULL " en cas d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite, " errno "(3) est mis a " 0 .
+.TP
+.B EINVAL
+.RB "Si la fonction a ete appele avec au moins un argument invalide, " errno (3)
+.RB "est mis a " EINVAL .
+
+.SH NOTES
+.RI "- " lst " doit etre different de"
+.RB (( slst_t " **)(" NULL )),
+.RI "notez que " *lst
+.RB "= ((" slst_t " *)(" NULL ))
+.R est valide et designe une liste vide.
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst2sclst "(3), " slst2lifo "(3), " slst_t "(3), " fifo_t (3)

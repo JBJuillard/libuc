@@ -2,7 +2,7 @@
 ** slst_tail function for Undefined-C library
 **
 ** Created: 02/08/2016 by Juillard Jean-Baptiste
-** Updated: 02/08/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -32,6 +32,7 @@ mslst_t	*slst_tail(slst_t **lst, size_t n)
 	register size_t		i;
 	register mslst_t	*tail;
 	auto mslst_t		*tmp;
+	register int		err;
 
 	errno = 0;
 	tail = (mslst_t *)(NULL);
@@ -54,7 +55,7 @@ mslst_t	*slst_tail(slst_t **lst, size_t n)
 			i--;
 		}
 	}
-	while (ptr)
+	while (n)
 	{
 		if ((tmp = (mslst_t *)malloc(sizeof(mslst_t))) == (mslst_t *)(NULL))
 		{
@@ -64,12 +65,14 @@ mslst_t	*slst_tail(slst_t **lst, size_t n)
 			{
 				tmp = tail->next;
 				tail->next = (mslst_t *)(NULL);
+				err = errno;
 				mslst_purge(&tmp);
+				errno = err;
 			}
 			return (mslst_t *)(NULL);
 		}
-		tmp->kptr = &(ptr->key);
-		tmp->sptr = &(ptr->size);
+		tmp->kptr = ((ptr) ? &(ptr->key) : (void **)(NULL));
+		tmp->sptr = ((ptr) ? &(ptr->size) : (size_t *)(NULL));
 		if (tail)
 		{
 			tmp->next = tail->next;
@@ -78,7 +81,8 @@ mslst_t	*slst_tail(slst_t **lst, size_t n)
 		else
 			tmp->next = tmp;
 		tail = tmp;
-		ptr = ptr->next;
+		if (ptr)
+			ptr = ptr->next;
 		n--;
 	}
 	tmp = tail->next;

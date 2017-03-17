@@ -1,0 +1,83 @@
+.\"
+.\" Manpage of stdlst subset for Undefined-C library
+.\"
+.\" Created: 03/08/17 by Juillard Jean-Baptiste
+.\" Updated: 03/08/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH STDLST 3 "03/08/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+stdlst \- Sous-ensemble des listes chainees.
+
+.SH SYNOPSYS
+.TP
+.I Include
+.B #include <stdlst.h>
+.TP
+.I Type
+
+slst_t						\- Listes non-ordonees lineaires simplement chainees.
+.br
+mslst_t						\- Mappage de listes non-ordonees lineaires simplement chainees.
+.br
+lifo_t						\- Structure LIFO (Last In First Out).
+.br
+mlifo_t						\- Mappage de structure LIFO (Last In First Out).
+.br
+sslst_t						\- Listes ordonees lineaires simplement chainees.
+.br
+msslst_t						\- Mappage de listes ordonees lineaires simplement chainees.
+.br
+sclst_t						\- Listes non-ordonees circullaires simplement chainees.
+.br
+msclst_t						\- Mappage de listes non-ordonees circullaires simplement chainees.
+.br
+fifo_t						\- Structure FIFO (First In First Out).
+.br
+mfifo_t						\- Mappage de structure FIFO (First In First Out).
+.br
+scslst_t						\- Listes ordonees circullaires simplement chainees.
+.br
+mscslst_t						\- Mappage de listes ordonees circullaires simplement chainees.
+.br
+
+
+.SH DESCRIPTION
+.TP
+.B Conparaison de complexitees en moyenne en fonction des types:
+
+.B							slst_t		lifo_t		sslst_t		sclst_t		fifo_t		scslst_t
+.br
+.BR "ajout simple" "				O(2)			O(2)			O(N+2)		O(3)			O(3)			O(N)"
+.br
+.BR "retrait simple" "				O(2)			O(2)			O(2)			O(3)			O(3)			O(3)"
+.br
+.BR "copie simple" "				O(N+2)		O(N+2)		O(N+2)		O(N)			O(N)			O(N)"
+.br
+.BR "concatenation simple" "		O(N+1)		O(N+1)		O(2N)		O(3)			O(3)			O(2N)"
+.br
+
+.SH NOTES
+
+.SH EXEMPLES
+
+.SH AUTEUR
+.R "Juillard Jean-Baptiste"
+
+.SH VOIR AUSSI

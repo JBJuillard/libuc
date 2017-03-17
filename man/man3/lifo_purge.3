@@ -1,0 +1,86 @@
+.\"
+.\" Manpage of lifo_purge function for Undefined-C library
+.\"
+.\" Created: 03/09/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH LIFO_PURGE 3 "03/16/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+lifo_purge \- Libere tous les elements d'une structure LIFO
+
+.SH SYNOPSYS
+.B #include <stdlst.h>
+
+.BI "void	lifo_purge(lifo_t " **stk ", void (" *fdel ")(void " * ", size_t));"
+
+.SH DESCRIPTION
+.B lifo_purge
+.RB "libere, avec " free "(3),"
+.RI "l'ensemble des elements de la pile " stk ". Les valeurs cles sont liberes"
+.RI "avec la fonction " fdel .
+.IR lst " et " fdel " doivent etres des arguments valides tels qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.BR errno "(3) est toujours modifier par " lifo_purge " de la maniere decrite"
+.RB "dans la section " ERREURS .
+
+
+.SH VALEUR DE RETOUR
+.BR lifo_purge " ne retourne rien."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "L'operation s'est termine sans erreur, " errno "(3) est mis a " 0 .
+.TP
+.B EINVAL
+.RB "Si au moins un argument d'appel de fonction est invalide, " errno (3)
+.RB "est mis a " EINVAL .
+.TP
+.B ENOMEM
+.RB "Si une erreur d'allocation survient lors d'un appel a " malloc (3),
+.BR errno "(3) devrait etre mis a " ENOMEM " par " malloc (3).
+
+.SH NOTES
+.RI "- " stk " doit etre different de"
+.RB (( lifo_t " **)(" NULL )),
+.RI "notez que " *stk
+.RB "= ((" lifo_t " *)(" NULL ))
+.R est valide et designe une pile vide.
+
+.RI "- " fdel " est un pointeur sur fonction."
+.RB "Celle-ci prend en parametre un pointeur " void " qui adresse la valeur"
+.RB "cle et un " size_t " qui donne la taille du tampon contenant la valeur"
+.R cle (pour toutes fins utiles).
+.RI "Une fonction " fdel " bien construite DEVRAIT toujours positionner"
+.BR errno "(3) en fonction du resultat."
+
+
+.SH BUGS
+.R Aucun bug signale.
+
+.SH EXEMPLES
+.RB "Voir " lifo_push (3).
+
+.SH AUTEUR
+.R Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR lifo_push "(3), " lifo_pop "(3), " lifo_map "(3),"
+.BR stdlst "(3), " mlifo "(3), " slst "(3)"

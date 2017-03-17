@@ -2,7 +2,7 @@
 ** slst_delelm function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 01/31/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,36 +20,21 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<errno.h>
-#include	<stdlib.h>
+#include <errno.h>
+#include <stdlib.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-void		slst_delelm(slst_t *elm, void (*fdel)(void *, size_t))
+void	slst_delelm(slst_t *elm, void (*fdel)(void *, size_t))
 {
 	errno = 0;
 	if (!elm || elm->next || !fdel)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ;
 	}
 	(*fdel)(elm->key, elm->size);
 	if (errno)
-#if defined(DEBUG) && (DEBUG == 1)
-	{
-		assert(errno);
-#endif
 		return ;
-#if defined(DEBUG) && (DEBUG == 1)
-	}
-#endif
 	elm->key = NULL;
 	elm->size = 0;
 	free((void *)(elm));

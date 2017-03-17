@@ -1,0 +1,74 @@
+.\"
+.\" Manpage of fifo_map function for Undefined-C library
+.\"
+.\" Created: 03/16/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH FIFO_MAP 3 "03/16/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+fifo_map \- Mappage de structure FIFO
+
+.SH SYNOPSYS
+.B #include <stdlst.h>
+
+.BI "mfifo_t	*fifo_map(fifo_t " **que );
+
+.SH DESCRIPTION
+.B fifo_map
+.RI "retourne un mappage de la file " que ". " que " doit etre un argument"
+.RB "valide tel que decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno "(3) est modifier par " fifo_map " de la"
+.RB "maniere decrite dans la section " NOTES .
+
+.SH VALEUR DE RETOUR
+.B fifo_map
+.RI "retourne un pointeur sur le mappage de la file " que .
+
+.SH ERREURS
+.TP
+.B 0
+.RB "L'operation s'est termine sans erreur, " errno "(3) est mis a " 0 .
+.TP
+.B EINVAL
+.RB "Si au moins un argument d'appel est invalide, " errno (3)
+.RB "est mis a " EINVAL .
+.TP
+.B ENOMEM
+.RB "Si une erreur d'allocation survient lors d'un appel a " malloc "(3),"
+.BR errno "(3) devrait etre mis a " ENOMEM " par " malloc (3).
+
+.SH NOTES
+.RI "- " que " doit etre different de"
+.RB (( fifo_t " **)(" NULL ))
+.RI "notez que " *que
+.RB "= ((" fifo_t " *)(" NULL ))
+.R est valide et designe une file vide.
+
+.SH BUGS
+.R Aucun bug signale.
+
+.SH EXEMPLES
+
+.SH AUTEUR
+.R Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR mfifo "(3), " fifo_push "(3), " fifo_pop "(3), " fifo_purge "(3),"
+.BR stdlst "(3), " sclst (3)

@@ -2,7 +2,7 @@
 ** Header file for stdlst subset of Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/24/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part of free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -96,7 +96,7 @@ typedef msclst_t	mfifo_t;
 /*
 ** Non-ordered simply Linked List function (slst_t)
 */
-slst_t		*slst_new(void);
+slst_t		*slst_newelm(void);
 void		slst_delelm(slst_t *elm, void (*fdel)(void *, size_t));
 int			slst_isempty(slst_t **lst);
 size_t		slst_len(slst_t **lst);
@@ -108,6 +108,7 @@ slst_t		*slst_put(slst_t **lst, void *key, size_t size);
 slst_t		*slst_putn(slst_t **lst, void *key, size_t size, size_t n);
 void		*slst_get(slst_t **lst);
 void		*slst_getn(slst_t **lst, size_t n);
+void		slst_purge(slst_t **lst, void (*fdel)(void *, size_t));
 void		slst_del(slst_t **lst, void (*fdel)(void *, size_t));
 void		slst_deln(slst_t **lst, size_t n, void (*fdel)(void *, size_t));
 void		slst_delp(slst_t **lst, slst_t *ptr, void (*fdel)(void *, size_t));
@@ -117,7 +118,6 @@ void		slst_delk(	slst_t **lst,
 						int (*fcmp)(const void *, const size_t,
 									const void *, const size_t),
 						void (*fdel)(void *, size_t));
-void		slst_purge(slst_t **lst, void (*fdel)(void *, size_t));
 slst_t		*slst_nsrt(slst_t **lst, slst_t *elm);
 slst_t		*slst_nsrtn(slst_t **lst, slst_t *elm, size_t n);
 slst_t		*slst_nsrtp(slst_t **lst, slst_t *elm, slst_t *ptr);
@@ -192,24 +192,48 @@ slst_t		*slst_cutk(slst_t **lst,
 						const size_t size,
 						int (*fcmp)(const void *, const size_t,
 									const void *, const size_t));
-
 int			slst_apply(slst_t **lst, int (*func)(void **, size_t *));
 size_t		slst_keyslen(slst_t **lst);
 void		*slst_keysdup(slst_t **lst, size_t *size);
-
-// slst_t		*slst_stupidsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_stupidrsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-slst_t		*slst_bubblesrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-slst_t		*slst_bubblersrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_shellsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_shellrsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_introsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_introrsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_mergesrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_mergersrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-// slst_t		*slst_heapsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
+slst_t		*slst_slctsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));		// Trie par selection (Selection sort)
+slst_t		*slst_slctrsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));
+slst_t		*slst_nsrtsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));		// Trie par insertion (Insertion sort)
+slst_t		*slst_nsrtrsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));
+slst_t		*slst_bbsrt(slst_t **lst,
+						int (*fcmp)(const void *, const size_t,
+									const void *, const size_t));			// Trie a bulle (Bubble sort)
+slst_t		*slst_bbrsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));
+// slst_t		*slst_cmbsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));	// Trie a peigne (Comb sort)
+// slst_t		*slst_cmbrsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
+slst_t		*slst_mrgsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));		// Trie fusion (Merge sort)
+slst_t		*slst_mrgrsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));
+slst_t		*slst_qcksrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));		// Trie rapide (Quick sort)
+slst_t		*slst_qckrsrt(slst_t **lst,
+							int (*fcmp)(const void *, const size_t,
+										const void *, const size_t));
+// slst_t		*slst_intsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));	// Intro sort
+// slst_t		*slst_intrsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
+// slst_t		*slst_shsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));		// Trie de Shell (Shell sort)
+// slst_t		*slst_shrsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
+// slst_t		*slst_heapsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));	// Trie par tas (Heap sort)
 // slst_t		*slst_heaprsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
-
+slst_t		*slst_random(slst_t **lst, unsigned int seed);					// Melange de Fisher-Yates (Fisher–Yates shuffle)
 lifo_t		*slst2lifo(slst_t **lst);
 // sslst_t	*slst2sslst(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
 sclst_t		*slst2sclst(slst_t **lst);
@@ -225,6 +249,23 @@ void		mslst_purge(mslst_t **mlst);
 
 
 /*
+** LIFO structure (lifo_t)
+*/
+lifo_t		*lifo_push(lifo_t **stk, void *key, size_t size);
+void		*lifo_pop(lifo_t **stk);
+void		lifo_purge(lifo_t **stk, void (*fdel)(void *, size_t));
+mlifo_t		*lifo_map(lifo_t **stk);
+
+
+/*
+** LIFO structure mapping (mlifo_t)
+*/
+mlifo_t		*mlifo_push(mlifo_t **mstk, void **kptr, size_t *sptr);
+void		**mlifo_pop(mlifo_t **mstk);
+void		mlifo_purge(mlifo_t **mstk);
+
+
+/*
 ** Ordered simply linked list (sslst_t)
 */
 
@@ -235,32 +276,32 @@ void		mslst_purge(mslst_t **mlst);
 
 
 /*
-** LIFO structure (lifo_t)
-*/
-lifo_t		*lifo_new(void);
-lifo_t		*lifo_push(lifo_t **stk, void *key, size_t size);
-void		*lifo_pop(lifo_t **stk);
-void		lifo_purge(lifo_t **stk, void (*f)(void *, size_t));
-//mlifo_t	*lifo_map(lifo_t **stk);
-
-
-/*
-** LIFO structure mapping (mlifo_t)
-*/
-// mlifo_t		*mlifo_new(void);
-// mlifo_t		*mlifo_push(mlifo_t **mstk, void **kptr, size_t *sptr);
-// void		*mlifo_pop(mlifo_t **mstk);
-// void		mlifo_purge(mlifo_t **mstk);
-
-
-/*
 ** Non-ordered simply circular linked list (sclst_t)
 */
+sclst_t		*sclst_newelm(void);
+void		sclst_delelm(sclst_t *elm, void (*fdel)(void *, size_t));
+int			sclst_isempty(sclst_t **lst);
+size_t		sclst_len(sclst_t **lst);
+sclst_t		*sclst_previous(sclst_t **lst, sclst_t *elm);
+sclst_t		*sclst_next(sclst_t **lst, sclst_t *elm);
+msclst_t	*sclst_head(sclst_t **lst, size_t n);
+msclst_t	*sclst_tail(sclst_t **lst, size_t n);
+sclst_t		*sclst_put(sclst_t **lst, void *key, size_t size);
+sclst_t		*sclst_put_front(sclst_t **lst, void *key, size_t size);
+sclst_t		*sclst_put_back(sclst_t **lst, void *key, size_t size);
+sclst_t		*sclst_putn(sclst_t **lst, void *key, size_t size, size_t n);
+void		*sclst_get(sclst_t **lst);
+void		*sclst_get_front(sclst_t **lst);
+void		*sclst_get_back(sclst_t **lst);
+void		*sclst_getn(sclst_t **lst, size_t n);
+void		sclst_purge(sclst_t **lst, void (*fdel)(void *, size_t));
 
+msclst_t	*sclst_map(sclst_t **lst);
 
 /*
 ** Non-ordered simply circular linked list mapping (msclst_t)
 */
+void		msclst_purge(msclst_t **mlst);
 
 
 /*
@@ -276,20 +317,18 @@ void		lifo_purge(lifo_t **stk, void (*f)(void *, size_t));
 /*
 ** FIFO structure (fifo_t)
 */
-//fifo_t	*fifo_new(void);
-//fifo_t	*fifo_push(fifo_t **queue, void *key, size_t size);
-//void		*fifo_pop(fifo_t **queue);
-//void		fifo_purge(fifo_t **queue, void (*f)(void *, size_t));
-//mfifo_t	*fifo_map(fifo_t **queue);
+fifo_t		*fifo_push(fifo_t **que, void *key, size_t size);
+void		*fifo_pop(fifo_t **que);
+void		fifo_purge(fifo_t **que, void (*fdel)(void *, size_t));
+mfifo_t		*fifo_map(fifo_t **que);
 
 
 /*
 ** FIFO structure mapping (mfifo_t)
 */
-//mfifo_t	*mfifo_new(void);
-//mfifo_t	*mfifo_push(mfifo_t **mqueue, void **kptr, size_t *sptr);
-//void		*mfifo_pop(mfifo_t **mqueue);
-//void		mfifo_purge(mfifo_t **mqueue);
+mfifo_t		*mfifo_push(mfifo_t **mque, void **kptr, size_t *sptr);
+void		**mfifo_pop(mfifo_t **mque);
+void		mfifo_purge(mfifo_t **mque);
 
 
 #endif

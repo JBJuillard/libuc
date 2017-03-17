@@ -2,7 +2,7 @@
 ** slst_len function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/08/2017 by Juillard Jean-Baptiste
+** Updated: 03/16/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -23,14 +23,9 @@
 #include <stddef.h>
 #include <errno.h>
 #include <stdint.h>
-
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
-
 #include "stdlst.h"
 
-size_t		slst_len(slst_t **lst)
+size_t	slst_len(slst_t **lst)
 {
 	register size_t	len;
 	register slst_t	*ptr;
@@ -38,9 +33,6 @@ size_t		slst_len(slst_t **lst)
 	errno = 0;
 	if (!lst)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return (0);
 	}
@@ -50,9 +42,6 @@ size_t		slst_len(slst_t **lst)
 	{
 		if (len == SIZE_MAX)
 		{
-#if defined(DEBUG) && (DEBUG == 1)
-			assert(EOVERFLOW);
-#endif
 			errno = EOVERFLOW;
 			return (0);
 		}

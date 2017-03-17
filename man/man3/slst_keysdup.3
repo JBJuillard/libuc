@@ -1,0 +1,79 @@
+.\"
+.\" Manpage of slst_keysdup function for Undefined-C library
+.\"
+.\" Created: 03/09/17 by Juillard Jean-Baptiste
+.\" Updated: 03/09/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_KEYSDUP 3 "03/09/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_keysdup
+.R 	- Retourne un dump de l'ensemble des valeurs cles d'une liste de type
+.BR slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "void	*slst_keysdup(slst_t " **lst ", size_t " *size );
+
+.SH DESCRIPTION
+.B slst_keysdup
+.RI "retourne un dump de l'ensemble des valeurs cles de la liste " lst .
+.R Les valeurs cles sont copiees dans le tampon de sortie les unes a la suite
+.RI "des autres dans le sens de la liste " lst ". Si l'argument " size " est"
+.RI "fournit, la taille du tampon de sortie est retourne dans " size .
+.IR lst " et " size " doivent etres des arguments valides tel qu'ils sont"
+.RB "decrit dans la section " NOTES .
+.RB "Dans tous les cas, " errno " est modifier par " slst_keysdup
+.RB "tel que decrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_keydup
+.R retourne un pointeur sur le dump contenant les valeurs cles de la liste
+.I lst
+.RB "ou " NULL " en cas d'erreur d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.R Aucune erreur ne s'est prouite.
+.TP
+.B EINVAL
+.R La fonction a ete appele avec un (ou des) parametre(s) invalide(s).
+.TP
+.B ENOMEM
+.R Une erreur est survenu pendant l'allocation du tampon ou la copie des
+.R valeurs cles.
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RB "de " "((slst_t **)(NULL))" ", notez que "
+.IB *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.RI "- " size " peut etres egale a"
+.BR "((size_t *)(NULL))" " ou pointer vers un " size_t " valide."
+
+.SH EXEMPLES
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_keyslen (3)

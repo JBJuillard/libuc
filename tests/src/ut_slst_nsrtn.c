@@ -77,29 +77,29 @@ int	ut_slst_nsrtn_interface(int N)
 					slst_purge(&lst, &_ofree);
 					return (errno);
 				}
+		  		if ((ut_list[i]).key)
+				{
+					if ((elm->key = malloc(sizeof(long long))) == NULL)
+					{
+						free((void *)(elm));
+						slst_purge(&lst, &_ofree);
+						return (errno);
+					}
+					*((long long *)(elm->key)) = (long long)(j);
+				}
+				else
+					elm->key = NULL;
+				if ((ut_list[i]).size)
+					elm->size = sizeof(long long);
+				else
+					elm->size = 0;
+				if ((ut_list[i]).next)
+					elm->next = (slst_t *)(0xFFFFFFFF);
+				else
+					elm->next = (slst_t *)(NULL);
 			}
 			else
 				elm = (slst_t *)(NULL);
-		  	if (elm && (ut_list[i]).key)
-			{
-				if ((elm->key = malloc(sizeof(long long))) == NULL)
-				{
-					free((void *)(elm));
-					slst_purge(&lst, &_ofree);
-					return (errno);
-				}
-				*((long long *)(elm->key)) = (long long)(j);
-			}
-			else if (elm)
-				elm->key = NULL;
-			if (elm && (ut_list[i]).size)
-				elm->size = sizeof(long long);
-			else if (elm)
-				elm->size = 0;
-			if (elm && (ut_list[i]).next)
-				elm->next = (slst_t *)(0xFFFFFFFF);
-			else if (elm)
-				elm->next = (slst_t *)(NULL);
 			ret = slst_nsrtn(lptr, elm, (ut_list[i]).n);
 			if (errno != (ut_list[i]).err
 				|| (!ret && !((ut_list[i]).returnNULLptr))

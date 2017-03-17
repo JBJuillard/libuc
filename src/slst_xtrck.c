@@ -2,7 +2,7 @@
 ** slst_xtrck function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/03/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,22 +20,17 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stddef.h>
-#include	<errno.h>
-#include	<stdlib.h>
-#include	<stdint.h>
+#include <stddef.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-slst_t		*slst_xtrck(	slst_t **lst,
-							const void *key,
-							const size_t size,
-							int (*fcmp)(const void *, const size_t,
-										const void *, const size_t))
+slst_t	*slst_xtrck(slst_t **lst,
+					const void *key,
+					const size_t size,
+					int (*fcmp)(const void *, const size_t,
+								const void *, const size_t))
 {
 	register slst_t	*tmp;
 	register slst_t	**addr;
@@ -43,9 +38,6 @@ slst_t		*slst_xtrck(	slst_t **lst,
 	errno = 0;
 	if (!lst || !key || !size || size > SIZE_MAX || !fcmp)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ((slst_t *)(NULL));
 	}
@@ -55,7 +47,7 @@ slst_t		*slst_xtrck(	slst_t **lst,
 	addr = lst;
 	while (tmp)
 	{
-		if (!(*fcmp)(	key, size,
+		if (!(*fcmp)(key, size,
 						(const void *)(tmp->key), (const size_t)(tmp->size)))
 		{
 			*addr = tmp->next;
@@ -65,9 +57,6 @@ slst_t		*slst_xtrck(	slst_t **lst,
 		addr = &(tmp->next);
 		tmp = tmp->next;
 	}
-#if defined(DEBUG) && (DEBUG == 1)
-	assert(ERANGE);
-#endif
 	errno = ERANGE;
 	return ((slst_t *)(NULL));
 }

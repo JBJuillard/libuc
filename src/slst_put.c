@@ -2,7 +2,7 @@
 ** slst_put function for Undefined-C library
 **
 ** Created: 28/12/2016 by Juillard Jean-Baptiste
-** Updated: 01/31/2017 by Juillard Jean-Baptiste
+** Updated: 02/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,35 +20,24 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stddef.h>
-#include	<errno.h>
-#include	<stdlib.h>
-#include	<stdint.h>
+#include <stddef.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-slst_t		*slst_put(slst_t **lst, void *key, size_t size)
+slst_t	*slst_put(slst_t **lst, void *key, size_t size)
 {
 	register slst_t	*ptr;
 
 	if (!lst || !key || !size || size > SIZE_MAX)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return ((slst_t *)(NULL));
 	}
 	errno = 0;
 	if ((ptr = (slst_t *)malloc(sizeof(slst_t))) == (slst_t *)(NULL))
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(ENOMEM);
-#endif
 		if (!errno)
 			errno = ENOMEM;
 		return ((slst_t *)(NULL));

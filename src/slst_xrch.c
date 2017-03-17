@@ -2,7 +2,7 @@
 ** slst_xrch function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/04/2017 by Juillard Jean-Baptiste
+** Updated: 03/11/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,23 +20,18 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<stddef.h>
-#include	<errno.h>
-#include	<stdlib.h>
-#include	<stdint.h>
+#include <stddef.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-size_t		slst_xrch(	slst_t **lst,
-						const void *key,
-						const size_t size,
-						mslst_t **match,
-						int (*fcmp)(const void *, const size_t,
-									const void *, const size_t))
+size_t	slst_xrch(slst_t **lst,
+					const void *key,
+					const size_t size,
+					mslst_t **match,
+					int (*fcmp)(const void *, const size_t,
+								const void *, const size_t))
 {
 	register slst_t		*ptr;
 	register size_t		cnt;
@@ -45,9 +40,6 @@ size_t		slst_xrch(	slst_t **lst,
 
 	if (!lst || !key || !size || size > SIZE_MAX || !match || *match || !fcmp)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return (0);
 	}
@@ -63,9 +55,6 @@ size_t		slst_xrch(	slst_t **lst,
 			if ((tmp = (msclst_t *)malloc(sizeof(msclst_t)))
 				== (msclst_t *)(NULL))
 			{
-#if defined(DEBUG) && (DEBUG == 1)
-				assert(ENOMEM);
-#endif
 				if (!errno)
 					errno = ENOMEM;
 				break ;

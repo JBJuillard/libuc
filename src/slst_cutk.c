@@ -2,7 +2,7 @@
 ** slst_cutk function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/23/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,9 +24,6 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <stdint.h>
-#if defined(DEBUG) && (DEBUG == 1)
-# include <assert.h>
-#endif
 #include "stdlst.h"
 
 slst_t	*slst_cutk(slst_t **lst,
@@ -41,9 +38,6 @@ slst_t	*slst_cutk(slst_t **lst,
 	if (!lst || !key || !size || size > SIZE_MAX || !fcmp)
 	{
 		errno = EINVAL;
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		return ((slst_t *)(NULL));
 	}
 	errno = 0;

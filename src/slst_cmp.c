@@ -2,7 +2,7 @@
 ** slst_cmp function for Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 02/06/2017 by Juillard Jean-Baptiste
+** Updated: 03/13/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -23,19 +23,14 @@
 #include <stddef.h>
 #include <errno.h>
 #include <limits.h>
-
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
 #include "stdlst.h"
 
-int			slst_cmp(	slst_t **lst1,
-						slst_t **ptr1,
-						slst_t **lst2,
-						slst_t **ptr2,
-						int (*fcmp)(const void *, const size_t,
-									const void *, const size_t))
+int	slst_cmp(slst_t **lst1,
+				slst_t **ptr1,
+				slst_t **lst2,
+				slst_t **ptr2,
+				int (*fcmp)(const void *, const size_t,
+							const void *, const size_t))
 {
 	register slst_t	*tmp1;
 	register slst_t	*tmp2;
@@ -43,9 +38,6 @@ int			slst_cmp(	slst_t **lst1,
 
 	if (!lst1 || !lst2 || (ptr1 && *ptr1) || (ptr2 && *ptr2) || !fcmp)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return (0);
 	}

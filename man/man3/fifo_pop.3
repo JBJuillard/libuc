@@ -1,0 +1,75 @@
+.\"
+.\" Manpage of fifo_pop function for Undefined-C library
+.\"
+.\" Created: 03/15/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH FIFO_POP 3 "03/16/2017" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+fifo_pop \- Retire l'element se trouvant en tete d'une structure FIFO
+
+.SH SYNOPSYS
+.B #include <stdlst.h>
+
+.BI "void	*fifo_pop(fifo_t " **que );
+
+.SH DESCRIPTION
+.B fifo_pop
+.RB "libere, avec " free "(3), le premier element en tete de"
+.RI "file " que " (e.i.: le premier ajoute) et  retourne sa valleur cle."
+.IR que " doit etre un argument valide tel que decrit dans la section "
+.BR NOTES .
+.BR errno "(3) est toujours modifier par " fifo_pop " tel que decrit dans"
+.RB "la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B fifo_pop
+.RI "retourne un pointeur sur la valeur cle qui etait contenut dans le premier"
+.RI "element en tete de la file " que " avant sa liberation."
+.RB "En cas d'erreur, " NULL " est retourner et " errno "(3) est definit."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "L'operation s'est termine sans erreur, " errno "(3) est mis a " 0 .
+.TP
+.B EINVAL
+.RB "Si la fonction a ete appele avec au moins un argument invalide, " errno (3)
+.RB "est mis a " EINVAL .
+
+.SH NOTES
+.RI "- " que " doit etre different de"
+.RB (( fifo_t " **)( " NULL )),
+.RI " notez que " *que
+.RB "= ((" fifo_t " *)( " NULL )),
+.R est valide et designe une file vide.
+
+.SH BUGS
+.R Aucun bug signale.
+
+.SH EXEMPLES
+.RB "Voir " fifo_push (3).
+
+.SH AUTEUR
+.R Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR fifo_push "(3), " fifo_purge "(3), " fifo_map "(3),"
+.BR stdlst "(3), " sclst "(3), " mfifo (3)

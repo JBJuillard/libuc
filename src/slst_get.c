@@ -2,7 +2,7 @@
 ** slst_get function for Undefined-C library
 **
 ** Created: 28/12/2016 by Juillard Jean-Baptiste
-** Updated: 01/02/2017 by Juillard Jean-Baptiste
+** Updated: 03/15/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -20,17 +20,12 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include	<errno.h>
-#include	<stdlib.h>
-#include	<stdint.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "stdlst.h"
 
-#if defined(DEBUG) && (DEBUG == 1)
-# include	<assert.h>
-#endif
-
-#include	"stdlst.h"
-
-void		*slst_get(slst_t **lst)
+void	*slst_get(slst_t **lst)
 {
 	register slst_t	*tmp;
 	register void	*key;
@@ -38,9 +33,6 @@ void		*slst_get(slst_t **lst)
 	errno = 0;
 	if (!lst)
 	{
-#if defined(DEBUG) && (DEBUG == 1)
-		assert(EINVAL);
-#endif
 		errno = EINVAL;
 		return (NULL);
 	}

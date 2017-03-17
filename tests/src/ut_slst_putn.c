@@ -1,8 +1,8 @@
 /*
 ** Units tests of slst_putn function for Undefined-C library
 **
-** Created: 29/01/2017 by Juillard Jean-Baptiste
-** Updated: 29/01/2017 by Juillard Jean-Baptiste
+** Created: 01/29/2017 by Juillard Jean-Baptiste
+** Updated: 01/29/2017 by Juillard Jean-Baptiste
 **
 **
 ** This program is free software; you can redistribute it and/or
@@ -46,13 +46,13 @@ int	ut_slst_putn_interface(int N)
 	int				err;
 	int				i;
 	int				j;
-	static test_t	ut_list[7] = {	{ 0, 1, sizeof(int), 1, EINVAL, 1 },
-									{ 1, 0, sizeof(int), 1, EINVAL, 1 },
+	static test_t	ut_list[7] = {	{ 0, 1, sizeof(long long), 1, EINVAL, 1 },
+									{ 1, 0, sizeof(long long), 1, EINVAL, 1 },
 									{ 1, 1, 0, 1, EINVAL, 1 },
 									{ 1, 1, (SIZE_MAX + 1), 1, EINVAL, 1 },
-									{ 1, 1, sizeof(int), 0, EINVAL, 1 },
-									{ 1, 1, sizeof(int), (SIZE_MAX + 1), EINVAL, 1 },
-									{ 1, 1, sizeof(int), 1, 0, 0 }	};
+									{ 1, 1, sizeof(long long), 0, EINVAL, 1 },
+									{ 1, 1, sizeof(long long), (SIZE_MAX + 1), EINVAL, 1 },
+									{ 1, 1, sizeof(long long), 1, 0, 0 }	};
 
 	i = 0;
 	err = 0xFF;
@@ -69,9 +69,9 @@ int	ut_slst_putn_interface(int N)
 			k = NULL;
 			if ((ut_list[i]).key)
 			{
-				if ((k = malloc(sizeof(int))) == NULL)
+				if ((k = malloc(sizeof(long long))) == NULL)
 					break ;
-				*((int *)(k)) = j;
+				*((long long *)(k)) = j;
 			}
 			errno = 0;
 			ret = slst_putn(lptr, k, (ut_list[i]).size, (ut_list[i]).n);
@@ -105,16 +105,16 @@ int	ut_slst_putn_memchk(int N)
 	lst = (slst_t *)(NULL);
 	while (i < N)
 	{
-		if ((k = malloc(sizeof(int))) == NULL)
+		if ((k = malloc(sizeof(long long))) == NULL)
 		{
 			slst_purge(&lst, &_ofree);
 			if (!errno)
 				errno = -16;
 			break ;
 		}
-		*((int *)(k)) = i;
+		*((long long *)(k)) = i;
 		errno = 0;
-		if (slst_putn(&lst, k, sizeof(int), 1) == (slst_t *)(NULL) || errno)
+		if (slst_putn(&lst, k, sizeof(long long), 1) == (slst_t *)(NULL) || errno)
 		{
 			free(k);
 			slst_purge(&lst, &_ofree);

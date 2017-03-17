@@ -1,0 +1,229 @@
+.\"
+.\" Manpage of slst_random function for Undefined-C library
+.\"
+.\" Created: 03/16/17 by Juillard Jean-Baptiste
+.\" Updated: 03/16/17 by Juillard Jean-Baptiste
+.\"
+.\" This file is a part free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" There is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_RANDOM 3 "03/16/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+
+.SH NAME
+.B slst_random
+.RB "	- Mélange aléatoirrement une liste de type " slst_t "(3)."
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "slst_t	*slst_random(slst_t " **lst ", unsigned int " seed );
+
+.SH DESCRIPTION
+.B slst_random
+.RI "mélange aléatoirrement la liste " lst " en utilisant le mélange de"
+.R "Fisher-Yates (Fisher-Yates shuffle), pour se faire elle utilise"
+.RB "les fonctions " srand "(3) pour initialiser le générateur de nombre"
+.RI "pseudo-aléatoire avec le germe " seed ,
+.R puis la suite de nombre pseudo-aléatoire qui permet le mélange est générée
+.RB "avec la fonction " rand (3) .
+.RI "Le mélange depend de la qualitée du germe " seed " utilisé ; celui-ci"
+.R devrait, si possible, etre généré par un True Random Number Generator (TRNG).
+.RB "Du fait de l'utilisation des fonctions " srand "(3) et " rand "(3) pour"
+.R le mélange, un germe particulié appliqué a une liste particulière produit
+.R toujours le même résultat. Par exemple, le germe 10 appliqué a la séquence
+.R (1, 2, 3, 4, 5) produira toujours la séquence en sortie soit (1, 3, 5, 4, 2).
+.IR lst " et " seed " doivent être des arguments valides tel qu'ils sont décrit"
+.RB "dans la section " NOTES .
+.RB "Dans tous les cas, " errno "(3) est modifié par " slst_random
+.RB "tel que décrit dans la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.B slst_random
+.RI "retourne un pointeur sur la nouvelle tête de la liste " lst
+.RB "ou " NULL " en cas d'erreur d'erreur."
+
+.SH ERREURS
+.TP
+.B 0
+.RB "Aucune erreur ne s'est prouite, " errno "(3) est mis à " 0 .
+.TP
+.B EINVAL
+.RB "Si la fonction a été appelée avec au moins un argument invalide", errno (3)
+.RB "est mis à " EINVAL .
+.TP
+.B ENOMEM
+.RB "Si une erreur d'allocation mémoire se produit lors de l'appel à"
+.BR calloc (3), errno "(3) devrait être mis à " ENOMEM  " par " calloc (3).
+
+.SH NOTES
+.RI "- " lst " doit être différent de"
+.RB (( slst_t " **)(" NULL )),
+.RI "notez que " *lst
+.RB "= ((" slst_t " *)(" NULL ))
+.R est valide et désigne une liste vide.
+
+.RI "- " seed " doit être"
+.RB "suppérieur ou égal à " 1 " et inférieur ou égal à " UINT_MAX " (denifit"
+.RI "dans " /usr/include/limits.h ).
+
+.SH EXEMPLES
+.TP
+.RB "Exemple de mélange d'une liste d'entier:"
+
+
+#include <stdlib.h>
+.br
+#include <errno.h>
+.br
+#include <stdlst.h>
+.br
+#include <stdio.h>
+
+
+static void    _ofree(void *k, size_t z)
+.br
+{
+.br
+	if (!k || z != sizeof(int))
+.br
+	{
+.br
+		errno = EINVAL;
+.br
+		return ;
+.br
+	}
+.br
+	free(k);
+.br
+}
+
+
+int				main(void)
+.br
+{
+.br
+	slst_t    *lst;
+.br
+	void      *tmp;
+.br
+	int       i;
+
+
+.br
+	/*
+.br
+	** Création d'une liste d'entier
+.br
+	*/
+.br
+	lst = (slst_t *)(NULL);
+.br
+	i = 1;
+.br
+	while (i <= 5)
+.br
+	{
+.br
+		if ((tmp = malloc(sizeof(int)))== NULL)
+.br
+		{
+.br
+			/*
+.br
+			** En cas d'erreur on vide la liste
+.br
+			*/
+.br
+			slst_purge(&lst, &_ofree);
+.br
+			return (1);
+.br
+		}
+.br
+		*((int *)(tmp)) = i;
+.br
+		if (slst_put(&lst, tmp, sizeof(int)) == (slst_t *)(NULL))
+.br
+		{
+.br
+			free(tmp);
+.br
+			slst_purge(&lst, &_ofree);
+.br
+			return (1);
+.br
+		}
+.br
+		i++;
+.br
+	}
+
+
+.br
+	/*
+.br
+	** Mélange de la liste
+.br
+	*/
+.br
+	if (slst_random(&lst, 10) == (slst_t *)(NULL))
+.br
+	{
+.br
+		slst_purge(&lst, &_ofree);
+.br
+		return (1);
+.br
+	}
+
+.br
+	/*
+.br
+	** Affichage et libération de la liste
+.br
+	*/
+.br
+	while (lst)
+.br
+	{
+.br
+		if ((tmp = slst_get(&lst)) == NULL)
+.br
+		{
+.br
+			slst_purge(&lst, &_ofree);
+.br
+			return (1);
+.br
+		}
+.br
+		printf("%i\\n", *((int *)(tmp)));
+.br
+		free(tmp);
+.br
+	}
+
+
+	return (0);
+.br
+}
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " slst_cmp (3)

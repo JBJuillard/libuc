@@ -2,7 +2,7 @@
 ** Units tests of slst_xtrcn function for Undefined-C library
 **
 ** Created: 17/01/2017 by Juillard Jean-Baptiste
-** Updated: 02/03/2017 by Juillard Jean-Baptiste
+** Updated: 03/12/2017 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -51,7 +51,7 @@ int	ut_slst_xtrcn_interface(int N)
 	err = 0xFF;
 	while (i < 4)
 	{
-		if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+		if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 			return (errno);
 		if ((ut_list[i]).lst)
 			lptr = &lst;
@@ -94,9 +94,9 @@ int	ut_slst_xtrcn_memchk(int N)
 	slst_t	*tmp;
 
 	errno = 0;
-	if ((lst = _gen_slst(0, N, 1)) == (slst_t *)(NULL))
+	if ((lst = _gen_slst(1, N, 1)) == (slst_t *)(NULL))
 		return (errno);
-	while (lst && N-- >= 0)
+	while (lst && N-- > 0)
 	{
 		if (!(tmp = slst_xtrcn(&lst, 1)) || errno)
 		{

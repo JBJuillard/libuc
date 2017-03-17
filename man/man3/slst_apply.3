@@ -62,8 +62,10 @@
 .RB "Celle-ci prend en parametre un pointeur sur pointeur " void " qui adresse"
 .RB "le pointeur sur la valeur cle et un pointeur sur " size_t " qui addresse"
 .R la taille du tampon contenant la valeur cle. Cette disposition permet a la
-.RI "fonction " func " de reallouer la cle si necessaire."
-.IR func " doit retourne un entier"
+.RI "fonction " func " de reallouer la cle si necessaire. Si apres l'appel a"
+.IR func ", la valeur cle est"
+.BR NULL " ou si la taille du tampon vaut " 0 ", " slst_apply " se termine sur"
+.RI "une erreur. " func " doit retourne un entier"
 .RB "non-" NULL " en cas d'erreur et " 0 " sinon."
 
 .SH AUTEUR
