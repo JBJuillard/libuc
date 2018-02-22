@@ -2,7 +2,7 @@
 # Makefile for Undefined-C library
 #
 # Created: 01/29/2017 by Juillard Jean-Baptiste
-# Updated: 02/23/2017 by Juillard Jean-Baptiste
+# Updated: 01/25/2018 by Juillard Jean-Baptiste
 #
 # This file is a part of free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -93,7 +93,37 @@ SRC =	slst_newelm.c slst_delelm.c \
 		msclst_purge.c \
 		\
 		fifo_push.c fifo_pop.c fifo_purge.c fifo_map.c \
-		mfifo_push.c mfifo_pop.c mfifo_purge.c
+		mfifo_push.c mfifo_pop.c mfifo_purge.c \
+		\
+		\
+		\
+		\
+		\
+		bcmp.c bcopy.c bzero.c \
+		memset.c \
+		memcpy.c memcpy_s.c memccpy.c mempcpy.c \
+		memmove.c memmove_s.c \
+		memcmp.c \
+		memchr.c memrchr.c rawmemchr.c \
+		memmem.c \
+		memfrob.c \
+		\
+		ffs.c ffsl.c ffsll.c \
+		index.c  rindex.c \
+		strcpy.c strcpy_s.c strncpy.c strncpy_s.c \
+		stpcpy.c stpncpy.c \
+		strdup.c strdupa.c strndup.c strndupa.c \
+		strcat.c strcat_s.c strncat.c strncat_s.c strlcat.c \
+		strchr.c strrchr.c strchrnul.c \
+		strcmp.c strncmp.c strcasecmp.c strncasecmp.c \
+		strverscmp.c \
+		strstr.c strcasestr.c \
+		strpbrk.c \
+		strspn.c strcspn.c \
+		strtok.c strtok_r.c strtok_s.c \
+		strsep.c \
+		strlen.c strnlen.c strnlen_s.c \
+		strfry.c
 SRC_FULLPATH = $(addprefix $(SRC_PATH)/,$(SRC))
 
 
@@ -371,7 +401,7 @@ make-a: make-obj | $(A_PATH)
 clean: clean-obj clean-asm
 mostlyclean: clean-asm
 distclean: clean clean-a clean-so
-maintainer-clean: distclean dbg-distclean  check-distclean
+maintainer-clean: distclean dbg-distclean check-distclean
 clean-obj:
 	@if [ -e $(OBJ_PATH) ] ; then \
 		$(RM) $(RM_DIR_FLAGS) $(OBJ_PATH) ; \

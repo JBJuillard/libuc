@@ -48,11 +48,14 @@ mslst_t	*slst_map(slst_t **lst)
 		{
 			if (!errno)
 				errno = ENOMEM;
-			tmp = mlst->next;
-			mlst->next = (mslst_t *)(NULL);
-			err = errno;
-			mslst_purge(&tmp);
-			errno = err;
+			if (mlst)
+			{
+				tmp = mlst->next;
+				mlst->next = (mslst_t *)(NULL);
+				err = errno;
+				mslst_purge(&tmp);
+				errno = err;
+			}
 			return ((mslst_t *)(NULL));
 		}
 		tmp->kptr = &(ptr->key);

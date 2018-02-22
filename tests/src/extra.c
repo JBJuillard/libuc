@@ -230,3 +230,27 @@ sclst_t	*_gen_sclst(long long start, long long end, long long step)
 	}
 	return (lst);
 }
+
+char	*_gen_str(size_t size)
+{
+	char 			*str;
+	static const char	base[2] = {'A', 'a'};
+	size_t			i;
+
+	if (!size || size > SIZE_MAX)
+	{
+		errno = EINVAL;
+		return ((char *)(NULL));
+	}
+	if ((str = (char *)malloc(size)) == (char *)(NULL))
+		return ((char *)(NULL));
+	*(str + size) = '\0';
+	size--;
+	i ^= i;
+	while (i < size)
+	{
+		*(str + i) = ((i % 26) + base[(i % 2)]);
+		i++;
+	}
+	return (str);
+}

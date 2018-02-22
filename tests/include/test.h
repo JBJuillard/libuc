@@ -399,4 +399,17 @@ int		ut_mfifo_purge_interface(int N);
 int		ut_mfifo_purge_memchk(int N);
 int		ut_mfifo_purge_timeout(int N);
 
+
+
+/*
+** Tampon méoire et chaîne de caractères
+*/
+char		*_gen_str(size_t size);
+
+/***** bcmp *****/
+int		ut_bcmp_interface(int N);
+int		ut_bcmp_memchk(int N);
+int		ut_bcmp_timeout(int N);
+
+
 #endif

@@ -1,0 +1,66 @@
+.\"
+.\" Manpage of slst_apply function for Undefined-C library
+.\"
+.\" Created: 12/28/17 by Juillard Jean-Baptiste
+.\" Updated: 12/28/17 by Juillard Jean-Baptiste
+.\"
+.\" This program is free software; you can redistribute it and/or
+.\" modify it under the terms of the GNU General Public License as
+.\" published by the Free Software Foundation; either version 3, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+.\" General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; see the file LICENSE.  If not, write to
+.\" the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+.\" Floor, Boston, MA 02110-1301, USA.
+.\"
+
+.TH SLST_MAP 3 "12/28/17" "Version 0.0" "Manuel du programmeur Undefined-C"
+.SH NAME
+.B slst_map
+.R "\t- Retourne un mappage d'une liste de type"
+.BR slst_t (3).
+
+.SH SYNOPSIS
+.B #include <stdlst.h>
+
+.BI "mslst_t\t*slst_map(slst_t " **lst );
+
+.SH DESCRIPTION
+.BR slst_map
+.RI "retourne un mappage de la liste " lst .
+.IR lst " doit etre un argument valide tel qu'il est decrit dans la section"
+.BR NOTES .
+.BR errno " est toujours modifier par " slst_map " tel que definit dans"
+.RB "la section " ERREURS .
+
+.SH VALEUR DE RETOUR
+.BR slst_map " retourne un pointeur sur le mappage de la liste ou"
+.RB "((mlst_t *)(" NULL ")) en cas d'erreurs."
+
+.SH ERREURS
+.TP
+.B 0
+.R "Aucune erreur ne s'est produite."
+.TP
+.B EINVAL
+.RB "Un parametre invalide a ete passe lors de l'appel a " slst_map .
+.TP
+.B ENOMEM
+.RB "Une erreur c'est produite lors de l'appel à " malloc "(3) ou à " free (3).
+
+.SH NOTES
+.RI "- " lst " doit etre different"
+.RI "de ((slst_t **)(NULL)), notez que " *lst "=((slst_t *)(NULL))"
+.R est valide et designe une liste vide.
+
+.SH AUTEUR
+Juillard Jean-Baptiste
+
+.SH VOIR AUSSI
+.BR stdlst "(3), " slst_t "(3), " mslst_t (3)
