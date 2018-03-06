@@ -31,7 +31,7 @@
 # if defined(__STRICT_ANSI__) && (__STRICT_ANSI__ == 1)
 #  define SCHAR_MIN		(-127)
 # else
-#  define SCHAR_MIN		(-SCHAR_MAX − 1)	// -128 (real limit)
+#  define SCHAR_MIN		(-SCHAR_MAX - 1)	// -128 (real limit)
 # endif
 
 
@@ -51,7 +51,7 @@
 # if defined(__STRICT_ANSI__) && (__STRICT_ANSI__ == 1)
 #  define SHRT_MIN		(-32767)
 # else
-#  define SHRT_MIN		(-SHRT_MAX − 1)		// -32768 (real limit)
+#  define SHRT_MIN		(-SHRT_MAX - 1)		// -32768 (real limit)
 # endif
 # define USHRT_MAX		65535
 
@@ -62,7 +62,7 @@
 #  define UINT_MAX		65535
 # else
 #  define INT_MAX		2147483647
-#  define INT_MIN		(-INT_MAX − 1)		// -2147483648 (real limit)
+#  define INT_MIN		(-INT_MAX - 1)		// -2147483648 (real limit)
 #  define UINT_MAX		4294967295U
 # endif
 
@@ -73,7 +73,7 @@
 #  define ULONG_MAX		4294967295U
 # else
 #  define LONG_MAX		9223372036854775807L
-#  define LONG_MIN		(-LONG_MAX − 1)		// -92233720368547758078 (real limit)
+#  define LONG_MIN		(-LONG_MAX - 1)		// -92233720368547758078 (real limit)
 #  define ULONG_MAX		18446744073709551615UL
 # endif
 
@@ -84,7 +84,7 @@
 #  define ULLONG_MAX		4294967295U
 # else
 #  define LLONG_MAX		9223372036854775807L
-#  define LLONG_MIN		(-LLONG_MAX − 1)	// -92233720368547758078 (real limit)
+#  define LLONG_MIN		(-LLONG_MAX - 1)	// -92233720368547758078 (real limit)
 #  define ULLONG_MAX		18446744073709551615UL
 # endif
 

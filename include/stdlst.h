@@ -2,7 +2,7 @@
 ** Header file for stdlst subset of Undefined-C library
 **
 ** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 03/16/2017 by Juillard Jean-Baptiste
+** Updated: 03/04/2018 by Juillard Jean-Baptiste
 **
 ** This file is a part of free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -234,6 +234,8 @@ slst_t		*slst_qckrsrt(slst_t **lst,
 // slst_t		*slst_heapsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));	// Trie par tas (Heap sort)
 // slst_t		*slst_heaprsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
 slst_t		*slst_random(slst_t **lst, unsigned int seed);					// Melange de Fisher-Yates (Fisher–Yates shuffle)
+//slst_t	*slst_rot(slst_t **lst, size_t n);						// Rotation
+//slst_t	*slst_rrot(slst_t **lst, size_t n);						// Rotation inverse
 lifo_t		*slst2lifo(slst_t **lst);
 // sslst_t	*slst2sslst(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
 sclst_t		*slst2sclst(slst_t **lst);

@@ -27,4 +27,7 @@
 # define EOF			((int)(-1))
 
 
+//int   fprintf(FILE * restrict stream, const char * restrict format, ...);
+
+
 #endif
