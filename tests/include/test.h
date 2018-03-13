@@ -1,20 +1,23 @@
 /*
-** Header file for units test of Undefined-C library
+** test.h
 **
-** Created: 28/01/2017 by Juillard Jean-Baptiste
-** Updated: 02/06/2017 by Juillard Jean-Baptiste
+** Header file for test subset of Undefined-C library
 **
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
-** This program is free software; you can redistribute it and/or
+** Created: 2017/01/28 by Juillard Jean-Baptiste
+** Updated: 2018/03/12 by Juillard Jean-Baptiste
+**
+** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
 ** published by the Free Software Foundation; either version 3, or
 ** (at your option) any later version.
-** 
-** This program is distributed in the hope that it will be useful,
+**
+** There is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; see the file LICENSE.  If not, write to
 ** the Free Software Foundation, Inc., 51 Franklin Street, Fifth
@@ -24,7 +27,7 @@
 #ifndef TEST_H
 # define	TEST_H			1
 
-# include	"stdlst.h"
+# include <libuc/stdlst.h>
 
 int		get_int(char *str);
 

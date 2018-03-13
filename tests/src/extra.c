@@ -1,33 +1,36 @@
 /*
-** extra function for units tests of Undefined-C library
+** extra.c
 **
-** Created: 01/28/2017 by Juillard Jean-Baptiste
-** Updated: 01/12/2017 by Juillard Jean-Baptiste
+** extra function for unit tests of Undefined-C library
 **
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
-** This program is free software; you can redistribute it and/or
+** Created: 2017/01/28 by Juillard Jean-Baptiste
+** Updated: 2018/03/12 by Juillard Jean-Baptiste
+**
+** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
 ** published by the Free Software Foundation; either version 3, or
 ** (at your option) any later version.
-** 
-** This program is distributed in the hope that it will be useful,
+**
+** There is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; see the file LICENSE.  If not, write to
 ** the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <stddef.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <stdint.h>
-#include <limits.h>
-#include <stdio.h>
-#include "stdlst.h"
+#include <libuc/stddef.h>
+#include <stdlib.h>			/* Dev: a modifier après implantation de malloc et de free */
+#include <libuc/errno.h>
+#include <libuc/stdint.h>
+#include <libuc/limits.h>
+#include <stdio.h>			/* Dev: a modifier après implantation de printf */
+#include <libuc/stdlst.h>
 
 int	get_int(char *str)
 {
@@ -182,6 +185,8 @@ slst_t	*_gen_slst(long long start, long long end, long long step)
 		if ((tmp = (slst_t *)malloc(sizeof(sclst_t))) == (slst_t *)(NULL)
 			|| (tmp->key = malloc(sizeof(long long))) == NULL)
 		{
+			if (tmp)
+				free((void *)(tmp));
 			sclst_purge(&lst, &_ofree);
 			return ((slst_t *)(NULL));
 		}

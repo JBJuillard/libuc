@@ -1,10 +1,14 @@
 /*
+** stdio.h
+**
 ** Header file for stdio subset of Undefined-C library
 **
-** Created: 02/19/2018 by Juillard Jean-Baptiste
-** Updated: 02/19/2018 by Juillard Jean-Baptiste
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
-** This file is a part of free software; you can redistribute it and/or
+** Created: 2018/02/19 by Juillard Jean-Baptiste
+** Updated: 2018/03/12 by Juillard Jean-Baptiste
+**
+** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
 ** published by the Free Software Foundation; either version 3, or
 ** (at your option) any later version.

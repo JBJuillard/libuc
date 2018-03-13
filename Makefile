@@ -1,10 +1,14 @@
 #
-# Makefile for Undefined-C library
+# Makefile
 #
-# Created: 01/29/2017 by Juillard Jean-Baptiste
-# Updated: 01/25/2018 by Juillard Jean-Baptiste
+# Make script of Undefined-C library
 #
-# This file is a part of free software; you can redistribute it and/or
+# By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
+#
+# Created: 2016/01/29 by Juillard Jean-Baptiste
+# Updated: 2018/03/13 by Juillard Jean-Baptiste
+#
+# This file is a part free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
 # published by the Free Software Foundation; either version 3, or
 # (at your option) any later version.
@@ -56,79 +60,74 @@ EXAMPLES_PATH = examples
 
 
 # Source files
-SRC =	slst_newelm.c slst_delelm.c \
-		slst_len.c slst_isempty.c \
-		slst_previous.c slst_next.c \
-		slst_head.c slst_tail.c \
-		slst_put.c slst_putn.c \
-		slst_get.c slst_getn.c \
-		slst_del.c slst_deln.c slst_delp.c slst_delk.c \
-		slst_purge.c \
-		slst_nsrt.c slst_nsrtn.c slst_nsrtp.c slst_nsrtk.c \
-		slst_xtrc.c slst_xtrcn.c slst_xtrcp.c slst_xtrck.c \
-		slst_rch.c slst_rrch.c slst_xrch.c slst_rxrch.c \
-		slst_cmp.c slst_rcmp.c slst_diff.c slst_rdiff.c \
-		slst_cpy.c slst_rcpy.c \
-		slst_rev.c \
-		slst_cat.c \
-		slst_cut.c slst_cutn.c slst_cutp.c slst_cutk.c \
-		slst_apply.c \
-		slst_keyslen.c slst_keysdup.c \
-		slst_random.c \
-		slst2lifo.c slst2sclst.c slst2fifo.c \
-		slst_map.c \
-		mslst_purge.c \
+SRC =	stdlst/slst_newelm.c stdlst/slst_delelm.c stdlst/slst_len.c \
+		stdlst/slst_isempty.c stdlst/slst_previous.c stdlst/slst_next.c \
+		stdlst/slst_head.c stdlst/slst_tail.c stdlst/slst_put.c \
+		stdlst/slst_putn.c stdlst/slst_get.c stdlst/slst_getn.c \
+		stdlst/slst_del.c stdlst/slst_deln.c stdlst/slst_delp.c \
+		stdlst/slst_delk.c stdlst/slst_purge.c stdlst/slst_nsrt.c \
+		stdlst/slst_nsrtn.c stdlst/slst_nsrtp.c stdlst/slst_nsrtk.c \
+		stdlst/slst_xtrc.c stdlst/slst_xtrcn.c stdlst/slst_xtrcp.c \
+		stdlst/slst_xtrck.c stdlst/slst_rch.c stdlst/slst_rrch.c \
+		stdlst/slst_xrch.c stdlst/slst_rxrch.c stdlst/slst_cmp.c \
+		stdlst/slst_rcmp.c stdlst/slst_diff.c stdlst/slst_rdiff.c \
+		stdlst/slst_cpy.c stdlst/slst_rcpy.c stdlst/slst_rev.c \
+		stdlst/slst_cat.c stdlst/slst_cut.c stdlst/slst_cutn.c \
+		stdlst/slst_cutp.c stdlst/slst_cutk.c stdlst/slst_apply.c \
+		stdlst/slst_keyslen.c stdlst/slst_keysdup.c stdlst/slst_random.c \
+		stdlst/slst2lifo.c stdlst/slst2sclst.c stdlst/slst2fifo.c \
+		stdlst/slst_map.c \
+		stdlst/mslst_purge.c \
+		stdlst/lifo_push.c stdlst/lifo_pop.c stdlst/lifo_purge.c \
+		stdlst/lifo_map.c \
+		stdlst/mlifo_push.c stdlst/mlifo_pop.c stdlst/mlifo_purge.c \
+		stdlst/sclst_newelm.c stdlst/sclst_delelm.c stdlst/sclst_isempty.c \
+		stdlst/sclst_len.c stdlst/sclst_previous.c stdlst/sclst_next.c \
+		stdlst/sclst_head.c stdlst/sclst_tail.c stdlst/sclst_put.c \
+		stdlst/sclst_put_front.c stdlst/sclst_put_back.c stdlst/sclst_putn.c \
+		stdlst/sclst_get.c stdlst/sclst_get_front.c stdlst/sclst_get_back.c \
+		stdlst/sclst_getn.c stdlst/sclst_purge.c stdlst/sclst_map.c \
+		stdlst/msclst_purge.c \
+		stdlst/fifo_push.c stdlst/fifo_pop.c stdlst/fifo_purge.c \
+		stdlst/fifo_map.c \
+		stdlst/mfifo_push.c stdlst/mfifo_pop.c stdlst/mfifo_purge.c \
 		\
-		lifo_push.c lifo_pop.c lifo_purge.c  lifo_map.c \
-		mlifo_push.c mlifo_pop.c mlifo_purge.c \
+		#ctype/isalnum.c ctype/isalpha.c ctype/isascii.c \
+		ctype/isblank.c ctype/iscntrl.c ctype/isdigit.c ctype/isgraph.c \
+		ctype/islower.c ctype/isprint.c ctype/ispunct.c ctype/isspace.c \
+		ctype/isupper.c ctype/isxdigit.c ctype/toascii.c ctype/tolower.c \
+		ctype/toupper.c ctype/_toupper.c ctype/_tolower.c \
 		\
-		sclst_newelm.c sclst_delelm.c \
-		sclst_isempty.c sclst_len.c \
-		sclst_previous.c sclst_next.c \
-		sclst_head.c sclst_tail.c \
-		sclst_put.c sclst_put_front.c sclst_put_back.c sclst_putn.c \
-		sclst_get.c sclst_get_front.c sclst_get_back.c sclst_getn.c \
-		sclst_purge.c \
-		sclst_map.c \
-		msclst_purge.c \
+		string/memccpy.c string/memchr.c string/memcmp.c string/memcpy.c \
+		string/memcpy_s.c string/memmove.c string/memmove_s.c string/memset.c \
+		string/mempcpy.c string/memrchr.c string/rawmemchr.c string/memmem.c \
+		string/memfrob.c string/ffsl.c string/ffsll.c  string/strlcat.c\
+		string/strcpy.c string/strcpy_s.c string/strncpy.c string/strncpy_s.c \
+		string/strcat.c string/strcat_s.c string/strncat.c string/strncat_s.c \
+		string/strchr.c string/strrchr.c string/strchrnul.c string/strcmp.c \
+		string/strncmp.c string/stpcpy.c string/stpncpy.c string/strverscmp.c \
+		string/strdup.c string/strdupa.c string/strndup.c string/strndupa.c \
+		string/strstr.c string/strcasestr.c string/strpbrk.c string/strsep.c \
+		string/strspn.c string/strcspn.c string/strtok.c string/strtok_r.c \
+		string/strtok_s.c string/strlen.c string/strnlen.c string/strnlen_s.c \
+		string/strfry.c \
 		\
-		fifo_push.c fifo_pop.c fifo_purge.c fifo_map.c \
-		mfifo_push.c mfifo_pop.c mfifo_purge.c \
+		strings/bcmp.c strings/bcopy.c strings/bzero.c strings/ffs.c \
+		strings/index.c strings/rindex.c strings/strcasecmp.c \
+		strings/strncasecmp.c \
 		\
-		\
-		\
-		\
-		\
-		bcmp.c bcopy.c bzero.c \
-		memset.c \
-		memcpy.c memcpy_s.c memccpy.c mempcpy.c \
-		memmove.c memmove_s.c \
-		memcmp.c \
-		memchr.c memrchr.c rawmemchr.c \
-		memmem.c \
-		memfrob.c \
-		\
-		ffs.c ffsl.c ffsll.c \
-		index.c  rindex.c \
-		strcpy.c strcpy_s.c strncpy.c strncpy_s.c \
-		stpcpy.c stpncpy.c \
-		strdup.c strdupa.c strndup.c strndupa.c \
-		strcat.c strcat_s.c strncat.c strncat_s.c strlcat.c \
-		strchr.c strrchr.c strchrnul.c \
-		strcmp.c strncmp.c strcasecmp.c strncasecmp.c \
-		strverscmp.c \
-		strstr.c strcasestr.c \
-		strpbrk.c \
-		strspn.c strcspn.c \
-		strtok.c strtok_r.c strtok_s.c \
-		strsep.c \
-		strlen.c strnlen.c strnlen_s.c \
-		strfry.c
+		stdlib/atof.c stdlib/atoi.c stdlib/atol.c stdlib/atoll.c \
+		stdlib/strtof.c stdlib/strtod.c stdlib/strtold.c \
+		stdlib/strtol.c stdlib/strtoll.c stdlib/strtoul.c stdlib/strtoull.c \
+		stdlib/rand.c stdlib/bsearch.c #stdlib/qsort.c \
+
 SRC_FULLPATH = $(addprefix $(SRC_PATH)/,$(SRC))
 
 
 # Include files
-INC =	stdlst.h
+INC =	libuc/stdlst.h libuc/ctype.h libuc/errno.h libuc/limits.h \
+		libuc/stdbool.h libuc/stddef.h libuc/stdint.h libuc/stdio.h \
+		libuc/stdlib.h libuc/string.h
 INC_FULLPATH = $(addprefix $(INC_PATH)/,$(INC))
 INC_INSTALLPATH = $(prefix)/include
 INC_INSTALLFULLPATH = $(addprefix $(INC_INSTALLPATH)/,$(INC))
@@ -503,7 +502,6 @@ check-distclean:
 check-prompt:
 	@echo "\n\n\033[0;36;40mUnits tests for Undefined-C Library\033[0m\n\nTest with N = $(TEST_SIZE_N)\n"
 
-
 # Repository update and local update rules
 git-clone:
 git-push:
@@ -512,7 +510,14 @@ git-pull:
 
 # Object files rules
 $(OBJ_FULLPATH): | $(OBJ_PATH)
+$(OBJ_FULLPATH): | $(OBJ_PATH)/ctype/
+$(OBJ_FULLPATH): | $(OBJ_PATH)/stdlib/
+$(OBJ_FULLPATH): | $(OBJ_PATH)/stdlst/
+$(OBJ_FULLPATH): | $(OBJ_PATH)/string/
+$(OBJ_FULLPATH): | $(OBJ_PATH)/strings/
 $(OBJ_PATH):
+	@$(MD) $(MD_FLAGS) $@
+$(OBJ_PATH)/%/:
 	@$(MD) $(MD_FLAGS) $@
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 	$(CC) $(CFLAGS_OBJ) $(CFLAGS_PIC) $(CFLAGS) $(CFLAGS_OPTIMIZE)$(OPTIMIZATION_LEVEL) $(addprefix $(CFLAGS_MACRO),$(CMACRO)) $(CFLAGS_OUTPUT) $@ $<
@@ -520,7 +525,14 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 # Assembly files rules
 $(ASM_FULLPATH): | $(ASM_PATH)
+$(ASM_FULLPATH): | $(ASM_PATH)/ctype/
+$(ASM_FULLPATH): | $(ASM_PATH)/stdlib/
+$(ASM_FULLPATH): | $(ASM_PATH)/stdlst/
+$(ASM_FULLPATH): | $(ASM_PATH)/string/
+$(ASM_FULLPATH): | $(ASM_PATH)/strings/
 $(ASM_PATH):
+	@$(MD) $(MD_FLAGS) $@
+$(ASM_PATH)/%/:
 	@$(MD) $(MD_FLAGS) $@
 $(ASM_PATH)/%.$(ASM_EXTENSION): $(SRC_PATH)/%.c
 	$(CC) $(CFLAGS_ASM) $(CFLAGS_PIC) $(CFLAGS) $(CFLAGS_OPTIMIZE)$(OPTIMIZATION_LEVEL) $(addprefix $(CFLAGS_MACRO),$(CMACRO)) $(CFLAGS_OUTPUT) $@ $<
@@ -536,7 +548,14 @@ $(SO_PATH):
 
 # Test rules
 $(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)
+$(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/ctype/
+$(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/stdlib/
+$(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/stdlst/
+$(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/string/
+$(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/strings/
 $(TEST_PATH)/$(BIN_PATH):
+	@$(MD) $(MD_FLAGS) $@
+$(TEST_PATH)/$(BIN_PATH)/%/:
 	@$(MD) $(MD_FLAGS) $@
 $(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += $(CFLAGS_INCLUDE)./$(TEST_PATH)/$(INC_PATH)
 $(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += $(CFLAGS_OPTIMIZE)g
@@ -547,28 +566,36 @@ $(TEST_PATH)/$(BIN_PATH)/%: CMACRO += INTERFACE_FUNCTION=ut_$(*F)_interface
 $(TEST_PATH)/$(BIN_PATH)/%: CMACRO += MEMCHK_FUNCTION=ut_$(*F)_memchk
 $(TEST_PATH)/$(BIN_PATH)/%: CMACRO += TIMEOUT_FUNCTION=ut_$(*F)_timeout
 $(TEST_PATH)/$(BIN_PATH)/%: CMACRO += $(shell echo -n $(CMACRO_DEBUG))
-$(TEST_PATH)/$(BIN_PATH)/%: TEST_MAINFILE += $(TEST_PATH)/$(SRC_PATH)/ut_$(*F).c
+$(TEST_PATH)/$(BIN_PATH)/%: TEST_MAINFILE += $(TEST_PATH)/$(SRC_PATH)/$(*D)/ut_$(*F).c
 $(TEST_PATH)/$(BIN_PATH)/%: TEST_MAINFILE += $(TEST_PATH)/$(SRC_PATH)/extra.c
-$(TEST_PATH)/$(BIN_PATH)/%: $(TEST_PATH)/$(SRC_PATH)/ut_%.c
+$(TEST_PATH)/$(BIN_PATH)/%: $(TEST_MAINFILE)
 	$(CC) $(CFLAGS) $(addprefix $(CFLAGS_MACRO),$(CMACRO)) $(CFLAGS_OUTPUT) $@ $(TEST_MAINFILE)
+
 $(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)
+$(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/ctype/
+$(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/stdlib/
+$(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/stdlst/
+$(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/string/
+$(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/strings/
 $(TEST_SUCCESSFILE_FULLPATH): | check-prompt
 $(TEST_PATH)/$(LOG_PATH):
 	@$(MD) $(MD_FLAGS) $@
-$(TEST_PATH)/$(LOG_PATH)/%.log: MEMCHKFLAGS += $(MEMCHKFLAGS_LOG)$(TEST_PATH)/$(LOG_PATH)/$(*F).memchk
-$(TEST_PATH)/$(LOG_PATH)/%.log: TIMEFLAGS += $(TIMEFLAGS_LOG)$(TEST_PATH)/$(LOG_PATH)/$(*F).time
-$(TEST_PATH)/$(LOG_PATH)/%.log: $(TEST_PATH)/$(BIN_PATH)/% $(SRC_PATH)/%.c $(TEST_PATH)/$(SRC_PATH)/ut_%.c
+$(TEST_PATH)/$(LOG_PATH)/%/:
+	@$(MD) $(MD_FLAGS) $@
+$(TEST_PATH)/$(LOG_PATH)/%.log: MEMCHKFLAGS += $(MEMCHKFLAGS_LOG)$(TEST_PATH)/$(LOG_PATH)/$(*D)/$(*F).memchk
+$(TEST_PATH)/$(LOG_PATH)/%.log: TIMEFLAGS += $(TIMEFLAGS_LOG)$(TEST_PATH)/$(LOG_PATH)/$(*D)/$(*F).time
+$(TEST_PATH)/$(LOG_PATH)/%.log: $(TEST_PATH)/$(BIN_PATH)/%
 	@export LD_LIBRARY_PATH=./$(TEST_PATH)/$(SO_PATH) ; \
 	echo -n "\033[s$(*F)\033[u\033[50C" ; \
 	echo -n "\033[s\033[K[ \033[0;34;40mFunction Interface Test\033[0m ]\033[u" ; \
-	$(TEST_PATH)/$(BIN_PATH)/$(*F) 1 $(TEST_SIZE_N) ; \
+	$(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 1 $(TEST_SIZE_N) ; \
 	ERR=$$? ; \
 	if [ $$ERR -ne 0 ] ; then \
 		echo "\033[s\033[K[ \033[0;31;40mFunction Interface Error: $$ERR\033[0m ]\033[u\t" ; \
 		exit ; \
 	fi ; \
 	echo -n "\033[s\033[K[ \033[0;34;40mMemory Test\033[0m ]\033[u" ; \
-	$(MEMCHK) $(MEMCHKFLAGS) $(TEST_PATH)/$(BIN_PATH)/$(*F) 2 $(TEST_SIZE_N) ; \
+	$(MEMCHK) $(MEMCHKFLAGS) $(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 2 $(TEST_SIZE_N) ; \
 	ERR=$$? ; \
 	if [ $$ERR -eq $(MEMCHK_EXITCODE) ] ; then \
 		echo "\033[s\033[K[ \033[0;31;40mMemory Leak\033[0m ]\033[u\t" ; \
@@ -578,7 +605,7 @@ $(TEST_PATH)/$(LOG_PATH)/%.log: $(TEST_PATH)/$(BIN_PATH)/% $(SRC_PATH)/%.c $(TES
 		exit ; \
 	fi ; \
 	echo -n "\033[s\033[K[ \033[0;34;40mTimeout Test\033[0m ]\033[u" ; \
-	$(TIME) $(TIMEFLAGS) $(TIMEOUT) $(TIMEOUT_DELAY)s $(TEST_PATH)/$(BIN_PATH)/$(*F) 3 $(TEST_SIZE_N) ; \
+	$(TIME) $(TIMEFLAGS) $(TIMEOUT) $(TIMEOUT_DELAY)s $(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 3 $(TEST_SIZE_N) ; \
 	ERR=$$? ; \
 	if [ $$ERR -eq 124 ] ; then \
 		echo "\033[s\033[K[ \033[0;31;40mTimeout occurs\033[0m ]\033[u\t" ; \

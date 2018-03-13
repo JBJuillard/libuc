@@ -4,8 +4,7 @@ libuc provide some functions for deployment of efficent algorythms.
 
 For more information, you can see manpages using the following command:
 
-	cd man
-	./lman [3] <manpages>
+	./man.sh [3] <manpages>
 
 Because the project is in devellopement, manpages is only in french.
 The translation has been maked when the work has finish.

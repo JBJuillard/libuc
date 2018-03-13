@@ -1,29 +1,32 @@
 /*
-** main function for units tests of Undefined-C library
+** main.c
 **
-** Created: 28/01/2017 by Juillard Jean-Baptiste
-** Updated: 28/01/2017 by Juillard Jean-Baptiste
+** main function for unit tests of Undefined-C library
 **
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
-** This program is free software; you can redistribute it and/or
+** Created: 2017/01/28 by Juillard Jean-Baptiste
+** Updated: 2018/03/12 by Juillard Jean-Baptiste
+**
+** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
 ** published by the Free Software Foundation; either version 3, or
 ** (at your option) any later version.
-** 
-** This program is distributed in the hope that it will be useful,
+**
+** There is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; see the file LICENSE.  If not, write to
 ** the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <stdlib.h>
-#include <errno.h>
-#include <limits.h>
+#include <libuc/stdlib.h>
+#include <libuc/errno.h>
+#include <libuc/limits.h>
 
 #include "test.h"
 

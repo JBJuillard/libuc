@@ -1,10 +1,14 @@
 /*
-** Header file for stddef subset of Undefined-C library
+** ctype.h
 **
-** Created: 02/18/2018 by Juillard Jean-Baptiste
-** Updated: 02/19/2018 by Juillard Jean-Baptiste
+** Header file for ctype subset of Undefined-C library
 **
-** This file is a part of free software; you can redistribute it and/or
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
+**
+** Created: 2018/02/18 by Juillard Jean-Baptiste
+** Updated: 2018/03/12 by Juillard Jean-Baptiste
+**
+** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
 ** published by the Free Software Foundation; either version 3, or
 ** (at your option) any later version.
