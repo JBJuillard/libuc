@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -33,23 +33,21 @@
 /*
 ** Copying functions
 */
-void		*memcpy(void *s1, const void *s2, size_t n);
-# if defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
-errno_t		memcpy_s(void *s1, rsize_t s1max, const void *s2, rsize_t n);
-# endif
+void		*memcpy(void * restrict s1, const void * restrict s2, size_t n);
 void		*memmove(void *s1, const void *s2, size_t n);
+char		*strcpy(char * restrict s1, const char * restrict s2);
+char		*strncpy(char * restrict s1, const char * restrict s2, size_t n);
 # if defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
+errno_t		memcpy_s(void * restrict s1, rsize_t s1max,
+						const void * restrict s2, rsize_t n);
 errno_t		memmove_s(void *s1, rsize_t s1max, const void *s2, rsize_t n);
+errno_t		strcpy_s(char * restrict s1, rsize_t s1max,
+						const char * restrict s2);
+errno_t		strncpy_s(char * restrict s1, rsize_t s1max,
+						const char * restrict s2, rsize_t n);
 # endif
-char		*strcpy(char *s1, const char *s2);
-# if defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
-errno_t		strcpy_s(char *s1, rsize_t s1max, const char *s2);
-# endif
-char		*strncpy(char *s1, const char *s2, size_t n);
-# if defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
-errno_t		strncpy_s(char *s1, rsize_t s1max, const char *s2, rsize_t n);
-# endif
-void		*memccpy(void *s1, const void *s2, int c, size_t n);
+void		*memccpy(void * restrict s1, const void * restrict s2,
+						int c, size_t n);
 void		*mempcpy(void *s1, const void *s2, size_t n);
 char		*strdup(const char *s);
 char		*strndup(const char *s, size_t n);

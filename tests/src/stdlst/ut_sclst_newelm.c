@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/03/08 by Juillard Jean-Baptiste
-** Updated: 2018/03/13 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -26,6 +26,8 @@
 
 #include <stdlib.h>			/* Dev: a modifier après implantation de free */
 #include <libuc/stdlst.h>
+#include <libuc/errno.h>
+
 int	ut_sclst_newelm_interface(int N)
 {
 	sclst_t	*tmp;

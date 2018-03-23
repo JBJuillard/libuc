@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,23 +27,28 @@
 #include <libuc/stddef.h>
 #include <libuc/stdint.h>
 #include <libuc/errno.h>
-#include <stdlib.h>
+#include <libuc/stdlib.h>
 
-void	*memccpy(void *s1, const void *s2, int c, size_t n)
+void	*memccpy(void * restrict s1, const void * restrict s2,
+					int c, size_t n)
 {
-	register size_t	offset;
+	register unsigned char			*p1;	/* Fast pointer on s1 */
+	register const unsigned char	*p2;	/* Fast pointer on s2 */
+	register size_t					cnt;	/* Fast counter */
 
-	if (!s1 || !s2 || c < 0x00 || c > 0xFF || !n || n > SIZE_MAX)
+	if (!s1 || !s2 || c < 0x0 || c > 0xFF || !n || n > SIZE_MAX)
 	{
 		errno = EINVAL;
 		return (NULL);
 	}
-	errno ^= errno;
-	offset ^= offset;
-	while (offset < n && (int)(*((char *)(s2 + offset))) != c)
+	errno = 0;
+	p1 = (unsigned char *)(s1);
+	p2 = (const unsigned char *)(s2);
+	cnt = n;
+	while (cnt && p2 != (const unsigned char)(c))
 	{
-		*((char *)(s1 + offset)) = *((char *)(s2 + offset));
-		offset++;
+		*(p1++) = *((unsigned char *)(p2++));
+		cnt--;
 	}
 	return (s1);
 }

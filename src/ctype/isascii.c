@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/18 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/23 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,13 +24,13 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <libuc/stdio.h>
 #include <libuc/errno.h>
+#include <libuc/stdio.h>
 
-int	isacii(int c)
+int	isascii(int c)
 {
 	if (c != EOF
-		&& (c < 0x00 || c > 0xFF))
+		&& (c < 0x0 || c > 0xFF))
 	{
 		errno = EINVAL;
 		return (0);

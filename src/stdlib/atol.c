@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/25 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/14 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -47,7 +47,7 @@ long int	atol(const char *nptr)
 		errno = EINVAL;
 		return (0);
 	}
-	errno ^= errno;
+	errno = 0;
 	n ^= n;
 	p = nptr;
 	while (*p == '\f' || *p == '\n' || *p == '\r' || *p == '\t' || *p == '\v')

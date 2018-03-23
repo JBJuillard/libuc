@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -31,9 +31,12 @@
 #include <libuc/errno.h>
 #include <libuc/string.h>
 
-errno_t	strncpy_s(char *s1, rsize_t s1max, const char *s2, rsize_t n)
+errno_t	strncpy_s(char * restrict s1, rsize_t s1max,
+					const char * restrict s2, rsize_t n)
 {
-	register size_t	offset;
+	register unsigned char			*p1;	/* Fast pointer on s1 */
+	register const unsigned char	*p2;	/* Fast pointer on s2 */
+	register rsize_t				c;		/* Fast counter */
 
 	if (!s1 || !s1max || s1max > RSIZE_MAX || !s2
 		|| s1max == strnlen_s(s2, s1max)
@@ -44,14 +47,15 @@ errno_t	strncpy_s(char *s1, rsize_t s1max, const char *s2, rsize_t n)
 		errno = EINVAL;
 		return ((errno_t)(EINVAL));
 	}
-	errno ^= errno;
-	offset ^= offset;
-	while (*s2 && n)
+	errno = 0;
+	p1 = (unsigned char *)(s1);
+	p2 = (const unsigned char *)(s2);
+	while (*p2 && c)
 	{
-		*(s1 + offset++) = *(s2++);
-		--n;
+		*(p1++) = *((unsigned char *)(p2++));
+		c--;
 	}
-	while (n--)
-		*(s1 + offset++) = '\0';
+	if (*p2)
+		*((unsigned char *)(s1 + n)) = '\0';
 	return ((errno_t)(0));
 }

@@ -1,19 +1,23 @@
 /*
-** mlifo_push function for Undefined-C library
+** mlifo_push.c
 **
-** Created: 03/09/2017 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** mlifo_push function of Undefined-C library
+**
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
+**
+** Created: 2017/03/09 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
 ** published by the Free Software Foundation; either version 3, or
 ** (at your option) any later version.
-** 
+**
 ** There is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; see the file LICENSE.  If not, write to
 ** the Free Software Foundation, Inc., 51 Franklin Street, Fifth
@@ -29,13 +33,12 @@ mlifo_t	*mlifo_push(mlifo_t **mstk, void **kptr, size_t *sptr)
 {
 	register mlifo_t	*tmp;
 
-	if (!mstk)
+	if (!mstk || !kptr || !sptr)
 	{
 		errno = EINVAL;
 		return ((mlifo_t *)(NULL));
 	}
 	errno = 0;
-	tmp = (mlifo_t *)(NULL);
 	if ((tmp = (mlifo_t *)malloc(sizeof(mlifo_t))) == (mlifo_t *)(NULL))
 	{
 		if (!errno)

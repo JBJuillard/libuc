@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/03/16 by Juillard Jean-Baptiste
-** Updated: 2018/03/13 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -50,9 +50,9 @@ int	ut_mfifo_push_interface(int N)
 	int				j;
 	int				err;
 	static test_t	ut_list[4] = {	{ 0, 1, 1, EINVAL, 1 },
-									{ 1, 0, 1, 0, 0 },
-									{ 1, 1, 0, 0, 0 },
-									{ 1, 1, 0, 0, 0 }	};
+									{ 1, 0, 1, EINVAL, 1 },
+									{ 1, 1, 0, EINVAL, 1 },
+									{ 1, 1, 1, 0, 0 }	};
 
 	i = 0;
 	err = 0xFF;

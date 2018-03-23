@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/18 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/23 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,12 +27,11 @@
 #ifndef CTYPES_H
 # define	CTYPES_H		1
 
-
 int	isalnum(int c);
 //int	isalnum_l(int c, locale_t l);
 int	isalpha(int c);
 //int	isalpha_l(int c, locale_t l);
-int	isascii(int c);			// Obsolete POSIX.1-2008
+int	isascii(int c);						// Obsolete POSIX.1-2008
 int	isblank(int c);
 //int	isblank_l(int c, locale_t l);
 int	iscntrl(int c);
@@ -59,9 +58,7 @@ int	tolower(int c);
 int	toupper(int c);
 //int	toupper_l(int c, locale_t l);
 
-
-#define		_toupper(c)		((((int)(c)) >= 'a' || ((int)(c)) <= 'z') ? (toupper(c)) : (c))
-#define		_tolower(c)		((((int)(c)) >= 'a' || ((int)(c)) <= 'z') ? (tolower(c)) : (c))
-
+# define	_toupper(c)		((((int)(c)) >= (int)('a') && ((int)(c)) <= (int)('z')) ? (((int)(c)) - 0x20) : ((int)(c)))
+# define	_tolower(c)		((((int)(c)) >= (int)('A') && ((int)(c)) <= (int)('Z')) ? (((int)(c)) + 0x20) : ((int)(c)))
 
 #endif

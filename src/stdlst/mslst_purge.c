@@ -1,19 +1,23 @@
 /*
-** mslst_purge function for Undefined-C library
+** mslst_purge.c
 **
-** Created: 12/28/2016 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** mslst_purge function of Undefined-C library
+**
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
+**
+** Created: 2016/12/28 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
 ** published by the Free Software Foundation; either version 3, or
 ** (at your option) any later version.
-** 
+**
 ** There is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
 ** General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; see the file LICENSE.  If not, write to
 ** the Free Software Foundation, Inc., 51 Franklin Street, Fifth
@@ -27,6 +31,7 @@
 void	mslst_purge(mslst_t **mlst)
 {
 	register mslst_t	*tmp;
+	register mslst_t	*ptr;
 
 	if (!mlst)
 	{
@@ -34,10 +39,11 @@ void	mslst_purge(mslst_t **mlst)
 		return ;
 	}
 	errno = 0;
-	while (*mlst)
+	ptr = *mlst;
+	while (ptr)
 	{
-		tmp = *mlst;
-		*mlst = tmp->next;
+		tmp = ptr;
+		ptr = tmp->next;
 		tmp->kptr = (void **)(NULL);
 		tmp->sptr = (size_t *)(NULL);
 		tmp->next = (mslst_t *)(NULL);

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/01/29 by Juillard Jean-Baptiste
-** Updated: 2018/03/13 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,9 +24,10 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <stdlib.h>			/* Dev: a modiifer après iplantation de free */
+#include <stdlib.h>			/* Dev: a modififer après iplantation de free */
 #include <libuc/stdint.h>
 #include <libuc/stdlst.h>
+#include <libuc/errno.h>
 #include "test.h"
 
 typedef struct			test_s

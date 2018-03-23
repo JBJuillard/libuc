@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/18 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/22 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -36,7 +36,8 @@ int	iscntrl(int c)
 		return (0);
 	}
 	errno = 0;
-	if (c > 0x20 && c != 0x7F)
-		return (0);
-	return (1);
+	if ((c >= 0x0 && c < 0x20)
+		|| c == 0x7F)
+		return (1);
+	return (0);
 }

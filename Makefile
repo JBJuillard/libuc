@@ -6,7 +6,7 @@
 # By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 #
 # Created: 2016/01/29 by Juillard Jean-Baptiste
-# Updated: 2018/03/13 by Juillard Jean-Baptiste
+# Updated: 2018/03/23 by Juillard Jean-Baptiste
 #
 # This file is a part free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -60,7 +60,13 @@ EXAMPLES_PATH = examples
 
 
 # Source files
-SRC =	stdlst/slst_newelm.c stdlst/slst_delelm.c stdlst/slst_len.c \
+SRC =	ctype/isalnum.c ctype/isalpha.c ctype/isascii.c \
+		ctype/isblank.c ctype/iscntrl.c ctype/isdigit.c ctype/isgraph.c \
+		ctype/islower.c ctype/isprint.c ctype/ispunct.c ctype/isspace.c \
+		ctype/isupper.c ctype/isxdigit.c ctype/toascii.c ctype/tolower.c \
+		ctype/toupper.c \
+		\
+		stdlst/slst_newelm.c stdlst/slst_delelm.c stdlst/slst_len.c \
 		stdlst/slst_isempty.c stdlst/slst_previous.c stdlst/slst_next.c \
 		stdlst/slst_head.c stdlst/slst_tail.c stdlst/slst_put.c \
 		stdlst/slst_putn.c stdlst/slst_get.c stdlst/slst_getn.c \
@@ -90,13 +96,12 @@ SRC =	stdlst/slst_newelm.c stdlst/slst_delelm.c stdlst/slst_len.c \
 		stdlst/msclst_purge.c \
 		stdlst/fifo_push.c stdlst/fifo_pop.c stdlst/fifo_purge.c \
 		stdlst/fifo_map.c \
-		stdlst/mfifo_push.c stdlst/mfifo_pop.c stdlst/mfifo_purge.c \
+		stdlst/mfifo_push.c stdlst/mfifo_pop.c stdlst/mfifo_purge.c #\
 		\
-		#ctype/isalnum.c ctype/isalpha.c ctype/isascii.c \
-		ctype/isblank.c ctype/iscntrl.c ctype/isdigit.c ctype/isgraph.c \
-		ctype/islower.c ctype/isprint.c ctype/ispunct.c ctype/isspace.c \
-		ctype/isupper.c ctype/isxdigit.c ctype/toascii.c ctype/tolower.c \
-		ctype/toupper.c ctype/_toupper.c ctype/_tolower.c \
+		stdlib/atof.c stdlib/atoi.c stdlib/atol.c stdlib/atoll.c \
+		stdlib/strtof.c stdlib/strtod.c stdlib/strtold.c \
+		stdlib/strtol.c stdlib/strtoll.c stdlib/strtoul.c stdlib/strtoull.c \
+		stdlib/rand.c stdlib/bsearch.c stdlib/qsort.c \
 		\
 		string/memccpy.c string/memchr.c string/memcmp.c string/memcpy.c \
 		string/memcpy_s.c string/memmove.c string/memmove_s.c string/memset.c \
@@ -114,13 +119,7 @@ SRC =	stdlst/slst_newelm.c stdlst/slst_delelm.c stdlst/slst_len.c \
 		\
 		strings/bcmp.c strings/bcopy.c strings/bzero.c strings/ffs.c \
 		strings/index.c strings/rindex.c strings/strcasecmp.c \
-		strings/strncasecmp.c \
-		\
-		stdlib/atof.c stdlib/atoi.c stdlib/atol.c stdlib/atoll.c \
-		stdlib/strtof.c stdlib/strtod.c stdlib/strtold.c \
-		stdlib/strtol.c stdlib/strtoll.c stdlib/strtoul.c stdlib/strtoull.c \
-		stdlib/rand.c stdlib/bsearch.c #stdlib/qsort.c \
-
+		strings/strncasecmp.c
 SRC_FULLPATH = $(addprefix $(SRC_PATH)/,$(SRC))
 
 
@@ -215,6 +214,7 @@ TEST_MAINFILE = $(TEST_PATH)/$(SRC_PATH)/main.c
 TEST_SUCCESSFILE = $(addsuffix .log,$(TEST))
 TEST_SUCCESSFILE_FULLPATH = $(addprefix $(TEST_PATH)/$(LOG_PATH)/,$(TEST_SUCCESSFILE))
 TEST_SIZE_N = 1000000
+UT_SRCFILE := $(EMPTY)
 
 
 # C Compiler
@@ -584,7 +584,8 @@ $(TEST_PATH)/$(LOG_PATH)/%/:
 	@$(MD) $(MD_FLAGS) $@
 $(TEST_PATH)/$(LOG_PATH)/%.log: MEMCHKFLAGS += $(MEMCHKFLAGS_LOG)$(TEST_PATH)/$(LOG_PATH)/$(*D)/$(*F).memchk
 $(TEST_PATH)/$(LOG_PATH)/%.log: TIMEFLAGS += $(TIMEFLAGS_LOG)$(TEST_PATH)/$(LOG_PATH)/$(*D)/$(*F).time
-$(TEST_PATH)/$(LOG_PATH)/%.log: $(TEST_PATH)/$(BIN_PATH)/%
+$(TEST_PATH)/$(LOG_PATH)/%.log: UT_SRCFILE = $(TEST_PATH)/$(SRC_PATH)/$(*D)/ut_$(*F).c
+$(TEST_PATH)/$(LOG_PATH)/%.log: $(SRC_PATH)/%.c $(UT_SRCFILE) $(TEST_PATH)/$(BIN_PATH)/%
 	@export LD_LIBRARY_PATH=./$(TEST_PATH)/$(SO_PATH) ; \
 	echo -n "\033[s$(*F)\033[u\033[50C" ; \
 	echo -n "\033[s\033[K[ \033[0;34;40mFunction Interface Test\033[0m ]\033[u" ; \

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/20 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -28,18 +28,18 @@
 #include <libuc/errno.h>
 #include <stdlib.h>
 
-char	*strcpy(char *s1, const char *s2)
+char	*strcpy(char * restrict s1, const char * restrict s2)
 {
-	register unsigned char	*p1;
-	register unsigned char	*p2;
+	register unsigned char			*p1;	/* Fast pointer on s1 */
+	register const unsigned char	*p2;	/* Fast pointer on s2 */
 
 	if (!(p1 = (unsigned char *)(s1))
-		|| !(p2 = (unsigned char *)(s2)))
+		|| !(p2 = (const unsigned char *)(s2)))
 	{
 		errno = EINVAL;
 		return ((char *)(NULL));
 	}
-	errno ^= errno;
+	errno = 0;
 	while (*p2)
 		*(p1++) = *(p2++);
 	*p1 = '\0';

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/01/29 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -26,6 +26,7 @@
 
 #include <stdlib.h>			/* Dev: a mofifier après implataon de free */
 #include <libuc/stdlst.h>
+#include <libuc/errno.h>
 
 int	ut_slst_newelm_interface(int N)
 {
@@ -62,4 +63,9 @@ int	ut_slst_newelm_memchk(int N)
 int	ut_slst_newelm_timeout(int N)
 {
 	return (ut_slst_newelm_memchk(N));
+}
+
+int ut_slst_newelm_validity(int N)
+{
+	return (ut_slst_newelm_interface(N));
 }

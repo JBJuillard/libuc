@@ -1,0 +1,34 @@
+Librairie Undefined-C
+=====================
+
+	Undefined-C est une extension du langage C et de la norme POSIX qui ajoute
+un certain nombre de structure de donnée, ainsi que les fonctions permettant de
+les manipuller, à celles existantes dans ces deux normes. Les structures de
+données ajoutées sont les suivantes:
+
+		- listes simplements chaînées,
+		- listes simplements chaînées circulaires,
+		- listes doublements chaînées,
+		- listes doublements chaînées circulaires,
+		- structures LIFOs,
+		- structures FIFOs.
+
+	En plus des ajout de structure, Undefined-C modifie les fonctions existantes
+sans modifier leurs interfaces ou leurs valeurs de retour. Ces modifications
+permettent une meilleure gestion des erreurs tout en restant retro-compatible
+avec les codes sources pré-existants.
+
+
+	Pour plus d'informations, il est possible de consulter les pages de manuel
+d'Undefined-C via le script 'man.sh' avec la ligne de commande suivante:
+
+		./man.sh [3] <manpage>
+
+
+	Les fichiers sources peuvent êtres édités sous emacs via le script
+'emacs.sh' via la commande suivante:
+
+		./emacs.sh <file_path>
+
+	Ce script permet de mettre à jour l'en-tête du fichier source
+automatiquement en cas de modification.

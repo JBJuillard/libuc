@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -32,30 +32,40 @@
 
 errno_t	memmove_s(void *s1, rsize_t s1max, const void *s2, rsize_t n)
 {
-	register size_t	offset;
+	register unsigned char			*p1;	/* Fast pointer on s1 */
+	register const unsigned char	*p2;	/* Fast pointer on s2 */
+	register rsize_t				c;		/* Fast counter */
 
-	offset ^= offset;
 	if (!s1 || !s2 || !s1max || s1max > RSIZE_MAX
 		|| !n || n > RSIZE_MAX || n > s1max)
 	{
 		if (s1 && s1max && s1max <= RSIZE_MAX)
-			while (offset < s1max)
-				*((char *)(s1 + offset++)) = '\0';
+			while (s1max--)
+				*((unsigned char *)(s1++)) = '\0';
 		errno = EINVAL;
 		return ((errno_t)(EINVAL));
 	}
-	errno ^= errno;
-	if (s1 == (void *)(s2))
+	errno = 0;
+	p1 = (unsigned char *)(s1);
+	p2 = (const unsigned char *)(s2);
+	c = n;
+	if (p1 == (unsigned char *)(p2))
 		return (0);
-	if (s1 > (void *)(s2))
-		offset = n - 1;
-	while (n--)
+	else if (p1 > (unsigned char *)(p2))
 	{
-		*((char *)(s1 + offset)) = *((char *)(s2 + offset));
-		if (s1 > (void *)(s2))
-			offset--;
-		else
-			offset++;
+		while (c)
+		{
+			*(p1--) = *((unsigned char *)(p2--));
+			c--;
+		}
+	}
+	else
+	{
+		while (c)
+		{
+			*(p1++) = *((unsigned char *)(p2++));
+			c--;
+		}
 	}
 	return ((errno_t)(0));
 }

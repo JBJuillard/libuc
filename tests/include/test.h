@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/01/28 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/23 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -31,12 +31,98 @@
 
 int		get_int(char *str);
 
+/*
+** Character (ctype)
+*/
+/***** isalnum *****/
+int		ut_isalnum_interface(int N);
+int		ut_isalnum_validity(int N);
+int		ut_isalnum_memchk(int N);
+int		ut_isalnum_timeout(int N);
+/***** isalpha *****/
+int		ut_isalpha_interface(int N);
+int		ut_isalpha_validity(int N);
+int		ut_isalpha_memchk(int N);
+int		ut_isalpha_timeout(int N);
+/***** isascii *****/
+int		ut_isascii_interface(int N);
+int		ut_isascii_validity(int N);
+int		ut_isascii_memchk(int N);
+int		ut_isascii_timeout(int N);
+/***** isblank *****/
+int		ut_isblank_interface(int N);
+int		ut_isblank_validity(int N);
+int		ut_isblank_memchk(int N);
+int		ut_isblank_timeout(int N);
+/***** iscntrl *****/
+int		ut_iscntrl_interface(int N);
+int		ut_iscntrl_validity(int N);
+int		ut_iscntrl_memchk(int N);
+int		ut_iscntrl_timeout(int N);
+/***** isdigit *****/
+int		ut_isdigit_interface(int N);
+int		ut_isdigit_validity(int N);
+int		ut_isdigit_memchk(int N);
+int		ut_isdigit_timeout(int N);
+/***** isgraph *****/
+int		ut_isgraph_interface(int N);
+int		ut_isgraph_validity(int N);
+int		ut_isgraph_memchk(int N);
+int		ut_isgraph_timeout(int N);
+/***** islower *****/
+int		ut_islower_interface(int N);
+int		ut_islower_validity(int N);
+int		ut_islower_memchk(int N);
+int		ut_islower_timeout(int N);
+/***** isprint *****/
+int		ut_isprint_interface(int N);
+int		ut_isprint_validity(int N);
+int		ut_isprint_memchk(int N);
+int		ut_isprint_timeout(int N);
+/***** ispunct *****/
+int		ut_ispunct_interface(int N);
+int		ut_ispunct_validity(int N);
+int		ut_ispunct_memchk(int N);
+int		ut_ispunct_timeout(int N);
+/***** isspace *****/
+int		ut_isspace_interface(int N);
+int		ut_isspace_validity(int N);
+int		ut_isspace_memchk(int N);
+int		ut_isspace_timeout(int N);
+/***** isupper *****/
+int		ut_isupper_interface(int N);
+int		ut_isupper_validity(int N);
+int		ut_isupper_memchk(int N);
+int		ut_isupper_timeout(int N);
+/***** isxdigit *****/
+int		ut_isxdigit_interface(int N);
+int		ut_isxdigit_validity(int N);
+int		ut_isxdigit_memchk(int N);
+int		ut_isxdigit_timeout(int N);
+/***** toascii *****/
+int		ut_toascii_interface(int N);
+int		ut_toascii_validity(int N);
+int		ut_toascii_memchk(int N);
+int		ut_toascii_timeout(int N);
+/***** tolower *****/
+int		ut_tolower_interface(int N);
+int		ut_tolower_validity(int N);
+int		ut_tolower_memchk(int N);
+int		ut_tolower_timeout(int N);
+/***** toupper *****/
+int		ut_toupper_interface(int N);
+int		ut_toupper_validity(int N);
+int		ut_toupper_memchk(int N);
+int		ut_toupper_timeout(int N);
+
+/*
+** Linked Lsit (stdlst)
+*/
 void	_ofree(void *key, size_t size);
 int		_ocmp(const void *k1, const size_t s1, const void *k2, const size_t s2);
 void	*_ocpy(void *key, size_t size);
 int		_ofunc(void **key, size_t *size);
 int		_oprint(void **k, size_t *s);
-
 /*
 ** Non-Ordered Simply Linked List (slst_t)
 */

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,34 +27,40 @@
 #include <libuc/stddef.h>
 #include <libuc/stdint.h>
 #include <libuc/errno.h>
-#include <stdlib.h>
+#include <libuc/stdlib.h>
 
 void	*memmove(void *s1, const void *s2, size_t n)
 {
-	register unsigned char	*ptr1;
-	register unsigned char	*ptr2;
-	register int		neg;
+	register unsigned char			*p1;	/* Fast pointer on s1 */
+	register const unsigned char	*p2;	/* Fast pointer on s2 */
+	register size_t					c;		/* Fast counter */
 
-	if (!(ptr1 = (unsigned char *)(s1))
-		|| !(ptr2 = (unsigned char *)(s2))
+	if (!(p1 = (unsigned char *)(s1))
+		|| !(p2 = (const unsigned char *)(s2))
 		|| n || n > SIZE_MAX)
 	{
 		errno = EINVAL;
 		return (NULL);
 	}
-	errno ^= errno;
-	neg ^= neg;
-	if (ptr1 == ptr2)
+	errno = 0;
+	c = n;
+	if (p1 == p2)
 		return (s1);
-	else if (ptr1 > ptr2)
-		neg++;
-	while (n)
+	else if (p1 > p2)
 	{
-		if (neg)
-			*(ptr1--) = *(ptr2--);
-		else
-			*(ptr1++) = *(ptr2++);
-		n--;
+		while (c)
+		{
+			*(p1--) = *((unsigned char *)(p2--));
+			c--;
+		}
+	}
+	else
+	{
+		while (c)
+		{
+			*(p1++) = *((unsigned char *)(p2++));
+			c--;
+		}
 	}
 	return (s1);
 }

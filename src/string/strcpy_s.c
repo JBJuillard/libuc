@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -31,19 +31,25 @@
 #include <libuc/errno.h>
 #include <libuc/string.h>
 
-errno_t	strcpy_s(char *s1, rsize_t s1max, const char *s2)
+errno_t	strcpy_s(char * restrict s1, rsize_t s1max, const char * restrict s2)
 {
-	if (!s1 || !s1max || s1max > RSIZE_MAX || !s2
-		|| s1max == strnlen_s(s2, s1max))
+	register unsigned char 			*p1;
+	register const unsigned char	*p2;
+
+	if (!s1 || !s2
+		|| !s1max || s1max > RSIZE_MAX
+		|| s1max <= strnlen_s(s2, s1max))
 	{
 		if (s1 && s1max && s1max <= RSIZE_MAX)
 			*s1 = '\0';
 		errno = EINVAL;
 		return ((errno_t)(EINVAL));
 	}
-	errno ^= errno;
-	while (*s2)
-		*(s1++) = *(s2++);
-	*s1 = '\0';
+	errno = 0;
+	p1 = (unsigned char *)(s1);
+	p2 = (const unsigned char *)(s2);
+	while (*p2)
+		*(p1++) = *(p2++);
+	*p1 = '\0';
 	return ((errno_t)(0));
 }

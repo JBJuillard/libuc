@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2016/12/28 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/21 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,16 +27,7 @@
 #ifndef STDLST_H
 # define	STDLST_H				1
 
-
-# include	<stddef.h>
-
-/*
-** For Windows and other non-POSIX system
-*/
-#include	<errno.h>
-#ifndef		EOVERFLOW
-# define	EOVERFLOW				84
-#endif
+# include	<libuc/stddef.h>
 
 /*
 ** Simply linked list
@@ -187,6 +178,8 @@ size_t		slst_rdiff(slst_t **lst1,
 slst_t		*slst_cpy(slst_t **lst, void *(*fcpy)(const void *, size_t));
 slst_t		*slst_rcpy(slst_t **lst, void *(*fcpy)(const void *, size_t));
 slst_t		*slst_rev(slst_t **lst);
+//slst_t	*slst_rot(slst_t **lst, size_t n);						// Rotation
+//slst_t	*slst_rrot(slst_t **lst, size_t n);						// Rotation inverse
 slst_t		*slst_cat(slst_t **lst1, slst_t **lst2);
 slst_t		*slst_cut(slst_t **lst);
 slst_t		*slst_cutn(slst_t **lst, size_t n);
@@ -238,8 +231,6 @@ slst_t		*slst_qckrsrt(slst_t **lst,
 // slst_t		*slst_heapsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));	// Trie par tas (Heap sort)
 // slst_t		*slst_heaprsrt(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
 slst_t		*slst_random(slst_t **lst, unsigned int seed);					// Melange de Fisher-Yates (Fisher–Yates shuffle)
-//slst_t	*slst_rot(slst_t **lst, size_t n);						// Rotation
-//slst_t	*slst_rrot(slst_t **lst, size_t n);						// Rotation inverse
 lifo_t		*slst2lifo(slst_t **lst);
 // sslst_t	*slst2sslst(slst_t **lst, int (*fcmp)(const void *, const size_t, const void *, const size_t));
 sclst_t		*slst2sclst(slst_t **lst);

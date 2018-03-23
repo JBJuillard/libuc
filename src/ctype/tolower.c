@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/18 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/23 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -33,10 +33,10 @@ int	tolower(int c)
 		&& (c < 0x00 || c > 0xFF))
 	{
 		errno = EINVAL;
-		return (c);
+		return (0);
 	}
 	errno = 0;
-	if (c < 'A' || c > 'Z')
-		return (c);
-	return (c + 0x20);
+	if (c >= 'A' && c <= 'Z')
+		return (c + 0x20);
+	return (c);
 }

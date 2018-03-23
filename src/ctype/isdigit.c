@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/18 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/23 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,13 +30,13 @@
 int	isdigit(int c)
 {
 	if (c != EOF
-		&& (c < 0x00 || c > 0xFF))
+		&& (c < 0x0 || c > 0xFF))
 	{
 		errno = EINVAL;
 		return (0);
 	}
 	errno = 0;
-	if (c >= '0' && c <= '9')
+	if (c >= 0x30 && c <= 0x39)
 		return (1);
 	return (0);
 }
