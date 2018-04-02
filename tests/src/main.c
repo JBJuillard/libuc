@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/01/28 by Juillard Jean-Baptiste
-** Updated: 2018/03/23 by Juillard Jean-Baptiste
+** Updated: 2018/03/26 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -41,6 +41,7 @@ int	main(int ac, char **av)
 		test = 0;
 		N = 0;
 		if ((test = get_int(av[1])) <= 0 || test > 3
+			|| errno == EOVERFLOW || errno == EINVAL
 			|| (N = get_int(av[2])) <= 0 || N > INT_MAX
 			|| errno == EOVERFLOW || errno == EINVAL)
 			return (-2);

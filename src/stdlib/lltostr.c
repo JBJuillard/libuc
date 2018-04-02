@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/14 by Juillard Jean-Baptiste
-** Updated: 2018/03/14 by Juillard Jean-Baptiste
+** Updated: 2018/03/31 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -25,15 +25,16 @@
 */
 
 #include <libuc/errno.h>
+#include <libuc/limits.h>
 #include <libuc/stdlib.h>
 
 char	*lltostr(long long int n, int base, int upcasse)
 {
-	auto unsigned char				t[32];
+	static unsigned char			t[((sizeof(long long int) * CHAR_BIT) + 2)];
 	register unsigned long long int	nb;
 	register size_t					i;
 	register unsigned long long int	c;
-	register unsigned char			*s;
+	register unsigned long long int	b;
 	register int					neg;
 
 	if (n < LLONG_MIN || n > LLONG_MAX || base < 2 || base > 36)
@@ -50,29 +51,30 @@ char	*lltostr(long long int n, int base, int upcasse)
 	}
 	else
 		nb = (unsigned long long int)(n);
-	t[31] = '\0';
-	i = 31;
-	while (nb)
+	b = (unsigned long long int)(base);
+	i = ((sizeof(long long int) * CHAR_BIT) + 1);
+	t[i] = '\0';
+	if (!nb)
+		t[--i] = '0';
+	else
 	{
-		c = nb % (unsigned long long int)(base);
-		nb /= (unsigned long long int)(base);
-		if (c > 9ULL)
+		while (nb)
 		{
-			if (upcasse)
-				c += (unsigned long long int)('A');
+			c = nb % b;
+			nb /= b;
+			if (c > 9ULL)
+			{
+				if (upcasse)
+					c += (unsigned long long int)('A');
+				else
+					c += (unsigned long long int)('a');
+			}
 			else
-				c += (unsigned long long int)('a');
+				c += (unsigned long long int)('0');
+			t[--i] = (unsigned char)(c);
 		}
-		else
-			c += (unsigned long long int)('0');
-		t[--i] = (unsigned char)(c);
+		if (neg)
+			t[--i] = '-';
 	}
-	if (neg)
-		t[--i] = '-';
-	if ((s = (unsigned char *)malloc(32 - i)) == (unsigned char *)(NULL))
-		return ((char *)(NULL));
-	c ^= c;
-	while (c < 32ULL)
-		*(s + c++) = t[i++];
-	return ((char *)(s));
+	return ((char *)(t + i));
 }

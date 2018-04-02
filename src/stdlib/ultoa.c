@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/14 by Juillard Jean-Baptiste
-** Updated: 2018/03/14 by Juillard Jean-Baptiste
+** Updated: 2018/03/28 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,10 +30,9 @@
 
 char	*ultoa(unsigned long int n)
 {
-	auto unsigned char			t[32];
+	static unsigned char		t[32];
 	register size_t				i;
 	register unsigned long int	c;
-	register unsigned char		*s;
 
 	if (n > LONG_MAX)
 	{
@@ -43,17 +42,17 @@ char	*ultoa(unsigned long int n)
 	errno = 0;
 	t[31] = '\0';
 	i = 31;
-	while (n)
+	if (!n)
+		t[--i] = '0';
+	else
 	{
-		c = n % 10UL;
-		n /= 10UL;
-		c += (unsigned long int)('0');
-		t[--i] = (unsigned char)(c);
+		while (n)
+		{
+			c = n % 10UL;
+			n /= 10UL;
+			c += (unsigned long int)('0');
+			t[--i] = (unsigned char)(c);
+		}
 	}
-	if ((s = (unsigned char *)malloc(32 - i)) == (unsigned char *)(NULL))
-		return ((char *)(NULL));
-	c ^= c;
-	while (c < 32)
-		*(s + c++) = t[i++];
-	return ((char *)(s));
+	return ((char *)(t + i));
 }

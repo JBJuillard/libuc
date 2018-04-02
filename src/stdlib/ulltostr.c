@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/14 by Juillard Jean-Baptiste
-** Updated: 2018/03/14 by Juillard Jean-Baptiste
+** Updated: 2018/03/31 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -25,14 +25,15 @@
 */
 
 #include <libuc/errno.h>
+#include <libuc/limits.h>
 #include <libuc/stdlib.h>
 
 char	*ulltostr(unsigned long long int n, int base, int upcasse)
 {
-	auto unsigned char				t[32];
+	static unsigned char			t[((sizeof(long long int) * CHAR_BIT) + 1)];
 	register size_t					i;
 	register unsigned long long int	c;
-	register unsigned char			*s;
+	register unsigned long long int	b;
 
 	if (n > ULLONG_MAX || base < 2 || base > 36)
 	{
@@ -40,27 +41,28 @@ char	*ulltostr(unsigned long long int n, int base, int upcasse)
 		return ((char *)(NULL));
 	}
 	errno = 0;
-	t[31] = '\0';
-	i = 31;
-	while (n)
+	b = (unsigned long long int)(base);
+	i = (sizeof(long long int) * CHAR_BIT);
+	t[i] = '\0';
+	if (!n)
+		t[--i] = '0';
+	else
 	{
-		c = n % (unsigned long long int)(base);
-		n /= (unsigned long long int)(base);
-		if (c > 9ULL)
+		while (n)
 		{
-			if (upcasse)
-				c += (unsigned long long int)('A');
+			c = n % b;
+			n /= b;
+			if (c > 9ULL)
+			{
+				if (upcasse)
+					c += (unsigned long long int)('A');
+				else
+					c += (unsigned long long int)('a');
+			}
 			else
-				c += (unsigned long long int)('a');
+				c += (unsigned long long int)('0');
+			t[--i] = (unsigned char)(c);
 		}
-		else
-			c += (unsigned long long int)('0');
-		t[--i] = (unsigned char)(c);
 	}
-	if ((s = (unsigned char *)malloc(32 - i)) == (unsigned char *)(NULL))
-		return ((char *)(NULL));
-	c ^= c;
-	while (c < 32ULL)
-		*(s + c++) = t[i++];
-	return ((char *)(s));
+	return ((char *)(t + i));
 }

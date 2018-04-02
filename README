@@ -1,11 +1,32 @@
-Work in progress ...
+Undefied-C Library
+==================
 
-libuc provide some functions for deployment of efficent algorythms.
+	Undefiend -C is an extension if the C language and the POSIX standard
+that adds a number of data structures, as well as the functions for
+manipullate to those existing in these two standards. The structure of data
+added are as follows:
 
-For more information, you can see manpages using the following command:
+	  - Simple linked lists,
+	  - Simple circular linked lists,
+	  - Double linked lists,
+	  - Diuble circular linked lists,
+	  - Fifo sructures,
+	  - Lifo sructures.
 
-	./man.sh [3] <manpages>
+	  In addition to adding structure, Undefined-C modifies existing
+functions without chaging their interfaces or return values. These
+changes allow for better error handling while remaining retro-compatible
+with pre-existing source codes.
 
-Because the project is in devellopement, manpages is only in french.
-The translation has been maked when the work has finish.
-Sorry for this inconvenient.
+For more information, it is possible to view the manual pages of Undefied-C
+in using the 'man.sh' script with the following command line:
+
+	.man.sh [3] <manpage>
+
+	Source files can be edited in Emacs in using the script 'emacs.sh' with
+the following command line:
+
+	./emacs.sh <file_path>
+
+	This script is used to update the header of the source file automatically
+in case of change.

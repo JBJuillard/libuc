@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/19 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/26 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -25,11 +25,24 @@
 */
 
 #ifndef STDIO_H
-# define STDIO_H		1
+# define STDIO_H				1
 
 
-# define EOF			((int)(-1))
+/* size_t */
+# include <libuc/stddef.h>
+/* off_t, ssize_t */
+# include <sys/types.h>
+/* va_list*/
+# include <stdarg.h>
 
+# define EOF					((int)(-1))
+
+# define STDIN					0
+# define STDOUT					1
+# define STDERR					2
+# define stdin					STDIN
+# define stdout					STDOUT
+# define stderr					STDERR
 
 //int   fprintf(FILE * restrict stream, const char * restrict format, ...);
 

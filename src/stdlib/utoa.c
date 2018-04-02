@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/14 by Juillard Jean-Baptiste
-** Updated: 2018/03/14 by Juillard Jean-Baptiste
+** Updated: 2018/03/28 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,10 +30,9 @@
 
 char	*utoa(unsigned int n)
 {
-	auto unsigned char		t[16];
+	static unsigned char	t[16];
 	register size_t			i;
 	register unsigned int	c;
-	register unsigned char	*s;
 
 	if (n > UINT_MAX)
 	{
@@ -43,17 +42,17 @@ char	*utoa(unsigned int n)
 	errno = 0;
 	t[15] = '\0';
 	i = 15;
-	while (n)
+	if (!n)
+		t[--i] = '0';
+	else
 	{
-		c = n % 10U;
-		n /= 10U;
-		c += (unsigned int)('0');
-		t[--i] = (unsigned char)(c);
+		while (n)
+		{
+			c = n % 10U;
+			n /= 10U;
+			c += (unsigned int)('0');
+			t[--i] = (unsigned char)(c);
+		}
 	}
-	if ((s = (unsigned char *)malloc(16 - i)) == (unsigned char *)(NULL))
-		return ((char *)(NULL));
-	c ^= c;
-	while (c < 16)
-		*(s + c++) = t[i++];
-	return ((char *)(s));
+	return ((char *)(t + i));
 }

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/18 by Juillard Jean-Baptiste
-** Updated: 2018/03/23 by Juillard Jean-Baptiste
+** Updated: 2018/03/26 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,36 +27,36 @@
 #ifndef CTYPES_H
 # define	CTYPES_H		1
 
-int	isalnum(int c);
-//int	isalnum_l(int c, locale_t l);
-int	isalpha(int c);
-//int	isalpha_l(int c, locale_t l);
-int	isascii(int c);						// Obsolete POSIX.1-2008
-int	isblank(int c);
-//int	isblank_l(int c, locale_t l);
-int	iscntrl(int c);
-//int	iscntrl_l(int c, locale_t l);
-int	isdigit(int c);
-//int	isdigit_l(int c, locale_t l);
-int	isgraph(int c);
-//int	isgraph_l(int c, locale_t l);
-int	islower(int c);
-//int	islower_l(int c, locale_t l);
-int	isprint(int c);
-//int	isprint_l(int c, locale_t l);
-int	ispunct(int c);
-//int	ispunct_l(int c, locale_t l);
-int	isspace(int c);
-//int	isspace_l(int c, locale_t l);
-int	isupper(int c);
-//int	isupper_l(int c, locale_t l);
-int	isxdigit(int c);
-//int	isxdigit_l(int c, locale_t l);
-int	toascii(int c);
-int	tolower(int c);
-//int	tolower_l(int c, locale_t l);
-int	toupper(int c);
-//int	toupper_l(int c, locale_t l);
+extern int	isalnum(int c);
+//extern int	isalnum_l(int c, locale_t l);
+extern int	isalpha(int c);
+//extern int	isalpha_l(int c, locale_t l);
+extern int	isascii(int c);						// Obsolete POSIX.1-2008
+extern int	isblank(int c);
+//extern int	isblank_l(int c, locale_t l);
+extern int	iscntrl(int c);
+//extern int	iscntrl_l(int c, locale_t l);
+extern int	isdigit(int c);
+//extern int	isdigit_l(int c, locale_t l);
+extern int	isgraph(int c);
+//extern int	isgraph_l(int c, locale_t l);
+extern int	islower(int c);
+//extern int	islower_l(int c, locale_t l);
+extern int	isprint(int c);
+//extern int	isprint_l(int c, locale_t l);
+extern int	ispunct(int c);
+//extern int	ispunct_l(int c, locale_t l);
+extern int	isspace(int c);
+//extern int	isspace_l(int c, locale_t l);
+extern int	isupper(int c);
+//extern int	isupper_l(int c, locale_t l);
+extern int	isxdigit(int c);
+//extern int	isxdigit_l(int c, locale_t l);
+extern int	toascii(int c);
+extern int	tolower(int c);
+//extern int	tolower_l(int c, locale_t l);
+extern int	toupper(int c);
+//extern int	toupper_l(int c, locale_t l);
 
 # define	_toupper(c)		((((int)(c)) >= (int)('a') && ((int)(c)) <= (int)('z')) ? (((int)(c)) - 0x20) : ((int)(c)))
 # define	_tolower(c)		((((int)(c)) >= (int)('A') && ((int)(c)) <= (int)('Z')) ? (((int)(c)) + 0x20) : ((int)(c)))

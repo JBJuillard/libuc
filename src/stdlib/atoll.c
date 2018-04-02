@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/25 by Juillard Jean-Baptiste
-** Updated: 2018/03/14 by Juillard Jean-Baptiste
+** Updated: 2018/03/26 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -33,7 +33,7 @@
 #define	_U_LLONG_MAX_R1_TO_RX	((unsigned long long int)(LLONG_MAX) / 10ULL)
 #define	_U_LLONG_MAX_R0			((unsigned long long int)(LLONG_MAX) % 10ULL)
 #define	_U_LLONG_MIN_R1_TO_RX	(((unsigned long long int)(LLONG_MAX) + 1ULL) / 10ULL)
-#define	_U_LLONG_MIN_R0			(((unsigned long int)(LLONG_MAX) + 1ULL) % 10ULL)
+#define	_U_LLONG_MIN_R0			(((unsigned long long int)(LLONG_MAX) + 1ULL) % 10ULL)
 
 long long int	atoll(const char *nptr)
 {

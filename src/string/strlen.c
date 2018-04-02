@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/22 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/03/25 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,14 +30,14 @@
 
 size_t	strlen(const char *s)
 {
-	register char	*p;
+	register const char	*p;
 
-	if (!(p = (char *)(s)))
+	if (!(p = s))
 	{
 		errno = EINVAL;
 		return ((size_t)(0));
 	}
-	errno ^= errno;
+	errno = 0;
 	while (*p)
 		p++;
 	return ((size_t)(p - s));

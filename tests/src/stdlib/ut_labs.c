@@ -1,0 +1,97 @@
+/*
+** ut_labs.c
+**
+** Unit tests for labs function of Undefined-C library
+**
+** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
+**
+** Created: 2018/03/23 by Juillard Jean-Baptiste
+** Updated: 2018/03/24 by Juillard Jean-Baptiste
+**
+** This file is a part free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License as
+** published by the Free Software Foundation; either version 3, or
+** (at your option) any later version.
+**
+** There is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+** General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; see the file LICENSE.  If not, write to
+** the Free Software Foundation, Inc., 51 Franklin Street, Fifth
+** Floor, Boston, MA 02110-1301, USA.
+*/
+
+#include <libuc/errno.h>
+#include <libuc/stdlib.h>
+#include <libuc/limits.h>
+
+typedef struct		err_s
+{
+	long long int	n;
+	long long int	ret;
+	int				err;
+}					err_t;
+
+int	ut_labs_interface(int N)
+{
+	long int	i;
+	int			error;
+	err_t		tdat[4] = {	{(((long long)(LONG_MIN) == LLONG_MIN) ? ((long long)(LONG_MIN)) : ((long long)(LONG_MIN) - 1LL)),
+								(((long long)(LONG_MIN) == LLONG_MIN) ? (0) : (LONG_MIN)),
+								(((long long)(LONG_MIN) == LLONG_MIN) ? (0) : (EINVAL))},
+							{(((long long)(LONG_MAX) == LLONG_MAX) ? ((long long)(LONG_MAX)) : ((long long)(LONG_MAX) + 1LL)),
+								(((long long)(LONG_MAX) == LLONG_MAX) ? (0) : (LONG_MIN)),
+								(((long long)(LONG_MAX) == LLONG_MAX) ? (0) : (EINVAL))},
+							{LONG_MIN, LONG_MIN, ERANGE},
+							{LONG_MAX, LONG_MAX, 0}};
+
+	error = 0xFF;
+	i = 0;
+	N =N;
+	while (i < 4)
+	{
+		errno = 0;
+		if ((long long int)labs((long int)((tdat[i]).n)) != (tdat[i]).ret
+			|| errno != (tdat[i]).err)
+			return (error);
+		i++;
+		error--;
+	}
+	return (0);
+}
+
+int	ut_labs_validity(int N)
+{
+	unsigned long int	i;
+
+	i = 0;
+	N = N;
+	while (i <= LONG_MAX)
+		if (i && labs(-i) != (long)(i))
+			return ((int)(-i));
+	if (labs(0))
+		return (INT_MIN);
+	i = 0;
+	while ((long)(i) <= LONG_MAX)
+		if (i && labs(i) != (long)(i))
+			return ((int)(i));
+	return (0);
+}
+
+int	ut_labs_memchk(int N)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < (unsigned int)(N))
+		labs(i);
+	return (0);
+}
+
+int	ut_labs_timeout(int N)
+{
+	return (ut_labs_memchk(N));
+}

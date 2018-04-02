@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/14 by Juillard Jean-Baptiste
-** Updated: 2018/03/14 by Juillard Jean-Baptiste
+** Updated: 2018/03/28 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,12 +30,11 @@
 
 char	*ltoa(long int n)
 {
+	static unsigned char		t[32];
 	register unsigned long int	nb;
-	auto unsigned char			t[32];
 	register size_t				i;
 	register unsigned long int	c;
 	register int				neg;
-	register unsigned char		*s;
 
 	if (n < LONG_MIN || n > LONG_MAX)
 	{
@@ -53,19 +52,19 @@ char	*ltoa(long int n)
 		nb = (unsigned long int)(n);
 	t[31] = '\0';
 	i = 31;
-	while (nb)
+	if (!nb)
+		t[--i] =  '0';
+	else
 	{
-		c = nb % 10UL;
-		nb /= 10UL;
-		c += (unsigned long int)('0');
-		t[--i] = (unsigned char)(c);
+		while (nb)
+		{
+			c = nb % 10UL;
+			nb /= 10UL;
+			c += (unsigned long int)('0');
+			t[--i] = (unsigned char)(c);
+		}
+		if (neg)
+			t[--i] = '-';
 	}
-	if (neg)
-		t[--i] = '-';
-	if ((s = (unsigned char *)malloc(32 - i)) == (unsigned char *)(NULL))
-		return ((char *)(NULL));
-	c ^= c;
-	while (c < 32)
-		*(s + c++) = t[i++];
-	return ((char *)(s));
+	return ((char *)(t + i));
 }

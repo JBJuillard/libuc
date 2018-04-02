@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/01/28 by Juillard Jean-Baptiste
-** Updated: 2018/03/23 by Juillard Jean-Baptiste
+** Updated: 2018/03/30 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -114,6 +114,200 @@ int		ut_toupper_interface(int N);
 int		ut_toupper_validity(int N);
 int		ut_toupper_memchk(int N);
 int		ut_toupper_timeout(int N);
+
+/*
+** Integer type (inttypes)
+*/
+/***** imaxabs *****/
+int		ut_imaxabs_interface(int N);
+int		ut_imaxabs_validity(int N);
+int		ut_imaxabs_memchk(int N);
+int		ut_imaxabs_timeout(int N);
+/***** imaxdiv *****/
+int		ut_imaxdiv_interface(int N);
+int		ut_imaxdiv_validity(int N);
+int		ut_imaxdiv_memchk(int N);
+int		ut_imaxdiv_timeout(int N);
+/***** umaxdiv *****/
+int		ut_umaxdiv_interface(int N);
+int		ut_umaxdiv_validity(int N);
+int		ut_umaxdiv_memchk(int N);
+int		ut_umaxdiv_timeout(int N);
+/***** strtoimax *****/
+int		ut_strtoimax_interface(int N);
+int		ut_strtoimax_validity(int N);
+int		ut_strtoimax_memchk(int N);
+int		ut_strtoimax_timeout(int N);
+/***** strtoumax *****/
+int		ut_strtoumax_interface(int N);
+int		ut_strtoumax_validity(int N);
+int		ut_strtoumax_memchk(int N);
+int		ut_strtoumax_timeout(int N);
+/***** imaxtostr *****/
+int		ut_imaxtostr_interface(int N);
+int		ut_imaxtostr_validity(int N);
+int		ut_imaxtostr_memchk(int N);
+int		ut_imaxtostr_timeout(int N);
+/***** umaxtostr *****/
+int		ut_umaxtostr_interface(int N);
+int		ut_umaxtostr_validity(int N);
+int		ut_umaxtostr_memchk(int N);
+int		ut_umaxtostr_timeout(int N);
+
+/*
+** Standard library (stdlib)
+*/
+/***** abs *****/
+int		ut_abs_interface(int N);
+int		ut_abs_validity(int N);
+int		ut_abs_memchk(int N);
+int		ut_abs_timeout(int N);
+/***** labs *****/
+int		ut_labs_interface(int N);
+int		ut_labs_validity(int N);
+int		ut_labs_memchk(int N);
+int		ut_labs_timeout(int N);
+/***** llabs *****/
+int		ut_llabs_interface(int N);
+int		ut_llabs_validity(int N);
+int		ut_llabs_memchk(int N);
+int		ut_llabs_timeout(int N);
+/***** div *****/
+int		ut_div_interface(int N);
+int		ut_div_validity(int N);
+int		ut_div_memchk(int N);
+int		ut_div_timeout(int N);
+/***** ldiv *****/
+int		ut_ldiv_interface(int N);
+int		ut_ldiv_validity(int N);
+int		ut_ldiv_memchk(int N);
+int		ut_ldiv_timeout(int N);
+/***** lldiv *****/
+int		ut_lldiv_interface(int N);
+int		ut_lldiv_validity(int N);
+int		ut_lldiv_memchk(int N);
+int		ut_lldiv_timeout(int N);
+/***** atoi *****/
+int		ut_atoi_interface(int N);
+int		ut_atoi_validity(int N);
+int		ut_atoi_memchk(int N);
+int		ut_atoi_timeout(int N);
+/***** itoa *****/
+int		ut_itoa_interface(int N);
+int		ut_itoa_validity(int N);
+int		ut_itoa_memchk(int N);
+int		ut_itoa_timeout(int N);
+/***** atou *****/
+int		ut_atou_interface(int N);
+int		ut_atou_validity(int N);
+int		ut_atou_memchk(int N);
+int		ut_atou_timeout(int N);
+/***** utoa *****/
+int		ut_utoa_interface(int N);
+int		ut_utoa_validity(int N);
+int		ut_utoa_memchk(int N);
+int		ut_utoa_timeout(int N);
+/***** atol *****/
+int		ut_atol_interface(int N);
+int		ut_atol_validity(int N);
+int		ut_atol_memchk(int N);
+int		ut_atol_timeout(int N);
+/***** ltoa *****/
+int		ut_ltoa_interface(int N);
+int		ut_ltoa_validity(int N);
+int		ut_ltoa_memchk(int N);
+int		ut_ltoa_timeout(int N);
+/***** atoul *****/
+int		ut_atoul_interface(int N);
+int		ut_atoul_validity(int N);
+int		ut_atoul_memchk(int N);
+int		ut_atoul_timeout(int N);
+/***** ultoa *****/
+int		ut_ultoa_interface(int N);
+int		ut_ultoa_validity(int N);
+int		ut_ultoa_memchk(int N);
+int		ut_ultoa_timeout(int N);
+/***** atoll *****/
+int		ut_atoll_interface(int N);
+int		ut_atoll_validity(int N);
+int		ut_atoll_memchk(int N);
+int		ut_atoll_timeout(int N);
+/***** lltoa *****/
+int		ut_lltoa_interface(int N);
+int		ut_lltoa_validity(int N);
+int		ut_lltoa_memchk(int N);
+int		ut_lltoa_timeout(int N);
+/***** atoull *****/
+int		ut_atoull_interface(int N);
+int		ut_atoull_validity(int N);
+int		ut_atoull_memchk(int N);
+int		ut_atoull_timeout(int N);
+/***** ulltoa *****/
+int		ut_ulltoa_interface(int N);
+int		ut_ulltoa_validity(int N);
+int		ut_ulltoa_memchk(int N);
+int		ut_ulltoa_timeout(int N);
+/***** strtoi *****/
+int		ut_strtoi_interface(int N);
+int		ut_strtoi_validity(int N);
+int		ut_strtoi_memchk(int N);
+int		ut_strtoi_timeout(int N);
+/***** itostr *****/
+int		ut_itostr_interface(int N);
+int		ut_itostr_validity(int N);
+int		ut_itostr_memchk(int N);
+int		ut_itostr_timeout(int N);
+/***** strtou *****/
+int		ut_strtou_interface(int N);
+int		ut_strtou_validity(int N);
+int		ut_strtou_memchk(int N);
+int		ut_strtou_timeout(int N);
+/***** utostr *****/
+int		ut_utostr_interface(int N);
+int		ut_utostr_validity(int N);
+int		ut_utostr_memchk(int N);
+int		ut_utostr_timeout(int N);
+/***** strtol *****/
+int		ut_strtol_interface(int N);
+int		ut_strtol_validity(int N);
+int		ut_strtol_memchk(int N);
+int		ut_strtol_timeout(int N);
+/***** ltostr *****/
+int		ut_ltostr_interface(int N);
+int		ut_ltostr_validity(int N);
+int		ut_ltostr_memchk(int N);
+int		ut_ltostr_timeout(int N);
+/***** strtoul *****/
+int		ut_strtoul_interface(int N);
+int		ut_strtoul_validity(int N);
+int		ut_strtoul_memchk(int N);
+int		ut_strtoul_timeout(int N);
+/***** ultostr *****/
+int		ut_ultostr_interface(int N);
+int		ut_ultostr_validity(int N);
+int		ut_ultostr_memchk(int N);
+int		ut_ultostr_timeout(int N);
+/***** strtoll *****/
+int		ut_strtoll_interface(int N);
+int		ut_strtoll_validity(int N);
+int		ut_strtoll_memchk(int N);
+int		ut_strtoll_timeout(int N);
+/***** lltostr *****/
+int		ut_lltostr_interface(int N);
+int		ut_lltostr_validity(int N);
+int		ut_lltostr_memchk(int N);
+int		ut_lltostr_timeout(int N);
+/***** strtoull *****/
+int		ut_strtoull_interface(int N);
+int		ut_strtoull_validity(int N);
+int		ut_strtoull_memchk(int N);
+int		ut_strtoull_timeout(int N);
+/***** ulltostr *****/
+int		ut_ulltostr_interface(int N);
+int		ut_ulltostr_validity(int N);
+int		ut_ulltostr_memchk(int N);
+int		ut_ulltostr_timeout(int N);
+
 
 /*
 ** Linked Lsit (stdlst)

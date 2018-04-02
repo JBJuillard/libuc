@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/14 by Juillard Jean-Baptiste
-** Updated: 2018/03/14 by Juillard Jean-Baptiste
+** Updated: 2018/03/28 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,12 +30,11 @@
 
 char	*itoa(int n)
 {
+	static unsigned char	t[16];
 	register unsigned int	nb;
-	auto unsigned char		t[16];
 	register size_t			i;
 	register unsigned int	c;
 	register int			neg;
-	register unsigned char	*s;
 
 	if (n < INT_MIN || n > INT_MAX)
 	{
@@ -53,19 +52,19 @@ char	*itoa(int n)
 		nb = (unsigned int)(n);
 	t[15] = '\0';
 	i = 15;
-	while (nb)
+	if (!nb)							/* nb == 0 */
+		t[--i] = '0';
+	else
 	{
-		c = nb % 10U;
-		nb /= 10U;
-		c += (unsigned int)('0');
-		t[--i] = (unsigned char)(c);
+		while (nb)
+		{
+			c = nb % 10U;
+			nb /= 10U;
+			c += (unsigned int)('0');
+			t[--i] = (unsigned char)(c);
+		}
+		if (neg)
+			t[--i] = '-';
 	}
-	if (neg)
-		t[--i] = '-';
-	if ((s = (unsigned char *)malloc(16 - i)) == (unsigned char *)(NULL))
-		return ((char *)(NULL));
-	c ^= c;
-	while (c < 16)
-		*(s + c++) = t[i++];
-	return ((char *)(s));
+	return ((char *)(t + i));
 }
