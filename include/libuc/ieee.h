@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/14 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,17 +27,17 @@
 #ifndef IEEE_H
 # define IEEE_H							1
 
-/*
-# if		!defined(CPU_BYTEORDER)
-#  error	"CPU_BYTEORDER not defined."
-# elif		!defined(FPU_WORDORDER)
-#  error	"FPU_WORDORDER not defined."
-# endif
-*/
+# include <libuc/endian.h>
 
-# define	IEEE754_FLOAT_BIAS			0x7F			/* Bias = 127 */
-# define	IEEE754_DOUBLE_BIAS			0x3FF			/* Bias = 1023 */
-# define	IEEE854_LDOUBLE_BIAS		0x3FFF			/* Bias = 16383 */
+# if		!defined(__BYTE_ORDER)
+#  error	"__BYTE_ORDER not defined."
+# elif		!defined(__FLOAT_WORD_ORDER)
+#  error	"__FLOAT_WORD_ORDER not defined."
+# endif
+
+# define IEEE754_FLOAT_BIAS				0x7F			/* Bias = 127 */
+# define IEEE754_DOUBLE_BIAS			0x3FF			/* Bias = 1023 */
+# define IEEE854_LDOUBLE_BIAS			0x3FFF			/* Bias = 16383 */
 
 /* IEEE 754 single-precision format. */
 struct									ieee754_float_s

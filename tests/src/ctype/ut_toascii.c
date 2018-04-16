@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/22 by Juillard Jean-Baptiste
-** Updated: 2018/03/23 by Juillard Jean-Baptiste
+** Updated: 2018/04/04 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -53,7 +53,7 @@ int		ut_toascii_interface(int N)
 		j = (tdat[i]).c1;
 		while (j <= (tdat[i]).c2)
 		{
-			if (toascii(j) != (((j < 0x0 || j > 0xFF) && (j != EOF)) ? (0) : ((j & 0x80) ? (j ^ 0x80) : (j)))
+			if (toascii(j) != (((j < 0x0 || j > 0xFF) && (j != EOF)) ? (0) : ((j != EOF && j & 0x80) ? (j ^ 0x80) : (j)))
 				|| errno != (tdat[i]).err)
 				return (err);
 			j++;

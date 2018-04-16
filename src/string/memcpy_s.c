@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -33,16 +33,19 @@
 errno_t	memcpy_s(void * restrict s1, rsize_t s1max,
 					const void * restrict s2, rsize_t n)
 {
-	register unsigned char			*p1;	/* Fast pointer on s1 */
-	register const unsigned char	*p2;	/* Fast pointer on s2 */
-	register rsize_t				c;		/* Fast counter */
+	register unsigned char			*p1;
+	register const unsigned char	*p2;
+	register rsize_t				c;
 
 	if (!s1 || !s2 || !s1max || s1max > RSIZE_MAX
 		|| !n || n > RSIZE_MAX || n > s1max)
 	{
 		if (s1 && s1max && s1max <= RSIZE_MAX)
-			while (s1max--)
+			while (s1max)
+			{
 				*((unsigned char *)(s1++)) = '\0';
+				--s1max;
+			}
 		errno = EINVAL;
 		return ((errno_t)(EINVAL));
 	}

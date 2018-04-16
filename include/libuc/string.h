@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -37,7 +37,7 @@ void		*memcpy(void * restrict s1, const void * restrict s2, size_t n);
 void		*memmove(void *s1, const void *s2, size_t n);
 char		*strcpy(char * restrict s1, const char * restrict s2);
 char		*strncpy(char * restrict s1, const char * restrict s2, size_t n);
-# if defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
+# if	defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
 errno_t		memcpy_s(void * restrict s1, rsize_t s1max,
 						const void * restrict s2, rsize_t n);
 errno_t		memmove_s(void *s1, rsize_t s1max, const void *s2, rsize_t n);
@@ -53,7 +53,6 @@ char		*strdup(const char *s);
 char		*strndup(const char *s, size_t n);
 char		*strdupa(const char *s);
 char		*strndupa(const char *s, size_t n);
-void		bcopy(const void *s1, void *s2, size_t n);				/* Obsolette */
 char		*stpcpy(char *dest, const char *src);
 char		*stpncpy(char *dest, const char *src, size_t n);
 
@@ -62,11 +61,9 @@ char		*stpncpy(char *dest, const char *src, size_t n);
 ** Concatenation functions
 */
 char		*strcat(char *s1, const char *s2);
-# if defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
-errno_t		strcat_s(char *s1, rsize_t s1max, const char *s2);
-# endif
 char		*strncat(char *s1, const char *s2, size_t n);
 # if defined(__STDC_WANT_LIB_EXT1__) && (__STDC_WANT_LIB_EXT1__ == 1)
+errno_t		strcat_s(char *s1, rsize_t s1max, const char *s2);
 errno_t		strncat_s(char *s1, rsize_t s1max, const char *s2, rsize_t n);
 # endif
 size_t		strlcat(char *s1, const char *s2, size_t size);
@@ -82,7 +79,6 @@ int		strcasecmp(const char *s1, const char *s2);
 //int		strcasecmp_l (const char *s1, const char *s2, locale_t loc)
 int		strncasecmp(const char *s1, const char *s2, size_t n);
 //int		strncasecmp_l (const char *s1, const char *s2, size_t n, locale_t loc)
-int		bcmp(const void *s1, const void *s2, size_t n);				/* Obsolette */
 //int		strcoll(const char *s1, const char *s2);
 // ?? //int		strcoll_l(const char *s1, const char *s2, locale_t loc);
 //size_t		strxfrm(char *s1, const char *s2, size_t n);
@@ -126,7 +122,6 @@ char		*strsep(char **s1, const char *s2);
 ** Miscellaneous functions
 */
 void		*memset(void *s, int c, size_t n);
-void		bzero(void *s, size_t n);				/* Obsolette */
 //char		*strerror(int errnum);
 # if (_POSIX_C_SOURCE >= 200112L) && !(_GNU_SOURCE)
 //int		strerror_r(int errnum, char *buf, size_t buflen);	/* XSI-compliant */

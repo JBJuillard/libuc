@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -41,11 +41,11 @@ void	*mempcpy(void *s1, const void *s2, size_t n)
 		errno = EINVAL;
 		return (NULL);
 	}
-	errno ^= errno;
+	errno = 0;
 	while (n)
 	{
 		*(ptr1++) = *(ptr2++);
 		n--;
 	}
-	return (--ptr1);
+	return (ptr1);
 }

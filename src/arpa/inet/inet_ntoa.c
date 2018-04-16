@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/28 by Juillard Jean-Baptiste
-** Updated: 2018/03/28 by Juillard Jean-Baptiste
+** Updated: 2018/04/14 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,30 +24,37 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
+#include <libuc/stdlib.h>
+#include <libuc/string.h>
+#include <libuc/stdint.h>
 #include <netinet/in.h>
 
 char	*inet_ntoa(struct in_addr in)
 {
 	static char				cp[32];
 	register unsigned int	byte;
-	register unsigned int	mask;
 	register char			*str;
 	register int			i;
 	register size_t			offset;
+	auto union
+	{
+		struct in_addr		netlong;
+		uint8_t				byte[4];
+	}						inaddr;
 
 	i ^= i;
 	offset ^= offset;
-	mask = 0xff000000;
-	while (i++ < 4)
+	inaddr.netlong = in;
+	while (i < 4)
 	{
-		byte = (in & mask) >> (8 * (3 - i));
+		byte = (unsigned int)(inaddr.byte[i] & 0xff);
 		if ((str = utoa(byte)) == (char *)(NULL)
 			|| strcpy((cp + offset), str) == (char *)(NULL))
 			return ((char *)(NULL));
 		offset += strlen(str);
 		if (i < 3)
 			cp[offset++] = '.';
-		mask >>= 8;
+		i++;
 	}
 	cp[offset] = '\0';
 	return (cp);

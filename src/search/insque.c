@@ -1,12 +1,12 @@
 /*
-** float.h
+** insque.c
 **
-** Header file for float subset of Undefined-C library
+** insque function of Undefined-C library
 **
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
-** Created: 2018/03/31 by Juillard Jean-Baptiste
-** Updated: 2018/03/31 by Juillard Jean-Baptiste
+** Created: 2018/04/12 by Juillard Jean-Baptiste
+** Updated: 2018/04/12 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,9 +24,34 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef FLOAT_H
-# define FLOAT_H					1
+#include <libuc/search.h>
+#include <libuc/errno.h>
 
+void	insque(void *elem, void *prev)
+{
+	register struct qelem	*e;
+	register struct qelem	*p;
+	register struct qelem	*n;
 
-
-#endif
+	if (!elem || !prev)
+	{
+		errno = EINVAL;
+		return ;
+	}
+	errno = 0;
+	e = (struct qelem *)(elem);
+	p = (struct qelem *)(prev);
+	if (p)
+	{
+		n = p->forw;
+		if (n)
+			n->q_back = e;
+		e->q_forw = n;
+		e->q_back = p;
+	}
+	else
+	{
+		e->q_forw = (struct qelem *)(NULL);
+		e->q_back = (struct qelem *)(NULL);
+	}
+}

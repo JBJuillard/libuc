@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -32,11 +32,12 @@
 
 errno_t	memmove_s(void *s1, rsize_t s1max, const void *s2, rsize_t n)
 {
-	register unsigned char			*p1;	/* Fast pointer on s1 */
-	register const unsigned char	*p2;	/* Fast pointer on s2 */
-	register rsize_t				c;		/* Fast counter */
+	register unsigned char			*p1;
+	register const unsigned char	*p2;
+	register rsize_t				c;
 
-	if (!s1 || !s2 || !s1max || s1max > RSIZE_MAX
+	if (!s1 || !s2
+		|| !s1max || s1max > RSIZE_MAX
 		|| !n || n > RSIZE_MAX || n > s1max)
 	{
 		if (s1 && s1max && s1max <= RSIZE_MAX)
@@ -53,10 +54,12 @@ errno_t	memmove_s(void *s1, rsize_t s1max, const void *s2, rsize_t n)
 		return (0);
 	else if (p1 > (unsigned char *)(p2))
 	{
+		p1 += c - 1;
+		p2 += c - 1;
 		while (c)
 		{
 			*(p1--) = *((unsigned char *)(p2--));
-			c--;
+			--c;
 		}
 	}
 	else
@@ -64,7 +67,7 @@ errno_t	memmove_s(void *s1, rsize_t s1max, const void *s2, rsize_t n)
 		while (c)
 		{
 			*(p1++) = *((unsigned char *)(p2++));
-			c--;
+			--c;
 		}
 	}
 	return ((errno_t)(0));

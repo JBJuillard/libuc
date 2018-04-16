@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/27 by Juillard Jean-Baptiste
-** Updated: 2018/03/27 by Juillard Jean-Baptiste
+** Updated: 2018/04/03 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,17 +24,27 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <inttypes.h>
+#include <libuc/stdint.h>
+#include <libuc/endian.h>
+#include <libuc/byteswap.h>
 
 uint16_t	htons(uint16_t hostshort)
 {
 #if		BYTE_ORDER == BIG_ENDIAN
 	return (hostshort);
 #elif	BYTE_ORDER == LITTLE_ENDIAN
-	return (((hostshort & 0xff00) >> 8)
-			| ((hostshort & 0xff) << 8));
-#elif	BYTE_ORDER == MIDDLE_ENDIAN
+	return (bswap_16(hostshort));
+#elif	BYTE_ORDER == WORD_BIG_ENDIAN
 	return (hostshort);
+#elif	BYTE_ORDER == WORD_LITTLE_ENDIAN
+	return (({	register uint16_t	ret;
+				__asm__("movw %1, %0\n"
+						"rorw $8, %0\n"
+						: "=r"(ret)
+						: "m"(hostshort)
+						: "cc" );
+				ret;
+			}));
 #else
 # error "What kind of system is this ?"
 #endif

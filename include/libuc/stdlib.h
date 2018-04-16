@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/24 by Juillard Jean-Baptiste
-** Updated: 2018/03/27 by Juillard Jean-Baptiste
+** Updated: 2018/04/14 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -59,9 +59,9 @@
 /*
 ** abs(3), labs(3), llabs(3).
 */
-extern int abs(int n);
-extern long int labs(long int n);
-extern long long int llabs(long long int n);
+extern int				abs(int n);
+extern long int			labs(long int n);
+extern long long int	llabs(long long int n);
 
 
 /*
@@ -85,9 +85,9 @@ typedef struct			lldiv_s
 /*
 ** div(3), ldiv(3), lldiv(3).
 */
-extern div_t div(int numer, int denom);
-extern ldiv_t ldiv(long int numer, long int denom);
-extern lldiv_t lldiv(long long int numer, long long int denom);
+extern div_t	div(int numer, int denom);
+extern ldiv_t	ldiv(long int numer, long int denom);
+extern lldiv_t	lldiv(long long int numer, long long int denom);
 
 
 /*
@@ -95,13 +95,13 @@ extern lldiv_t lldiv(long long int numer, long long int denom);
 ** atou(3), atoul(3), atoull(3),
 ** atof(3).
 */
-extern int atoi(const char *nptr);
-extern unsigned int atou(const char *nptr);
-extern long int atol(const char *nptr);
-extern unsigned long int atoul(const char *nptr);
-extern long long int atoll(const char *nptr);
-extern unsigned long long int atoull(const char *nptr);
-//extern double atof(const char *nptr);
+extern int						atoi(const char *nptr);
+extern unsigned int				atou(const char *nptr);
+extern long int					atol(const char *nptr);
+extern unsigned long int		atoul(const char *nptr);
+extern long long int			atoll(const char *nptr);
+extern unsigned long long int	atoull(const char *nptr);
+//extern double					atof(const char *nptr);
 
 
 /*
@@ -184,12 +184,5 @@ extern void qsort(void *base, size_t nmemb, size_t size,
 					int (*compar)(const void *, const void *));
 extern void qsort_s(void *base, size_t nmemb, size_t size,
 					int (*compar)(const void *, const void *));
-
-
-extern void	*malloc(size_t size);
-extern void	*calloc(size_t nmemb, size_t size);
-extern void	free(void *ptr);
-extern void	*realloc(void *ptr, size_t size);
-
 
 #endif

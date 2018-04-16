@@ -6,7 +6,7 @@
 # By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 #
 # Created: 2016/12/29 by Juillard Jean-Baptiste
-# Updated: 2018/03/12 by Juillard Jean-Baptiste
+# Updated: 2018/04/14 by Juillard Jean-Baptiste
 #
 # This file is a part free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as

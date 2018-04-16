@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,7 +30,9 @@
 
 size_t	strnlen(const char *s, size_t maxlen)
 {
-	register size_t	size;
+	register size_t		size;
+	register size_t		max;
+	register const char	*str;
 
 	if (!s || !maxlen || maxlen > SIZE_MAX)
 	{
@@ -39,7 +41,9 @@ size_t	strnlen(const char *s, size_t maxlen)
 	}
 	errno ^= errno;
 	size ^= size;
-	while (size < maxlen && *(s + size))
+	max = maxlen;
+	str = s;
+	while (size < max && *(str++))
 		size++;
 	return (size);
 }

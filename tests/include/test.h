@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2017/01/28 by Juillard Jean-Baptiste
-** Updated: 2018/03/30 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,6 +30,45 @@
 # include <libuc/stdlst.h>
 
 int		get_int(char *str);
+
+/*
+** Internet (arpa/inet)
+*/
+/***** htonl *****/
+int		ut_htonl_interface(int N);
+int		ut_htonl_validity(int N);
+int		ut_htonl_memchk(int N);
+int		ut_htonl_timeout(int N);
+/***** htons *****/
+int		ut_htons_interface(int N);
+int		ut_htons_validity(int N);
+int		ut_htons_memchk(int N);
+int		ut_htons_timeout(int N);
+/***** ntohl *****/
+int		ut_ntohl_interface(int N);
+int		ut_ntohl_validity(int N);
+int		ut_ntohl_memchk(int N);
+int		ut_ntohl_timeout(int N);
+/***** ntohs *****/
+int		ut_ntohs_interface(int N);
+int		ut_ntohs_validity(int N);
+int		ut_ntohs_memchk(int N);
+int		ut_ntohs_timeout(int N);
+/***** inet_ntoa *****/
+int		ut_inet_ntoa_interface(int N);
+int		ut_inet_ntoa_validity(int N);
+int		ut_inet_ntoa_memchk(int N);
+int		ut_inet_ntoa_timeout(int N);
+/***** inet_addr *****/
+int		ut_inet_addr_interface(int N);
+int		ut_inet_addr_validity(int N);
+int		ut_inet_addr_memchk(int N);
+int		ut_inet_addr_timeout(int N);
+/***** inet_ntop *****/
+int		ut_inet_ntop_interface(int N);
+int		ut_inet_ntop_validity(int N);
+int		ut_inet_ntop_memchk(int N);
+int		ut_inet_ntop_timeout(int N);
 
 /*
 ** Character (ctype)
@@ -685,9 +724,105 @@ int		ut_mfifo_purge_timeout(int N);
 
 
 /*
-** Tampon méoire et chaîne de caractères
+** Tampon mémoire et chaîne de caractères (string.h)
 */
 char		*_gen_str(size_t size);
+/***** strlen *****/
+int		ut_strlen_interface(int N);
+int		ut_strlen_validity(int N);
+int		ut_strlen_memchk(int N);
+int		ut_strlen_timeout(int N);
+/***** strnlen *****/
+int		ut_strnlen_interface(int N);
+int		ut_strnlen_validity(int N);
+int		ut_strnlen_memchk(int N);
+int		ut_strnlen_timeout(int N);
+/***** strnlen_s *****/
+int		ut_strnlen_s_interface(int N);
+int		ut_strnlen_s_validity(int N);
+int		ut_strnlen_s_memchk(int N);
+int		ut_strnlen_s_timeout(int N);
+/***** memcpy *****/
+int		ut_memcpy_interface(int N);
+int		ut_memcpy_validity(int N);
+int		ut_memcpy_memchk(int N);
+int		ut_memcpy_timeout(int N);
+/***** memmove *****/
+int		ut_memmove_interface(int N);
+int		ut_memmove_validity(int N);
+int		ut_memmove_memchk(int N);
+int		ut_memmove_timeout(int N);
+/***** strcpy *****/
+int		ut_strcpy_interface(int N);
+int		ut_strcpy_validity(int N);
+int		ut_strcpy_memchk(int N);
+int		ut_strcpy_timeout(int N);
+/***** strncpy *****/
+int		ut_strncpy_interface(int N);
+int		ut_strncpy_validity(int N);
+int		ut_strncpy_memchk(int N);
+int		ut_strncpy_timeout(int N);
+/***** memcpy_s *****/
+int		ut_memcpy_s_interface(int N);
+int		ut_memcpy_s_validity(int N);
+int		ut_memcpy_s_memchk(int N);
+int		ut_memcpy_s_timeout(int N);
+/***** memmove_s *****/
+int		ut_memmove_s_interface(int N);
+int		ut_memmove_s_validity(int N);
+int		ut_memmove_s_memchk(int N);
+int		ut_memmove_s_timeout(int N);
+/***** strcpy_s *****/
+int		ut_strcpy_s_interface(int N);
+int		ut_strcpy_s_validity(int N);
+int		ut_strcpy_s_memchk(int N);
+int		ut_strcpy_s_timeout(int N);
+/***** strncpy_s *****/
+int		ut_strncpy_s_interface(int N);
+int		ut_strncpy_s_validity(int N);
+int		ut_strncpy_s_memchk(int N);
+int		ut_strncpy_s_timeout(int N);
+/***** memccpy *****/
+int		ut_memccpy_interface(int N);
+int		ut_memccpy_validity(int N);
+int		ut_memccpy_memchk(int N);
+int		ut_memccpy_timeout(int N);
+/***** mempcpy *****/
+int		ut_mempcpy_interface(int N);
+int		ut_mempcpy_validity(int N);
+int		ut_mempcpy_memchk(int N);
+int		ut_mempcpy_timeout(int N);
+/***** strdup *****/
+int		ut_strdup_interface(int N);
+int		ut_strdup_validity(int N);
+int		ut_strdup_memchk(int N);
+int		ut_strdup_timeout(int N);
+
+/***** strcat *****/
+int		ut_strcat_interface(int N);
+int		ut_strcat_validity(int N);
+int		ut_strcat_memchk(int N);
+int		ut_strcat_timeout(int N);
+/***** strncat *****/
+int		ut_strncat_interface(int N);
+int		ut_strncat_validity(int N);
+int		ut_strncat_memchk(int N);
+int		ut_strncat_timeout(int N);
+/***** strlcat *****/
+int		ut_strlcat_interface(int N);
+int		ut_strlcat_validity(int N);
+int		ut_strlcat_memchk(int N);
+int		ut_strlcat_timeout(int N);
+/***** strcat_s *****/
+int		ut_strcat_s_interface(int N);
+int		ut_strcat_s_validity(int N);
+int		ut_strcat_s_memchk(int N);
+int		ut_strcat_s_timeout(int N);
+/***** strncat_s *****/
+int		ut_strncat_s_interface(int N);
+int		ut_strncat_s_validity(int N);
+int		ut_strncat_s_memchk(int N);
+int		ut_strncat_s_timeout(int N);
 
 /***** bcmp *****/
 int		ut_bcmp_interface(int N);

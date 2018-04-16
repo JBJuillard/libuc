@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -44,7 +44,7 @@ errno_t	strcat_s(char *s1, rsize_t s1max, const char *s2)
 		errno = EINVAL;
 		return ((errno_t)(EINVAL));
 	}
-	errno ^= errno;
+	errno = 0;
 	offset ^= offset;
 	while (*(s1 + offset))
 	{

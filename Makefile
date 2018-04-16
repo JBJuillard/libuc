@@ -6,7 +6,7 @@
 # By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 #
 # Created: 2016/01/29 by Juillard Jean-Baptiste
-# Updated: 2018/04/01 by Juillard Jean-Baptiste
+# Updated: 2018/04/16 by Juillard Jean-Baptiste
 #
 # This file is a part free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -117,32 +117,73 @@ SRC =	ctype/isalnum.c ctype/isalpha.c ctype/isascii.c \
 		stdlst/msclst_purge.c \
 		stdlst/fifo_push.c stdlst/fifo_pop.c stdlst/fifo_purge.c \
 		stdlst/fifo_map.c \
-		stdlst/mfifo_push.c stdlst/mfifo_pop.c stdlst/mfifo_purge.c #\
+		stdlst/mfifo_push.c stdlst/mfifo_pop.c stdlst/mfifo_purge.c \
 		\
-		string/memccpy.c string/memchr.c string/memcmp.c string/memcpy.c \
-		string/memcpy_s.c string/memmove.c string/memmove_s.c string/memset.c \
-		string/mempcpy.c string/memrchr.c string/rawmemchr.c string/memmem.c \
-		string/memfrob.c string/ffsl.c string/ffsll.c  string/strlcat.c\
-		string/strcpy.c string/strcpy_s.c string/strncpy.c string/strncpy_s.c \
-		string/strcat.c string/strcat_s.c string/strncat.c string/strncat_s.c \
+		string/strlen.c string/strnlen.c string/strnlen_s.c \
+		string/memcpy.c string/memmove.c string/strcpy.c string/strncpy.c \
+		string/memcpy_s.c string/memmove_s.c string/strcpy_s.c string/strncpy_s.c \
+		string/memccpy.c string/mempcpy.c \
+		string/strdup.c #string/strdupa.c string/strndup.c string/strndupa.c #\
+		string/stpcpy.c string/stpncpy.c #\
+		string/strcat.c string/strncat.c string/strcat_s.c string/strncat_s.c \
+		string/strlcat.c #\
+		string/memchr.c string/memcmp.c \
+		string/memset.c \
+		string/memrchr.c string/rawmemchr.c string/memmem.c \
+		string/memfrob.c string/ffsl.c string/ffsll.c \
 		string/strchr.c string/strrchr.c string/strchrnul.c string/strcmp.c \
-		string/strncmp.c string/stpcpy.c string/stpncpy.c string/strverscmp.c \
-		string/strdup.c string/strdupa.c string/strndup.c string/strndupa.c \
+		string/strncmp.c string/strverscmp.c \
 		string/strstr.c string/strcasestr.c string/strpbrk.c string/strsep.c \
 		string/strspn.c string/strcspn.c string/strtok.c string/strtok_r.c \
-		string/strtok_s.c string/strlen.c string/strnlen.c string/strnlen_s.c \
+		string/strtok_s.c \
 		string/strfry.c \
 		\
 		strings/bcmp.c strings/bcopy.c strings/bzero.c strings/ffs.c \
 		strings/index.c strings/rindex.c strings/strcasecmp.c \
-		strings/strncasecmp.c
+		strings/strncasecmp.c \
+		\
+		arpa/inet/htonl.c arpa/inet/ntohl.c \
+		arpa/inet/htons.c arpa/inet/ntohs.c \
+		arpa/inet/inet_ntoa.c arpa/inet/inet_addr.c #\
+		arpa/inet/inet_ntop.c #arpa/inet/inet_pton.c \
+		\
+		bitsfield/bitsrot_8.c bitsfield/bitsrot_16.c \
+		bitsfield/bitsrot_32.c bitsfield/bitsrot_64.c \
+		bitsfield/bitswap_8.c bitsfield/bitswap_16.c \
+		bitsfield/bitswap_32.c bitsfield/bitswap_64.c \
+		\
+		search/hcreate.c \
+		search/remque.c search/insque.c \
+		search/lfind.c search/lsearch.c \
+		search/tfind.c search/tsearch.c search/twalk.c search/tdelete.c search/tdestroy.c \
+		\
+		unistd/write.c unistd/read.c
 SRC_FULLPATH = $(addprefix $(SRC_PATH)/,$(SRC))
 
 
 # Include files
-INC =	libuc/stdlst.h libuc/ctype.h libuc/errno.h libuc/limits.h \
-		libuc/stdbool.h libuc/stddef.h libuc/stdint.h libuc/stdio.h \
-		libuc/stdlib.h libuc/string.h libuc/inttypes.h
+INC =	libuc/arpa/inet.h	\
+		libuc/bitsfield.h	\
+		libuc/byteswap.h	\
+		libuc/ctype.h		\
+		libuc/endian.h		\
+		libuc/errno.h		\
+		libuc/ieee.h		\
+		libuc/inttypes.h	\
+		libuc/iso646.h		\
+		libuc/limits.h		\
+		libuc/netinet/in.h	\
+		libuc/search.h		\
+		libuc/stdalign.h	\
+		libuc/stdbool.h		\
+		libuc/stddef.h		\
+		libuc/stdint.h		\
+		libuc/stdio.h		\
+		libuc/stdlib.h		\
+		libuc/stdlst.h		\
+		libuc/string.h		\
+		libuc/strings.h		\
+		libuc/unistd.h
 INC_FULLPATH = $(addprefix $(INC_PATH)/,$(INC))
 INC_INSTALLPATH = $(prefix)/include
 INC_INSTALLFULLPATH = $(addprefix $(INC_INSTALLPATH)/,$(INC))
@@ -195,21 +236,21 @@ MAN_INSTALLFULLPATH_MAN = $(addprefix $(MAN_INSTALLPATH_MAN)/,$(MAN))
 
 
 # Variables overriding filter
-OVERRIDES_FILTER =	OPTIMIZATION_LEVEL=% \
-					CFLAGS=% \
-					CMACRO=% \
-					OBJ_PATH=% \
-					ASM_PATH=% \
-					A_PATH=% \
+OVERRIDES_FILTER =	OPTIMIZATION_LEVEL=%	\
+					CFLAGS=%				\
+					CMACRO=%				\
+					OBJ_PATH=%				\
+					ASM_PATH=%				\
+					A_PATH=%				\
 					SO_PATH=%
 
 
 # Debugging
-DBG_OVERRIDES =	"OPTIMIZATION_LEVEL=g" \
-				"CFLAGS=$(CFLAGS)  $(filter-out $(CFLAGS),$(CFLAGS_DEBUG))" \
-				"CMACRO=$(CMACRO) $(CMACRO_DEBUG)" \
-				"OBJ_PATH=$(DBG_PATH)/$(OBJ_PATH)" \
-				"ASM_PATH=$(DBG_PATH)/$(ASM_PATH)" \
+DBG_OVERRIDES =	"OPTIMIZATION_LEVEL=g"										\
+				"CFLAGS=$(CFLAGS)  $(filter-out $(CFLAGS),$(CFLAGS_DEBUG))"	\
+				"CMACRO=$(CMACRO) $(CMACRO_DEBUG)"							\
+				"OBJ_PATH=$(DBG_PATH)/$(OBJ_PATH)"							\
+				"ASM_PATH=$(DBG_PATH)/$(ASM_PATH)"							\
 				"LIB_PATH=$(DBG_PATH)/$(LIB_PATH)"
 DBG_OVERRIDES += $(filter-out $(OVERRIDES_FILTER),$(MAKEOVERRIDES))
 
@@ -219,11 +260,11 @@ TEST = $(patsubst %.c,%,$(SRC))
 TEST_FULLPATH = $(addprefix $(TEST_PATH)/$(BIN_PATH)/,$(TEST))
 TEST_OBJ = $(addsuffix .o,$(TEST))
 TEST_OBJ_FULLPATH = $(addprefix $(TEST_PATH)/$(OBJ_PATH)/,$(TEST_OBJ))
-TEST_OVERRIDES =	"OPTIMIZATION_LEVEL=g" \
-					"CFLAGS=$(CFLAGS) $(filter-out $(CFLAGS),$(CFLAGS_DEBUG))" \
-					"CMACRO=$(CMACRO) $(CMACRO_DEBUG)" \
-					"OBJ_PATH=$(TEST_PATH)/$(OBJ_PATH)" \
-					"ASM_PATH=$(TEST_PATH)/$(ASM_PATH)" \
+TEST_OVERRIDES =	"OPTIMIZATION_LEVEL=g"										\
+					"CFLAGS=$(CFLAGS) $(filter-out $(CFLAGS),$(CFLAGS_DEBUG))"	\
+					"CMACRO=$(CMACRO) $(CMACRO_DEBUG)"							\
+					"OBJ_PATH=$(TEST_PATH)/$(OBJ_PATH)"							\
+					"ASM_PATH=$(TEST_PATH)/$(ASM_PATH)"							\
 					"LIB_PATH=$(TEST_PATH)/$(LIB_PATH)"
 TEST_OVERRIDES += $(filter-out $(OVERRIDES_FILTER),$(MAKEOVERRIDES))
 TEST_MAINFILE = $(TEST_PATH)/$(SRC_PATH)/main.c
@@ -279,13 +320,13 @@ RANLIBFLAGS = -t
 
 # Documentation generation
 MAKEINFO = /usr/bin/makeinfo
-MAKEINFO_OUTPUT_DOCBOOK =  --docbook
-MAKEINFO_OUTPUT_HTML =  --html
-MAKEINFO_OUTPUT_XML =  --xml
-MAKEINFO_OUTPUT_PLAINTEXT =  --plaintext
-MAKEINFO_OUTPUT_DVI =  --dvi
-MAKEINFO_OUTPUT_PDF =  --pdf
-MAKEINFO_OUTPUT_PS =  --ps
+MAKEINFO_OUTPUT_DOCBOOK = --docbook
+MAKEINFO_OUTPUT_HTML = --html
+MAKEINFO_OUTPUT_XML = --xml
+MAKEINFO_OUTPUT_PLAINTEXT = --plaintext
+MAKEINFO_OUTPUT_DVI = --dvi
+MAKEINFO_OUTPUT_PDF = --pdf
+MAKEINFO_OUTPUT_PS = --ps
 
 
 # BISON = bison
@@ -343,27 +384,27 @@ GIT_URL = https://github.com/JBJuillard/libuc.git
 
 
 # Protect phony rules
-.PHONY:	help \
-		make make-asm make-obj make-a \
-		clean mostlyclean distclean maintainer-clean \
-		clean-obj clean-asm clean-a clean-so \
-		install install-strip install-html install-dvi \
-		install-pdf install-ps installdirs installcheck \
-		uninstall uninstall-strip uninstall-html uninstall-dvi \
-		uninstall-pdf uninstall-ps uninstallcheck \
-		re all\
-		dbg dbg-obj dbg-asm dbg-a dbg-clean dbg-distclean \
-		check check-make check-clean check-distclean check-prompt \
+.PHONY:	help														\
+		make make-asm make-obj make-a								\
+		clean mostlyclean distclean maintainer-clean				\
+		clean-obj clean-asm clean-a clean-so						\
+		install install-strip install-html install-dvi				\
+		install-pdf install-ps installdirs installcheck				\
+		uninstall uninstall-strip uninstall-html uninstall-dvi		\
+		uninstall-pdf uninstall-ps uninstallcheck					\
+		re all														\
+		dbg dbg-obj dbg-asm dbg-a dbg-clean dbg-distclean			\
+		check check-make check-clean check-distclean check-prompt	\
 		git-clone git-push git-pull update
 
 
 
 # Define suffixes list
 .SUFFIXES:
-.SUFFIXES:	.h .c .$(ASM_EXTENSION) .o .a .so .so.$(SO_MAJOR_VERSION) \
-			.so.$(SO_MAJOR_VERSION).$(SO_MINOR_VERSION) \
-			.so.$(SO_MAJOR_VERSION).$(SO_MINOR_VERSION).$(SO_RELEASE_VERSION) \
-			.$(MAN_SECTION) .html .dvi .pdf .ps \
+.SUFFIXES:	.h .c .$(ASM_EXTENSION) .o .a .so .so.$(SO_MAJOR_VERSION)			\
+			.so.$(SO_MAJOR_VERSION).$(SO_MINOR_VERSION)							\
+			.so.$(SO_MAJOR_VERSION).$(SO_MINOR_VERSION).$(SO_RELEASE_VERSION)	\
+			.$(MAN_SECTION) .html .dvi .pdf .ps									\
 			.conf
 
 
@@ -418,30 +459,30 @@ mostlyclean: clean-asm
 distclean: clean clean-a clean-so
 maintainer-clean: distclean dbg-distclean check-distclean
 clean-obj:
-	@if [ -e $(OBJ_PATH) ] ; then \
-		$(RM) $(RM_DIR_FLAGS) $(OBJ_PATH) ; \
+	@if [ -e $(OBJ_PATH) ] ; then			\
+		$(RM) $(RM_DIR_FLAGS) $(OBJ_PATH) ;	\
 	fi
 clean-asm:
-	@if [ -e $(ASM_PATH) ] ; then \
-		$(RM) $(RM_DIR_FLAGS) $(ASM_PATH) ; \
+	@if [ -e $(ASM_PATH) ] ; then			\
+		$(RM) $(RM_DIR_FLAGS) $(ASM_PATH) ;	\
 	fi
 clean-a:
-	@if [ -e $(A_FULLPATH) -a ! -e $(SO_FULLPATH) ] ; then \
-		$(RM) $(RM_DIR_FLAGS) $(LIB_PATH) ; \
-	elif [ -e $(A_FULLPATH) ] ; then \
-		$(RM) $(RM_FILE_FLAGS) $(A_FULLPATH) ; \
+	@if [ -e $(A_FULLPATH) -a ! -e $(SO_FULLPATH) ] ; then	\
+		$(RM) $(RM_DIR_FLAGS) $(LIB_PATH) ;					\
+	elif [ -e $(A_FULLPATH) ] ; then						\
+		$(RM) $(RM_FILE_FLAGS) $(A_FULLPATH) ;				\
 	fi
 clean-so:
-	@if [ -e $(SO_FULLPATH) -a ! -e $(A_FULLPATH) ] ; then \
-		$(RM) $(RM_DIR_FLAGS) $(LIB_PATH) ; \
-	elif [ -e $(SO_FULLPATH) ] ; then \
-		$(RM) $(RM_FILE_FLAGS) $(SO_FULLPATH) ; \
-		if [ -e $(SO_PATH)/$(SO_NAME) ] ; then \
-			$(RM) $(RM_FILE_FLAGS) $(SO_PATH)/$(SO_NAME) ; \
-		fi ; \
-		if [ -e $(SO_PATH)/$(SO_SONAME) ] ; then \
-			$(RM) $(RM_FILE_FLAGS) $(SO_PATH)/$(SO_SONAME) ; \
-		fi ; \
+	@if [ -e $(SO_FULLPATH) -a ! -e $(A_FULLPATH) ] ; then	\
+		$(RM) $(RM_DIR_FLAGS) $(LIB_PATH) ;					\
+	elif [ -e $(SO_FULLPATH) ] ; then						\
+		$(RM) $(RM_FILE_FLAGS) $(SO_FULLPATH) ;				\
+		if [ -e $(SO_PATH)/$(SO_NAME) ] ; then				\
+			$(RM) $(RM_FILE_FLAGS) $(SO_PATH)/$(SO_NAME) ;	\
+		fi ;												\
+		if [ -e $(SO_PATH)/$(SO_SONAME) ] ; then			\
+			$(RM) $(RM_FILE_FLAGS) $(SO_PATH)/$(SO_SONAME) ;\
+		fi ;												\
 	fi
 
 
@@ -449,9 +490,9 @@ clean-so:
 # /usr/local/lib, /usr/local/include, /usr/local/man
 install: $(MAN_INSTALLFULLPATH_MAN) $(INC_INSTALLFULLPATH) $(SO_INSTALLFULLPATH)
 	$(LDCONFIG) $(LDCONFIGFLAGS) $(SO_INSTALLPATH)
-	@cd $(SO_INSTALLPATH) ; \
-	$(LN) $(LN_SLNKFLAGS) $(SO_FULLNAME) $(SO_NAME) ; \
-	$(CHMOD) --reference=$(SO_FULLNAME) $(SO_NAME) ; \
+	@cd $(SO_INSTALLPATH) ;								\
+	$(LN) $(LN_SLNKFLAGS) $(SO_FULLNAME) $(SO_NAME) ;	\
+	$(CHMOD) --reference=$(SO_FULLNAME) $(SO_NAME) ;	\
 	$(CHMOD) --reference=$(SO_FULLNAME) $(SO_SONAME)
 #install-strip:
 #install-html:
@@ -493,8 +534,8 @@ dbg-clean:
 	@$(MAKE) $(MFLAGS) clean $(DBG_OVERRIDES)
 dbg-distclean:
 	@$(MAKE) $(MFLAGS) distclean $(DBG_OVERRIDES)
-	@if [ -e $(DBG_PATH) ] ; then \
-		$(RM) $(RM_DIR_FLAGS) $(DBG_PATH) ; \
+	@if [ -e $(DBG_PATH) ] ; then			\
+		$(RM) $(RM_DIR_FLAGS) $(DBG_PATH) ;	\
 	fi
 
 
@@ -502,18 +543,18 @@ dbg-distclean:
 check: check-make $(TEST_FULLPATH) $(TEST_SUCCESSFILE_FULLPATH)
 check-make:
 	@$(MAKE) $(MFLAGS) make $(TEST_OVERRIDES)
-	@cd $(TEST_PATH)/$(SO_PATH) ; \
-	$(LN) $(LN_SLNKFLAGS) $(SO_FULLNAME) $(SO_NAME) ; \
+	@cd $(TEST_PATH)/$(SO_PATH) ;						\
+	$(LN) $(LN_SLNKFLAGS) $(SO_FULLNAME) $(SO_NAME) ;	\
 	$(LN) $(LN_SLNKFLAGS) $(SO_FULLNAME) $(SO_SONAME)
 check-clean:
 	@$(MAKE) $(MFLAGS) clean $(TEST_OVERRIDES)
 check-distclean:
 	@$(MAKE) $(MFLAGS) distclean $(TEST_OVERRIDES)
-	@if [ -e $(TEST_PATH)/$(BIN_PATH) ] ; then \
-		$(RM) $(RM_DIR_FLAGS) $(TEST_PATH)/$(BIN_PATH) ; \
+	@if [ -e $(TEST_PATH)/$(BIN_PATH) ] ; then			\
+		$(RM) $(RM_DIR_FLAGS) $(TEST_PATH)/$(BIN_PATH) ;\
 	fi
-	@if [ -e $(TEST_PATH)/$(LOG_PATH) ] ; then \
-		$(RM) $(RM_DIR_FLAGS) $(TEST_PATH)/$(LOG_PATH) ; \
+	@if [ -e $(TEST_PATH)/$(LOG_PATH) ] ; then			\
+		$(RM) $(RM_DIR_FLAGS) $(TEST_PATH)/$(LOG_PATH) ;\
 	fi
 check-prompt:
 	@echo "\n\n\033[0;36;40mUnits tests for Undefined-C Library\033[0m\n\nTest with N = $(TEST_SIZE_N)\n"
@@ -526,6 +567,7 @@ git-pull:
 
 # Object files rules
 $(OBJ_FULLPATH): | $(OBJ_PATH)
+$(OBJ_FULLPATH): | $(OBJ_PATH)/arpa/inet/
 $(OBJ_FULLPATH): | $(OBJ_PATH)/ctype/
 $(OBJ_FULLPATH): | $(OBJ_PATH)/inttypes/
 $(OBJ_FULLPATH): | $(OBJ_PATH)/stdlib/
@@ -542,6 +584,7 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 # Assembly files rules
 $(ASM_FULLPATH): | $(ASM_PATH)
+$(ASM_FULLPATH): | $(ASM_PATH)/arpa/inet/
 $(ASM_FULLPATH): | $(ASM_PATH)/ctype/
 $(ASM_FULLPATH): | $(ASM_PATH)/inttypes/
 $(ASM_FULLPATH): | $(ASM_PATH)/stdlib/
@@ -566,6 +609,7 @@ $(SO_PATH):
 
 # Test rules
 $(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)
+$(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/arpa/inet/
 $(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/ctype/
 $(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/inttypes/
 $(TEST_FULLPATH): | $(TEST_PATH)/$(BIN_PATH)/stdlib/
@@ -579,6 +623,7 @@ $(TEST_PATH)/$(BIN_PATH)/%/:
 $(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += $(CFLAGS_INCLUDE)./$(TEST_PATH)/$(INC_PATH)
 $(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += $(CFLAGS_OPTIMIZE)g
 $(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += $(CFLAGS_DEBUG)
+$(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += -fno-builtin
 $(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += $(CFLAGS_LIBNAME)$(NAME)
 $(TEST_PATH)/$(BIN_PATH)/%: CFLAGS += $(CFLAGS_LIBPATH)./$(TEST_PATH)/$(SO_PATH)
 $(TEST_PATH)/$(BIN_PATH)/%: CMACRO += INTERFACE_FUNCTION=ut_$(*F)_interface
@@ -591,6 +636,7 @@ $(TEST_PATH)/$(BIN_PATH)/%: $(TEST_MAINFILE)
 	$(CC) $(CFLAGS) $(addprefix $(CFLAGS_MACRO),$(CMACRO)) $(CFLAGS_OUTPUT) $@ $(TEST_MAINFILE)
 
 $(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)
+$(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/arpa/inet/
 $(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/ctype/
 $(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/inttypes/
 $(TEST_SUCCESSFILE_FULLPATH): | $(TEST_PATH)/$(LOG_PATH)/stdlib/
@@ -606,49 +652,49 @@ $(TEST_PATH)/$(LOG_PATH)/%.log: MEMCHKFLAGS += $(MEMCHKFLAGS_LOG)$(TEST_PATH)/$(
 $(TEST_PATH)/$(LOG_PATH)/%.log: TIMEFLAGS += $(TIMEFLAGS_LOG)$(TEST_PATH)/$(LOG_PATH)/$(*D)/$(*F).time
 $(TEST_PATH)/$(LOG_PATH)/%.log: UT_SRCFILE = $(TEST_PATH)/$(SRC_PATH)/$(*D)/ut_$(*F).c
 $(TEST_PATH)/$(LOG_PATH)/%.log: $(SRC_PATH)/%.c $(UT_SRCFILE) $(TEST_PATH)/$(BIN_PATH)/%
-	@export LD_LIBRARY_PATH=./$(TEST_PATH)/$(SO_PATH) ; \
-	echo -n "\033[s$(*F)\033[u\033[50C" ; \
-	echo -n "\033[s\033[K[ \033[0;34;40mFunction Interface Test\033[0m ]\033[u" ; \
-	$(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 1 $(TEST_SIZE_N) ; \
-	ERR=$$? ; \
-	if [ $$ERR -ne 0 ] ; then \
-		echo "\033[s\033[K[ \033[0;31;40mFunction Interface Error: $$ERR\033[0m ]\033[u\t" ; \
-		exit ; \
-	fi ; \
-	echo -n "\033[s\033[K[ \033[0;34;40mMemory Test\033[0m ]\033[u" ; \
-	$(MEMCHK) $(MEMCHKFLAGS) $(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 2 $(TEST_SIZE_N) ; \
-	ERR=$$? ; \
-	if [ $$ERR -eq $(MEMCHK_EXITCODE) ] ; then \
-		echo "\033[s\033[K[ \033[0;31;40mMemory Leak\033[0m ]\033[u\t" ; \
-		exit ; \
-	elif [ $$ERR -ne 0 ] ; then \
-		echo "\033[s\033[K[ \033[0;31;40mMemory Error: $$ERR\033[0m ]\033[u\t" ; \
-		exit ; \
-	fi ; \
-	echo -n "\033[s\033[K[ \033[0;34;40mTimeout Test\033[0m ]\033[u" ; \
-	$(TIME) $(TIMEFLAGS) $(TIMEOUT) $(TIMEOUT_DELAY)s $(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 3 $(TEST_SIZE_N) ; \
-	ERR=$$? ; \
-	if [ $$ERR -eq 124 ] ; then \
-		echo "\033[s\033[K[ \033[0;31;40mTimeout occurs\033[0m ]\033[u\t" ; \
-		exit ; \
-	elif [ $$ERR -ne 0 ] ; then \
-		echo "\033[s\033[K[ \033[0;31;40mTimeout Error: $$ERR\033[0m ]\033[u" ; \
-		exit ; \
-	fi ; \
-	echo "\033[s\033[K[ \033[0;32;40mOk\033[0m ]\033[u" ; \
-	if [ -e $@ ] ; then \
-		$(RM) $(RM_FILE_FLAGS) $@ >> /dev/null ; \
-	fi ; \
-	touch $@; \
-	echo "\nUnits tests log file of $(*F)" >> $@ ; \
-	echo "\n\nInterface test:\n\n\tFunction interface work properly." >> $@ ; \
-	echo "\n\nMemory test:\n" >> $@ ; \
-	export MEMCHK_LINE=`/bin/grep -n 'HEAP SUMMARY' $(@D)/$(*F).memchk | /usr/bin/awk 'BEGIN {FS=":"} {print $$1}'` ; \
-	/usr/bin/tail -n +$$MEMCHK_LINE $(@D)/$(*F).memchk | /bin/sed -E s/==\[0-9\]+==\ */\	/ >> $@ ; \
-	/bin/rm $(@D)/$(*F).memchk ; \
-	echo "\n\nExecution time and timeout test:\n" >> $@ ; \
-	/bin/cat $(@D)/$(*F).time | /usr/bin/awk 'BEGIN {FS="\n";ORS=""} {print "\t";print $$1;print "\n"}' >> $@ ; \
-	echo "\tTimeout don't occur." >> $@ ; \
+	@export LD_LIBRARY_PATH=./$(TEST_PATH)/$(SO_PATH) ;																	\
+	echo -n "\033[s$(*F)\033[u\033[50C" ;																				\
+	echo -n "\033[s\033[K[ \033[0;34;40mFunction Interface Test\033[0m ]\033[u" ;										\
+	$(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 1 $(TEST_SIZE_N) ;																\
+	ERR=$$? ;																											\
+	if [ $$ERR -ne 0 ] ; then																							\
+		echo "\033[s\033[K[ \033[0;31;40mFunction Interface Error: $$ERR\033[0m ]\033[u\t" ;							\
+		exit ;																											\
+	fi ;																												\
+	echo -n "\033[s\033[K[ \033[0;34;40mMemory Test\033[0m ]\033[u" ;													\
+	$(MEMCHK) $(MEMCHKFLAGS) $(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 2 $(TEST_SIZE_N) ;									\
+	ERR=$$? ;																											\
+	if [ $$ERR -eq $(MEMCHK_EXITCODE) ] ; then																			\
+		echo "\033[s\033[K[ \033[0;31;40mMemory Leak\033[0m ]\033[u\t" ;												\
+		exit ;																											\
+	elif [ $$ERR -ne 0 ] ; then																							\
+		echo "\033[s\033[K[ \033[0;31;40mMemory Error: $$ERR\033[0m ]\033[u\t" ;										\
+		exit ;																											\
+	fi ;																												\
+	echo -n "\033[s\033[K[ \033[0;34;40mTimeout Test\033[0m ]\033[u" ;													\
+	$(TIME) $(TIMEFLAGS) $(TIMEOUT) $(TIMEOUT_DELAY)s $(TEST_PATH)/$(BIN_PATH)/$(*D)/$(*F) 3 $(TEST_SIZE_N) ;			\
+	ERR=$$? ;																											\
+	if [ $$ERR -eq 124 ] ; then																							\
+		echo "\033[s\033[K[ \033[0;31;40mTimeout occurs\033[0m ]\033[u\t" ;												\
+		exit ;																											\
+	elif [ $$ERR -ne 0 ] ; then																							\
+		echo "\033[s\033[K[ \033[0;31;40mTimeout Error: $$ERR\033[0m ]\033[u" ;											\
+		exit ;																											\
+	fi ;																												\
+	echo "\033[s\033[K[ \033[0;32;40mOk\033[0m ]\033[u" ;																\
+	if [ -e $@ ] ; then																									\
+		$(RM) $(RM_FILE_FLAGS) $@ >> /dev/null ;																		\
+	fi ;																												\
+	touch $@;																											\
+	echo "\nUnits tests log file of $(*F)" >> $@ ;																		\
+	echo "\n\nInterface test:\n\n\tFunction interface work properly." >> $@ ;											\
+	echo "\n\nMemory test:\n" >> $@ ;																					\
+	export MEMCHK_LINE=`/bin/grep -n 'HEAP SUMMARY' $(@D)/$(*F).memchk | /usr/bin/awk 'BEGIN {FS=":"} {print $$1}'` ;	\
+	/usr/bin/tail -n +$$MEMCHK_LINE $(@D)/$(*F).memchk | /bin/sed -E s/==\[0-9\]+==\ */\	/ >> $@ ;					\
+	/bin/rm $(@D)/$(*F).memchk ;																						\
+	echo "\n\nExecution time and timeout test:\n" >> $@ ;																\
+	/bin/cat $(@D)/$(*F).time | /usr/bin/awk 'BEGIN {FS="\n";ORS=""} {print "\t";print $$1;print "\n"}' >> $@ ;			\
+	echo "\tTimeout don't occur." >> $@ ;																				\
 	/bin/rm $(@D)/$(*F).time
 
 

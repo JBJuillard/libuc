@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/27 by Juillard Jean-Baptiste
-** Updated: 2018/03/27 by Juillard Jean-Baptiste
+** Updated: 2018/04/04 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,17 +24,27 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <inttypes.h>
+#include <libuc/stdint.h>
+#include <libuc/endian.h>
+#include <libuc/byteswap.h>
 
 uint16_t	ntohs(uint16_t netshort)
 {
-#if		BYTE_ORDER == BIG_ENDIAN
+#if		(BYTE_ORDER == BIG_ENDIAN)
 	return (netshort);
-#elif		BYTE_ORDER == BIG_ENDIAN
-	return (((netshort & 0xff00) >> 8)
-			| ((netshort & 0xff) << 8));
-#elif		BYTE_ORDER == BIG_ENDIAN
+#elif	(BYTE_ORDER == LITTLE_ENDIAN)
+	return (bswap_16(netshort));
+#elif	(BYTE_ORDER == WORD_BIG_ENDIAN)
 	return (netshort);
+#elif	(BYTE_ORDER == WORD_LITTLE_ENDIAN)
+	return (({	register uint16_t	ret;
+				__asm__("movw %1, %w0\n"
+						"rorw $8, %w0"
+						: "=r"(ret)
+						: "m"(netshort)
+						: "cc" );
+				ret;
+			}));
 #else
 # error "What kind of system is this ?"
 #endif

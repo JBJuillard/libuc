@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/31 by Juillard Jean-Baptiste
-** Updated: 2018/04/02 by Juillard Jean-Baptiste
+** Updated: 2018/04/14 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -31,11 +31,15 @@
 
 /*
 ** type setbits(type bitfield, type mask);
+**
+** All bits at 1 in mask are set
 */
 # define setbits(b,m)				(b | m)
 
 /*
 ** type clearbits(type bitfield, type mask);
+**
+** All bits at 1 in mask are clear
 */
 # define clearbits(b,m)				(b & ~(m))
 

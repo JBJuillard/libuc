@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/02/18 by Juillard Jean-Baptiste
-** Updated: 2018/03/23 by Juillard Jean-Baptiste
+** Updated: 2018/04/04 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -35,7 +35,8 @@ int	toascii(int c)
 		errno = EINVAL;
 		return (0);
 	}
-	if (c & 0x80)
+	errno = 0;
+	if (c != EOF && c & 0x80)
 		return (c ^ 0x80);
 	return (c);
 }

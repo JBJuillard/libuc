@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/23 by Juillard Jean-Baptiste
-** Updated: 2018/03/24 by Juillard Jean-Baptiste
+** Updated: 2018/04/04 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -80,7 +80,7 @@ int	ut_llabs_memchk(int N)
 
 	i = 0;
 	while (i < (unsigned int)(N))
-		llabs(i);
+		llabs(i++);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -32,9 +32,9 @@
 void	*memccpy(void * restrict s1, const void * restrict s2,
 					int c, size_t n)
 {
-	register unsigned char			*p1;	/* Fast pointer on s1 */
-	register const unsigned char	*p2;	/* Fast pointer on s2 */
-	register size_t					cnt;	/* Fast counter */
+	register unsigned char			*p1;
+	register const unsigned char	*p2;
+	register size_t					cnt;
 
 	if (!s1 || !s2 || c < 0x0 || c > 0xFF || !n || n > SIZE_MAX)
 	{
@@ -45,10 +45,10 @@ void	*memccpy(void * restrict s1, const void * restrict s2,
 	p1 = (unsigned char *)(s1);
 	p2 = (const unsigned char *)(s2);
 	cnt = n;
-	while (cnt && p2 != (const unsigned char)(c))
+	while (cnt && *p2 != (const unsigned char)(c))
 	{
 		*(p1++) = *((unsigned char *)(p2++));
-		cnt--;
+		--cnt;
 	}
 	return (s1);
 }

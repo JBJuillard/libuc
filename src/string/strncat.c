@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/12 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,7 +27,7 @@
 #include <libuc/stddef.h>
 #include <libuc/stdint.h>
 #include <libuc/errno.h>
-#include <stdlib.h>
+#include <libuc/stdlib.h>
 
 char	*strncat(char *s1, const char *s2, size_t n)
 {
@@ -41,10 +41,10 @@ char	*strncat(char *s1, const char *s2, size_t n)
 		errno = EINVAL;
 		return ((char *)(NULL));
 	}
-	errno ^= errno;
+	errno = 0;
 	while (*p1)
 		p1++;
-	while (*p2 && n)
+	while (n && *p2)
 	{
 		*(p1++) = *(p2++);
 		n--;

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/27 by Juillard Jean-Baptiste
-** Updated: 2018/03/30 by Juillard Jean-Baptiste
+** Updated: 2018/04/05 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -30,14 +30,14 @@
 /*
 ** uint32_t and uint16_t
 */
-# include <inttypes.h>
+# include <libuc/stdint.h>
 /*
 ** in_port_t,
 ** in_addr, in_addr_t,
 ** in6_addr, in6_addr_t,
 ** INET_ADDRSTRLEN, INET6_ADDRSTRLEN
 */
-# include <netinet/in.h>
+# include <libuc/netinet/in.h>
 
 uint32_t	htonl(uint32_t hostlong);
 uint16_t	htons(uint16_t hostshort);

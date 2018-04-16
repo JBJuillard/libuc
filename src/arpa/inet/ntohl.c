@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/27 by Juillard Jean-Baptiste
-** Updated: 2018/03/27 by Juillard Jean-Baptiste
+** Updated: 2018/04/03 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,20 +24,37 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <inttypes.h>
+#include <libuc/stdint.h>
+#include <libuc/endian.h>
+#include <libuc/byteswap.h>
 
 uint32_t	ntohl(uint32_t netlong)
 {
 #if		BYTE_ORDER == BIG_ENDIAN
 	return (netlong);
 #elif	BYTE_ORDER == LITTLE_ENDIAN
-	return (((netlong & 0xff00000000) >> 24)
-			| ((netlong & 0xff0000) >> 8)
-			| ((netlong & 0xff00) << 8)
-			| ((netlong & 0xff) << 24));
-#elif	BYTE_ORDER == MIDDLE_ENDIAN
-	return (((netlong & 0xffff0000) >> 16)
-			| ((netlong & 0xffff) << 16));
+	return (bswap_32(netlong));
+#elif	BYTE_ORDER == WORD_BIG_ENDIAN
+	return (({	register uint32_t	ret;
+				__asm__("movl %1, %0\n"
+						"rorl $16,%0\n"
+						: "=m"(netlong)
+						: "r"(ret)
+						: "cc" );
+				ret;
+			}));
+#elif	BYTE_ORDER == WORD_LITTLE_ENDIAN
+	return (({	register uint32_t	ret;
+				__asm__("movl %1, %0\n"
+						"rorw $8,%w0\n"
+						"rorl $16,%0\n"
+						"rorw $8,%w0\n"
+						"rorl $16,%0"
+						: "=m"(netlong)
+						: "r"(ret)
+						: "cc" );
+				ret;
+			}));
 #else
 # error "What kind of system is this ?"
 #endif

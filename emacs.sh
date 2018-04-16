@@ -6,7 +6,7 @@
 # By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 #
 # Created: 2018/03/10 by Juillard Jean-Baptiste
-# Updated: 2018/03/12 by Juillard Jean-Baptiste
+# Updated: 2018/04/14 by Juillard Jean-Baptiste
 #
 # This file is a part free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License as
@@ -26,23 +26,7 @@
 #!/bin/sh
 
 # Default value
-OPTIONS="-nw"
-FILES=$@
 ELISP_PATH=utils/emacs
-
-# Ajouter la detection du shell (via /etc/shells)
-# pour le parsage de la ligne de cmd ($0)
-#
-# while `cat /etc/shells` ; do
-# 	SHELLS_LIST=$SHELLS_LIST,"`rev $1 | awk 'BEGIN {FS=\"/\"} {print $$1}'`"
-# done
-# SHELLS_LIST={$SHELLS_LIST}
-
-# Ajouter la composition du chemin d'accès pour l'appel à emacs
-#WD=$PWD
-#echo $WD
-#echo $0
-
 
 # Validate parameters
 if [ -z "$@" ] ; then
@@ -67,4 +51,4 @@ else
 fi
 
 # Open emacs with emacs libuc extensions
-emacs $OPTIONS --directory ./$ELISP_PATH/ --load ./$ELISP_PATH/emacs.el $FILES
+emacs -nw --directory ./$ELISP_PATH/ --load ./$ELISP_PATH/emacs.el $@

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/11 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -31,13 +31,13 @@
 
 void	*memmove(void *s1, const void *s2, size_t n)
 {
-	register unsigned char			*p1;	/* Fast pointer on s1 */
-	register const unsigned char	*p2;	/* Fast pointer on s2 */
-	register size_t					c;		/* Fast counter */
+	register unsigned char			*p1;
+	register const unsigned char	*p2;
+	register size_t					c;
 
 	if (!(p1 = (unsigned char *)(s1))
 		|| !(p2 = (const unsigned char *)(s2))
-		|| n || n > SIZE_MAX)
+		|| !n || n > SIZE_MAX)
 	{
 		errno = EINVAL;
 		return (NULL);
@@ -48,10 +48,12 @@ void	*memmove(void *s1, const void *s2, size_t n)
 		return (s1);
 	else if (p1 > p2)
 	{
+		p1 += c - 1;
+		p2 += c - 1;
 		while (c)
 		{
 			*(p1--) = *((unsigned char *)(p2--));
-			c--;
+			--c;
 		}
 	}
 	else
@@ -59,7 +61,7 @@ void	*memmove(void *s1, const void *s2, size_t n)
 		while (c)
 		{
 			*(p1++) = *((unsigned char *)(p2++));
-			c--;
+			--c;
 		}
 	}
 	return (s1);

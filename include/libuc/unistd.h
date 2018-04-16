@@ -1,12 +1,12 @@
 /*
-** fenv.h
+** unistd.h
 **
-** Header file for fenv subset of Undefined-C library
+** Header file for unistd subset of Undefined-C library
 **
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
-** Created: 2018/03/31 by Juillard Jean-Baptiste
-** Updated: 2018/03/31 by Juillard Jean-Baptiste
+** Created: 2018/03/25 by Juillard Jean-Baptiste
+** Updated: 2018/04/14 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,9 +24,28 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef FENV_H
-# define FENV_H					1
+#ifndef UNISTD_H
+# define UNISTD_H					1
 
 
+# include <sys/types.h>
+
+
+/*
+** File number of stdin: 0.
+*/
+# define STDIN_FILENO				0
+/*
+** File number of stdout: 1.
+*/
+# define STDOUT_FILENO				1
+/*
+** File number of stderr: 2.
+*/
+# define STDERR_FILENO				2
+
+
+extern ssize_t write(int fd, const void *buf, size_t count);
+extern ssize_t read(int fd, void *buf, size_t count);
 
 #endif

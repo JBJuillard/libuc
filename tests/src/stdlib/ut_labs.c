@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/23 by Juillard Jean-Baptiste
-** Updated: 2018/03/24 by Juillard Jean-Baptiste
+** Updated: 2018/04/04 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -39,19 +39,13 @@ int	ut_labs_interface(int N)
 {
 	long int	i;
 	int			error;
-	err_t		tdat[4] = {	{(((long long)(LONG_MIN) == LLONG_MIN) ? ((long long)(LONG_MIN)) : ((long long)(LONG_MIN) - 1LL)),
-								(((long long)(LONG_MIN) == LLONG_MIN) ? (0) : (LONG_MIN)),
-								(((long long)(LONG_MIN) == LLONG_MIN) ? (0) : (EINVAL))},
-							{(((long long)(LONG_MAX) == LLONG_MAX) ? ((long long)(LONG_MAX)) : ((long long)(LONG_MAX) + 1LL)),
-								(((long long)(LONG_MAX) == LLONG_MAX) ? (0) : (LONG_MIN)),
-								(((long long)(LONG_MAX) == LLONG_MAX) ? (0) : (EINVAL))},
-							{LONG_MIN, LONG_MIN, ERANGE},
+	err_t		tdat[2] = {	{LONG_MIN, LONG_MIN, ERANGE},
 							{LONG_MAX, LONG_MAX, 0}};
 
 	error = 0xFF;
 	i = 0;
 	N =N;
-	while (i < 4)
+	while (i < 2)
 	{
 		errno = 0;
 		if ((long long int)labs((long int)((tdat[i]).n)) != (tdat[i]).ret
@@ -87,7 +81,7 @@ int	ut_labs_memchk(int N)
 
 	i = 0;
 	while (i < (unsigned int)(N))
-		labs(i);
+		labs(i++);
 	return (0);
 }
 

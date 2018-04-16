@@ -1,12 +1,12 @@
 /*
-** uchar.h
+** remque.c
 **
-** Header file for uchar subset of Undefined-C library
+** remque function of Undefined-C library
 **
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
-** Created: 2018/03/27 by Juillard Jean-Baptiste
-** Updated: 2018/03/27 by Juillard Jean-Baptiste
+** Created: 2018/04/12 by Juillard Jean-Baptiste
+** Updated: 2018/04/12 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,15 +24,24 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef UCHAR_H
-# define UCHAR_H				1
+#include <libuc/search.h>
+#include <libuc/errno.h>
 
+void	remque(void *elem)
+{
+	register struct qelem	*p;
+	register struct qelem	*n;
 
-# include <libuc/stddef.h>		/* size_t */
-# include <libuc/stdint.h>		/* uint_leastN_t */
-# include <libuc/wctype.h>		/* mbstate_t */
-
-typedef uint_least16_t			char16_t;
-typedef uint_least32_t			char32_t;
-
-#endif
+	if (!elem)
+	{
+		errno = EINVAL;
+		return ;
+	}
+	errno = 0;
+	p = ((struct qelem *)(elem))->q_back;
+	n = ((struct qelem *)(elem))->q_forw;
+	if (p)
+		p->q_forw = n;
+	if (n)
+		n->q_back = p;
+}

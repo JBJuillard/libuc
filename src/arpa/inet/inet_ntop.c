@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/03/28 by Juillard Jean-Baptiste
-** Updated: 2018/03/29 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -24,32 +24,37 @@
 ** Floor, Boston, MA 02110-1301, USA.
 */
 
-#include <arpa/inet.h>
+#include <libuc/arpa/inet.h>
 #include <libuc/errno.h>
-#include <netinet/in.h>
+#include <libuc/netinet/in.h>
+#include <libuc/stdlib.h>
+#include <string.h>
 
 static char	*inet_ntop_inaddr(struct in_addr in)
 {
 	static char				cp[32];
 	register unsigned int	byte;
-	register unsigned int	mask;
 	register char			*str;
 	register int			i;
 	register size_t			offset;
+	auto union
+	{
+		struct in_addr		in;
+		uint8_t				byte[4];
+	}						addr;
 
 	i ^= i;
 	offset ^= offset;
-	mask = 0xff000000;
-	while (i++ < 4)
+	addr.in = in;
+	while (i < 4)
 	{
-		byte = (in & mask) >> (8 * (3 - i));
+		if (i >= 1)
+			cp[offset++] = '.';
+		byte = addr.byte[i] & 0xff;
 		if ((str = utoa(byte)) == (char *)(NULL)
 			|| strcpy((cp + offset), str) == (char *)(NULL))
 			return ((char *)(NULL));
 		offset += strlen(str);
-		if (i < 3)
-			cp[offset++] = '.';
-		mask >>= 8;
 	}
 	cp[offset] = '\0';
 	return (cp);
@@ -69,7 +74,7 @@ static char	*inet_ntop_in6addr(struct in6_addr in)
 	nonzero ^= nonzero;
 	while (i < 16)
 	{
-		word = (uint16_t)(in.s6_addr[i]) | ((uint16_t)(in.s6_addr[i + 1]) << 8);
+		word = ((uint16_t)(in.s6_addr[i]) << 8) | (uint16_t)(in.s6_addr[i + 1]);
 		if (word || (!word && nonzero))
 		{
 			if (!nonzero && i)
@@ -112,19 +117,15 @@ const char	*inet_ntop(int af, const void * restrict src,
 	if (af == AF_INET)
 	{
 		if (!(str = inet_ntop_inaddr(*((struct in_addr *)(src))))
-			|| strlen(str) > (size_t)(size))
-		{
-			if (str)
-				errno = ;
+			|| strlen(str) > (size_t)(size)
+			|| strcpy(dest, str) != dest)
 			return ((const char *)(NULL));
-		}
-		if (strncpy(dest, str, (size_t)(size) != dest))
 	}
 	else if (af == AF_INET6)
 	{
 		if (!(str = inet_ntop_in6addr(*((struct in6_addr *)(src))))
 			|| strlen(str) > (size_t)(size)
-			|| strncpy(dest, str, (size_t)(size) != dest)
+			|| strcpy(dest, str) != dest)
 			return ((const char *)(NULL));
 	}
 	else

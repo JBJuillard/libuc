@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/20 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,29 +27,33 @@
 #include <libuc/stddef.h>
 #include <libuc/errno.h>
 #include <libuc/stdlib.h>
+#include <libuc/stdint.h>
 
 char	*strncpy(char * restrict s1, const char * restrict s2, size_t n)
 {
-	register unsigned char			*p1;	/* Fast pointer on s1 */
-	register const unsigned char	*p2;	/* Fast pointer on s2 */
-	register size_t					c;		/* Fast counter */
+	register unsigned char			*p1;
+	register const unsigned char	*p2;
+	register size_t					c;
 
 	if (!(p1 = (unsigned char *)(s1))
-		|| !(p2 = (const unsigned char *)(s2)))
+		|| !(p2 = (const unsigned char *)(s2))
+		|| !n
+		|| n > SIZE_MAX)
 	{
 		errno = EINVAL;
 		return ((char *)(NULL));
 	}
+	errno = 0;
 	c = n;
-	while (*p2 && c)
+	while (c && *p2)
 	{
 		*(p1++) = *((unsigned char *)(p2++));
-		c--;
+		--c;
 	}
 	while (c)
 	{
 		*(p1++) = '\0';
-		c--;
+		--c;
 	}
 	return (s1);
 }

@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/04/02 by Juillard Jean-Baptiste
-** Updated: 2018/04/02 by Juillard Jean-Baptiste
+** Updated: 2018/04/14 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -27,8 +27,10 @@
 #ifndef ENDIAN_H
 # define ENDIAN_H						1
 
-# define _ENDIAN_H						ENDIAN_H
-# include <bits/endian.h>
+# ifndef __BYTE_ORDER
+#  define _ENDIAN_H						ENDIAN_H
+#  include <bits/endian.h>
+# endif
 
 # include <libuc/stdint.h>
 # include <libuc/byteswap.h>
@@ -96,166 +98,9 @@
 #  define le64toh(x)					(x)
 # elif	(__BYTE_ORDER == __WORD_BIG_ENDIAN)				/* 2143 */
 #  define htobe16(x)					(x)
-#  define htole16(x)					bswap_16(x)
-#  define be16toh(x)					(x)
-#  define le16toh(x)					bswap_16(x)
-
-#  define htobe32(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorl $16, %d0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define htole32(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0\n"	\
-														"rorl $16, %d0\n"	\
-													    "rorw $8, %w0\n"	\
-														"rorl $16, %d0"		\
-													    : "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define be32toh(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorl $16, %d0\n"	\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define le32toh(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0\n"	\
-														"rorl $16, %d0\n"	\
-													    "rorw $8, %w0\n"	\
-														"rorl $16, %d0"		\
-													    : "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-
-#  define htobe64(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorl $16, %d0"		\
-														"rorq $32, %q0"		\
-														"rorl $16, %d0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define htole64(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														"rorq $32, %q0"		\
-														"rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define be64toh(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorl $16, %d0"		\
-														"rorq $32, %q0"		\
-														"rorl $16, %d0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define le64toh(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														"rorq $32, %q0"		\
-														"rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-# elif	(__BYTE_ORDER == __WORD_LITTLE_ENDIAN)		/* 3412 */
-#  define htobe16(x)					bswap_16(x)
-#  define htole16(x)					(x)
-#  define be16toh(x)					bswap_16(x)
-#  define le16toh(x)					(x)
-
-#  define htobe32(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0\n"	\
-														"rorl $16, %d0\n"	\
-													    "rorw $8, %w0\n"	\
-														"rorl $16, %d0"		\
-													    : "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define htole32(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorl $16, %d0\n"	\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define be32toh(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0\n"	\
-														"rorl $16, %d0\n"	\
-													    "rorw $8, %w0\n"	\
-														"rorl $16, %d0"		\
-													    : "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define le32toh(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorl $16, %d0\n"	\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-
-#  define htobe64(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														"rorq $32, %q0"		\
-														"rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define htole64(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorl $16, %d0"		\
-														"rorq $32, %q0"		\
-														"rorl $16, %d0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define be64toh(x)					({  unsigned int __v, __x = (x);	\
-											__asm__(    "rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														"rorq $32, %q0"		\
-														"rorw $8, %w0"		\
-														"rorl $16, %d0"		\
-														"rorw $8, %w0"		\
-														: "=r"(__x)			\
-														: "0"(__v)			\
-														: "cc");			\
-											__v;							\
-										})
-#  define le64toh(x)					(x)
+#  error "__WORD_BIG_ENDIAN not implemented."
+# elif	(__BYTE_ORDER == __WORD_LITTLE_ENDIAN)			/* 3412 */
+#  error "__WORD_LITTLE_ENDIAN not implemented."
 # else
 #  error "Unvalid value for __BYTE_ORDER macro."
 # endif

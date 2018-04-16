@@ -6,7 +6,7 @@
 ** By: Juillard Jean-Baptiste (jbjuillard@gmail.com)
 **
 ** Created: 2018/01/21 by Juillard Jean-Baptiste
-** Updated: 2018/03/21 by Juillard Jean-Baptiste
+** Updated: 2018/04/15 by Juillard Jean-Baptiste
 **
 ** This file is a part free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License as
@@ -34,9 +34,9 @@
 errno_t	strncpy_s(char * restrict s1, rsize_t s1max,
 					const char * restrict s2, rsize_t n)
 {
-	register unsigned char			*p1;	/* Fast pointer on s1 */
-	register const unsigned char	*p2;	/* Fast pointer on s2 */
-	register rsize_t				c;		/* Fast counter */
+	register unsigned char			*p1;
+	register const unsigned char	*p2;
+	register rsize_t				c;
 
 	if (!s1 || !s1max || s1max > RSIZE_MAX || !s2
 		|| s1max == strnlen_s(s2, s1max)
@@ -50,12 +50,21 @@ errno_t	strncpy_s(char * restrict s1, rsize_t s1max,
 	errno = 0;
 	p1 = (unsigned char *)(s1);
 	p2 = (const unsigned char *)(s2);
-	while (*p2 && c)
+	c = n;
+	while (c && *p2)
 	{
 		*(p1++) = *((unsigned char *)(p2++));
 		c--;
 	}
 	if (*p2)
 		*((unsigned char *)(s1 + n)) = '\0';
+	else
+	{
+		while (c)
+		{
+			*(p1++) = '\0';
+			--c;
+		}
+	}
 	return ((errno_t)(0));
 }

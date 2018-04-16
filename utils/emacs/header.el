@@ -89,7 +89,7 @@
 							("c"	(pcase (substring (file-name-base buffer-file-name) 0 3)
 										("ut_"	(concat "Unit tests for " (substring (file-name-base buffer-file-name) 3) " function of Undefined-C library"))
 										(_ 		(concat (file-name-base buffer-file-name) " function of Undefined-C library"))))
-							("cpp"	(concat (file-name-base buffer-file-name) " function of Undefined-C library"))
+							("cpp"	(concat (file-name-base buffer-file-name) " function of Undefined-C++ library"))
 							("sh"	(concat (file-name-base buffer-file-name) " shell script of Undefined-C library"))
 							("el"	(concat (file-name-base buffer-file-name) " elisp script of Undefined-C library"))
 							("3"	(concat "Manpage for " (file-name-base buffer-file-name) " of Undefined-C library"))))))
